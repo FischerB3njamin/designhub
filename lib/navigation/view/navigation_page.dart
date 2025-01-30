@@ -1,4 +1,5 @@
 import 'package:designhub/chat/view/chat_page.dart';
+import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/home/view/home_page.dart';
 import 'package:designhub/navigation/data/navigation_data.dart';
 import 'package:designhub/navigation/widgets/navigation_item.dart';
@@ -26,60 +27,54 @@ class _NavigationPageState extends State<NavigationPage> {
       backgroundColor: Colors.white,
       body: pages[activeIndex],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Transform.rotate(
-        angle: 0.75,
-        origin: Offset(0, 0),
-        child: SizedBox(
-          width: 80,
-          height: 80,
-          child: FittedBox(
-            child: FloatingActionButton(
-              // elevation: 0,
-              backgroundColor: Color(0xFFF25619),
-              onPressed: () {},
-              child: Transform.rotate(
-                angle: -0.75,
-                child: Icon(
-                  Icons.add,
-                  size: 36,
-                  color: Color(0xFFFFFEFE),
+      floatingActionButton: Transform.translate(
+        offset: Offset(0, 5), // 5 Pixel nach unten verschieben
+
+        child: InkWell(
+          overlayColor: WidgetStateProperty.all(Colors.transparent),
+          onTap: () {},
+          child: SizedBox(
+            height: 100,
+            width: 100,
+            child: Assets.images.floatingButton.image(),
+          ),
+        ),
+      ),
+      bottomNavigationBar: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          Assets.images.bottomBg.image(height: 120, width: double.infinity),
+          Positioned(
+            bottom: 30,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: NavigationData.items.asMap().entries.expand(
+                    (entry) {
+                      List<Widget> returnList = [];
+                      if (entry.key == 2) {
+                        returnList.add(SizedBox(
+                            width: 80)); // Platz für FloatingActionButton
+                      }
+                      returnList.add(NavigationItem(
+                        icon: entry.value.icon,
+                        isSelected: activeIndex == entry.key,
+                        callback: handleIconTap,
+                        index: entry.key,
+                        label: entry.value.label,
+                      ));
+                      return returnList;
+                    },
+                  ).toList(),
                 ),
               ),
             ),
           ),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-        child: BottomAppBar(
-          height: 100,
-          padding: EdgeInsets.all(16),
-          color: Color(0xFFF8F7F4),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            spacing: 16,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: NavigationData.items.asMap().entries.expand(
-              (entry) {
-                List<Widget> returnList = [];
-
-                // Spacer an 2. Stelle
-                if (entry.key == 2) returnList.add(Spacer());
-
-                returnList.add(NavigationItem(
-                  iconData: entry.value.iconData,
-                  isSelected: activeIndex == entry.key,
-                  callback: handleIconTap,
-                  index: entry.key,
-                  label: entry.value.label,
-                ));
-
-                return returnList;
-              },
-            ).toList(),
-          ),
-        ),
+        ],
       ),
     );
   }

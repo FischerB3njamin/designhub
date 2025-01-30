@@ -1,17 +1,18 @@
+import 'package:designhub/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
 
 class NavigationItem extends StatelessWidget {
   final bool isSelected;
   final Function callback;
   final int index;
-  final IconData iconData;
+  final SvgGenImage icon;
   final String label;
   const NavigationItem({
     super.key,
     required this.isSelected,
     required this.callback,
     required this.index,
-    required this.iconData,
+    required this.icon,
     required this.label,
   });
 
@@ -25,10 +26,10 @@ class NavigationItem extends StatelessWidget {
         child: Column(
           spacing: 0,
           children: [
-            Icon(
-              iconData,
-              size: 36,
-              color: isSelected ? Color(0xFFF25619) : Color(0xFF000000),
+            icon.svg(
+              colorFilter: isSelected
+                  ? ColorFilter.mode(Color(0xFFF25619), BlendMode.srcIn)
+                  : ColorFilter.mode(Color(0xFF000000), BlendMode.srcIn),
             ),
             if (isSelected)
               Text(

@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:designhub/gen/assets.gen.dart';
 
 class Navigation {
-  final IconData iconData;
+  final SvgGenImage icon;
   final String label;
 
   Navigation({
-    required this.iconData,
+    required this.icon,
     required this.label,
   });
 }

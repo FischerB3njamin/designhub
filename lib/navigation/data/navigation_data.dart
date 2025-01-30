@@ -1,23 +1,22 @@
+import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/navigation/models/navigation.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class NavigationData {
   static final List<Navigation> items = [
     Navigation(
-      iconData: Icons.home_outlined,
+      icon: Assets.icons.home,
       label: "Home",
     ),
     Navigation(
-      iconData: CupertinoIcons.chat_bubble,
+      icon: Assets.icons.chat,
       label: "Chat",
     ),
     Navigation(
-      iconData: CupertinoIcons.square_pencil,
+      icon: Assets.icons.rating,
       label: "Rating",
     ),
     Navigation(
-      iconData: CupertinoIcons.person_fill,
+      icon: Assets.icons.profile,
       label: "Profile",
     ),
   ];
