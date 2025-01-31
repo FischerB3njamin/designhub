@@ -18,15 +18,16 @@ class $AssetsIconsGen {
   /// File path: assets/icons/app_icon.png
   AssetGenImage get appIcon => const AssetGenImage('assets/icons/app_icon.png');
 
-  /// File path: assets/icons/apple_icon.svg
-  SvgGenImage get appleIcon => const SvgGenImage('assets/icons/apple_icon.svg');
+  /// File path: assets/icons/apple_logo.png
+  AssetGenImage get appleLogo =>
+      const AssetGenImage('assets/icons/apple_logo.png');
 
   /// File path: assets/icons/chat.svg
   SvgGenImage get chat => const SvgGenImage('assets/icons/chat.svg');
 
-  /// File path: assets/icons/google_icon.svg
-  SvgGenImage get googleIcon =>
-      const SvgGenImage('assets/icons/google_icon.svg');
+  /// File path: assets/icons/google_logo.png
+  AssetGenImage get googleLogo =>
+      const AssetGenImage('assets/icons/google_logo.png');
 
   /// File path: assets/icons/home.svg
   SvgGenImage get home => const SvgGenImage('assets/icons/home.svg');
@@ -46,9 +47,9 @@ class $AssetsIconsGen {
   /// List of all assets
   List<dynamic> get values => [
         appIcon,
-        appleIcon,
+        appleLogo,
         chat,
-        googleIcon,
+        googleLogo,
         home,
         logout,
         profile,
@@ -59,6 +60,9 @@ class $AssetsIconsGen {
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
+
+  /// File path: assets/images/bg.png
+  AssetGenImage get bg => const AssetGenImage('assets/images/bg.png');
 
   /// File path: assets/images/bottom_bg.png
   AssetGenImage get bottomBg =>
@@ -81,7 +85,7 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<dynamic> get values =>
-      [bottomBg, floatingButton, logo, logoText, sendMessage];
+      [bg, bottomBg, floatingButton, logo, logoText, sendMessage];
 }
 
 class Assets {

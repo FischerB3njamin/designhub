@@ -1,10 +1,10 @@
-import 'package:designhub/chat/view/chat_page.dart';
+import 'package:designhub/features/chat/view/chat_page.dart';
 import 'package:designhub/gen/assets.gen.dart';
-import 'package:designhub/home/view/home_page.dart';
-import 'package:designhub/navigation/data/navigation_data.dart';
-import 'package:designhub/navigation/widgets/navigation_item.dart';
-import 'package:designhub/profile/view/profile_page.dart';
-import 'package:designhub/rating/view/rating_page.dart';
+import 'package:designhub/features/home/view/home_page.dart';
+import 'package:designhub/features/navigation/data/navigation_data.dart';
+import 'package:designhub/features/navigation/widgets/navigation_item.dart';
+import 'package:designhub/features/profile/view/profile_page.dart';
+import 'package:designhub/features/rating/view/rating_page.dart';
 import 'package:flutter/material.dart';
 
 class NavigationPage extends StatefulWidget {

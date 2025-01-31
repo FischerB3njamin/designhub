@@ -1,4 +1,4 @@
-import 'package:designhub/navigation/view/navigation_page.dart';
+import 'package:designhub/features/auth/view/login_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
         useMaterial3: true, // Enable Material 3
       ),
       debugShowCheckedModeBanner: false,
-      home: const NavigationPage(),
+      home: const LoginPage(),
     );
   }
 }

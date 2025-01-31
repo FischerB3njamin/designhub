@@ -1,5 +1,5 @@
 import 'package:designhub/gen/assets.gen.dart';
-import 'package:designhub/navigation/models/navigation.dart';
+import 'package:designhub/features/navigation/models/navigation.dart';
 
 class NavigationData {
   static final List<Navigation> items = [
