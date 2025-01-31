@@ -1,4 +1,5 @@
 import 'package:designhub/features/auth/view/login_page.dart';
+import 'package:designhub/theme/custom_theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,9 +12,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        useMaterial3: true, // Enable Material 3
-      ),
+      theme: getCustomTheme(),
       debugShowCheckedModeBanner: false,
       home: const LoginPage(),
     );

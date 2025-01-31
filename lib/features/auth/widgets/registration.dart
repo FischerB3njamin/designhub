@@ -19,12 +19,6 @@ class _RegistrationState extends State<Registration> {
         children: [
           TextField(
             decoration: InputDecoration(
-              filled: true,
-              fillColor: Color.fromRGBO(0, 0, 0, .06),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(14)),
-                  gapPadding: 16,
-                  borderSide: BorderSide.none),
               hintText: 'Name',
             ),
           ),
@@ -33,12 +27,6 @@ class _RegistrationState extends State<Registration> {
           ),
           TextField(
             decoration: InputDecoration(
-              filled: true,
-              fillColor: Color.fromRGBO(0, 0, 0, .06),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(14)),
-                  gapPadding: 16,
-                  borderSide: BorderSide.none),
               hintText: 'Email',
             ),
           ),
@@ -46,12 +34,6 @@ class _RegistrationState extends State<Registration> {
           TextField(
             obscureText: true,
             decoration: InputDecoration(
-              filled: true,
-              fillColor: Color.fromRGBO(0, 0, 0, .06),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  gapPadding: 16,
-                  borderSide: BorderSide.none),
               hintText: 'Password',
             ),
           ),
@@ -59,12 +41,6 @@ class _RegistrationState extends State<Registration> {
           TextField(
             obscureText: true,
             decoration: InputDecoration(
-              filled: true,
-              fillColor: Color.fromRGBO(0, 0, 0, .06),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  gapPadding: 16,
-                  borderSide: BorderSide.none),
               hintText: 'Repeat Password',
             ),
           ),

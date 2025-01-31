@@ -1,4 +1,5 @@
 import 'package:designhub/features/chat/view/chat_page.dart';
+import 'package:designhub/features/posts/view/new_post_page.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/features/home/view/home_page.dart';
 import 'package:designhub/features/navigation/data/navigation_data.dart';
@@ -32,7 +33,8 @@ class _NavigationPageState extends State<NavigationPage> {
 
         child: InkWell(
           overlayColor: WidgetStateProperty.all(Colors.transparent),
-          onTap: () {},
+          onTap: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => NewPostPage())),
           child: SizedBox(
             height: 100,
             width: 100,

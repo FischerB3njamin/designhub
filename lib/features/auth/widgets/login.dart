@@ -19,12 +19,6 @@ class _LoginState extends State<Login> {
         children: <Widget>[
           TextField(
             decoration: InputDecoration(
-              filled: true,
-              fillColor: Color.fromRGBO(0, 0, 0, .06),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(14)),
-                  gapPadding: 16,
-                  borderSide: BorderSide.none),
               hintText: 'Email',
             ),
           ),
@@ -34,12 +28,6 @@ class _LoginState extends State<Login> {
           TextField(
             obscureText: true,
             decoration: InputDecoration(
-              filled: true,
-              fillColor: Color.fromRGBO(0, 0, 0, .06),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  gapPadding: 16,
-                  borderSide: BorderSide.none),
               hintText: 'Password',
             ),
           ),
