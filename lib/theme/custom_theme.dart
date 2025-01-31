@@ -12,4 +12,15 @@ ThemeData getCustomTheme() => ThemeData(
         hintStyle:
             TextStyle(color: Colors.grey), // Optional: Stil für Hint-Text
       ),
+      iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(Colors.white),
+          shape: WidgetStateProperty.all(
+            CircleBorder(),
+          ),
+          overlayColor: WidgetStateProperty.all(Colors.black12),
+          shadowColor: WidgetStateProperty.all(Colors.black26),
+          elevation: WidgetStateProperty.all(4),
+        ),
+      ),
     );
