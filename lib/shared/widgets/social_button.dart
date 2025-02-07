@@ -1,4 +1,5 @@
 import 'package:designhub/gen/assets.gen.dart';
+import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class SocialButton extends StatelessWidget {
@@ -17,7 +18,7 @@ class SocialButton extends StatelessWidget {
     return TextButton(
       style: ButtonStyle(
         side: WidgetStateProperty.all(
-            BorderSide(color: Color.fromRGBO(242, 86, 25, 1), width: 2)),
+            BorderSide(color: DesignhubColors.primary, width: 2)),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         ),
@@ -32,8 +33,8 @@ class SocialButton extends StatelessWidget {
             icon.image(width: 30, height: 30),
             SizedBox(width: 8),
             Text(label,
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.black))
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: DesignhubColors.black))
           ],
         ),
       ),
