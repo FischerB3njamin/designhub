@@ -29,65 +29,63 @@ class _RatingPageState extends State<RatingPage> {
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: ListWheelScrollView(
+        diameterRatio: 0.1,
+        itemExtent: 500,
         children: [
-          Draggable(
-            onDragStarted: () => setState(() {
-              notDragged = false;
-            }),
-            onDragEnd: (details) => setState(
-              () {
-                notDragged = true;
+          ...posts.map(
+            (e) => Draggable(
+              onDragStarted: () => setState(() {
+                notDragged = false;
+              }),
+              onDragEnd: (details) => setState(
+                () {
+                  notDragged = true;
 
-                if (details.offset.dx < -140) {
-                  showModalBottomSheet(
+                  if (details.offset.dx < -140) {
+                    showModalBottomSheet(
                       isScrollControlled: true,
                       context: context,
                       builder: (context) => BsRatingView(
-                          post: posts[index],
-                          rolloutType: RollOutType.dislike));
-                }
-                if (details.offset.dx > 140) {
-                  showModalBottomSheet(
+                          post: e, rolloutType: RollOutType.dislike),
+                    );
+                  }
+                  if (details.offset.dx > 140) {
+                    showModalBottomSheet(
                       isScrollControlled: true,
                       context: context,
-                      builder: (context) => BsRatingView(
-                          post: posts[index], rolloutType: RollOutType.like));
-                }
-                if (details.offset.dy < 100) {
-                  setState(() {
-                    if (index + 1 < posts.length - 1) {
-                      index += 1;
-                    } else {
-                      index = 0;
-                    }
-                  });
-                }
-              },
-            ),
-            feedback: Card(
-              child: RatingPostDetailSection(post: posts[index]),
-            ),
-            child: notDragged
-                ? Card(
-                    child: RatingPostDetailSection(post: posts[index]),
-                  )
-                : Row(
-                    children: [
-                      Assets.icons.like.image(
-                        width: 100,
-                        height: 100,
-                        color: DesignhubColors.primary,
+                      builder: (context) =>
+                          BsRatingView(post: e, rolloutType: RollOutType.like),
+                    );
+                  }
+                },
+              ),
+              feedback: Card(
+                child: RatingPostDetailSection(post: e),
+              ),
+              child: notDragged
+                  ? Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: RatingPostDetailSection(post: e),
                       ),
-                      Spacer(),
-                      Assets.icons.dislike.image(
-                        width: 100,
-                        height: 100,
-                        color: DesignhubColors.primary,
-                      ),
-                    ],
-                  ),
+                    )
+                  : Row(
+                      children: [
+                        Assets.icons.like.image(
+                          width: 100,
+                          height: 100,
+                          color: DesignhubColors.primary,
+                        ),
+                        Spacer(),
+                        Assets.icons.dislike.image(
+                          width: 100,
+                          height: 100,
+                          color: DesignhubColors.primary,
+                        ),
+                      ],
+                    ),
+            ),
           ),
         ],
       ),
