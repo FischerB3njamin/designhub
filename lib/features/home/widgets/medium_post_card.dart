@@ -4,8 +4,12 @@ import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class MediumPostCard extends StatelessWidget {
-  const MediumPostCard({super.key, required this.post});
   final Post post;
+
+  const MediumPostCard({
+    super.key,
+    required this.post,
+  });
 
   @override
   Widget build(BuildContext context) {

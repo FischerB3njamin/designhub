@@ -39,9 +39,9 @@ class ChatDetailItemReciever extends StatelessWidget {
                   ),
                   Text(
                     item.date,
-                    style: TextTheme.of(context)
-                        .labelSmall!
-                        .copyWith(color: DesignhubColors.black.withAlpha(200)),
+                    style: TextTheme.of(context).labelSmall!.copyWith(
+                          color: DesignhubColors.black.withAlpha(200),
+                        ),
                   ),
                 ],
               ),
@@ -49,9 +49,10 @@ class ChatDetailItemReciever extends StatelessWidget {
           ),
           SizedBox(width: 4),
           AvatarBigCircle(
-              width: 50,
-              height: 50,
-              imagePath: ProfileSingleton().profile!.avatarImagePath)
+            width: 50,
+            height: 50,
+            imagePath: ProfileSingleton().profile!.avatarImagePath,
+          ),
         ],
       ),
     );

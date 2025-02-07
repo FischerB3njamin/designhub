@@ -3,16 +3,16 @@ import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class RatingFooterSection extends StatelessWidget {
+  final int activeQuestion;
+  final int numberOfQuestions;
+  final Function callback;
+
   const RatingFooterSection({
     required this.activeQuestion,
     required this.callback,
     required this.numberOfQuestions,
     super.key,
   });
-
-  final int activeQuestion;
-  final int numberOfQuestions;
-  final Function callback;
 
   @override
   Widget build(BuildContext context) {

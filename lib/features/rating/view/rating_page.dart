@@ -1,6 +1,6 @@
 import 'package:designhub/features/posts/data/post_mock_database.dart';
 import 'package:designhub/features/posts/models/post.dart';
-import 'package:designhub/features/posts/view/new_post_page.dart';
+import 'package:designhub/features/posts/models/roll_out_type.dart';
 import 'package:designhub/features/profile/models/profile_singleton.dart';
 import 'package:designhub/features/rating/view/bs_rating_view.dart';
 import 'package:designhub/features/rating/widgets/rating_post_detail_section.dart';
@@ -20,6 +20,7 @@ class _RatingPageState extends State<RatingPage> {
   late List<Post> posts;
   int index = 0;
   bool notDragged = true;
+
   @override
   Widget build(BuildContext context) {
     setState(() {

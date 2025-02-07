@@ -1,5 +1,5 @@
 import 'package:designhub/features/posts/models/post.dart';
-import 'package:designhub/features/posts/view/new_post_page.dart';
+import 'package:designhub/features/posts/models/roll_out_type.dart';
 import 'package:designhub/features/rating/view/rating_overview_screen.dart';
 import 'package:designhub/features/rating/view/rating_screen.dart';
 import 'package:designhub/features/rating/widgets/rating_footer_section.dart';
@@ -61,13 +61,14 @@ class _BsRatingViewState extends State<BsRatingView> {
                     post: widget.post,
                   ),
                 RatingFooterSection(
-                    activeQuestion: activeQuestion,
-                    callback: (int index) {
-                      setState(() {
-                        activeQuestion = index;
-                      });
-                    },
-                    numberOfQuestions: numberOfQuestions + 1),
+                  activeQuestion: activeQuestion,
+                  callback: (int index) {
+                    setState(() {
+                      activeQuestion = index;
+                    });
+                  },
+                  numberOfQuestions: numberOfQuestions + 1,
+                ),
               ],
             ),
           ),

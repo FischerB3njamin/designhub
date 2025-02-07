@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 class ChatDetailItem extends StatelessWidget {
   final ChatItem item;
   final Profile senderProfile;
+
   const ChatDetailItem({
     super.key,
     required this.item,

@@ -1,19 +1,21 @@
 import 'package:designhub/features/posts/models/post.dart';
+import 'package:designhub/features/posts/models/question.dart';
 import 'package:designhub/features/posts/view/new_post_page.dart';
 import 'package:designhub/features/rating/view/rating_done_screen.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class RatingOverviewScreen extends StatelessWidget {
+  final Post post;
+  final List<Question> questions;
+  final List<String> answers;
+
   const RatingOverviewScreen({
     super.key,
     required this.questions,
     required this.answers,
     required this.post,
   });
-  final Post post;
-  final List<Question> questions;
-  final List<String> answers;
 
   @override
   Widget build(BuildContext context) {

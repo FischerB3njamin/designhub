@@ -87,7 +87,7 @@ class NewsItem extends StatelessWidget {
                   news.date,
                   style: TextTheme.of(context).bodySmall,
                 ),
-              )
+              ),
             ],
           ),
         ),

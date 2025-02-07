@@ -30,7 +30,6 @@ class _AnimatedSavedButtonState extends State<AnimatedSavedButton> {
         onPressed: () {
           setState(() {
             saved = !saved;
-            //add controller call
           });
         },
         icon: saved
@@ -41,8 +40,10 @@ class _AnimatedSavedButtonState extends State<AnimatedSavedButton> {
             : Assets.icons.folder.svg(
                 height: 35,
                 width: 35,
-                colorFilter:
-                    ColorFilter.mode(DesignhubColors.primary, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(
+                  DesignhubColors.primary,
+                  BlendMode.srcIn,
+                ),
               ),
       ),
     );

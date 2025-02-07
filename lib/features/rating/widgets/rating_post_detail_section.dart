@@ -2,23 +2,23 @@ import 'package:designhub/features/posts/models/post.dart';
 import 'package:flutter/material.dart';
 
 class RatingPostDetailSection extends StatelessWidget {
+  final Post post;
+
   const RatingPostDetailSection({
     required this.post,
     super.key,
   });
-  final Post post;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      // mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
           height: 350,
           width: MediaQuery.of(context).size.width,
           child: ListView(
-            scrollDirection: Axis.horizontal, // Scrollable if multiple images
+            scrollDirection: Axis.horizontal,
             children: post.images
                 .map((e) => Card(
                       clipBehavior: Clip.hardEdge,
@@ -31,7 +31,6 @@ class RatingPostDetailSection extends StatelessWidget {
                 .toList(),
           ),
         ),
-
         Text(
           post.title,
           style: TextTheme.of(context).headlineLarge,
@@ -41,7 +40,6 @@ class RatingPostDetailSection extends StatelessWidget {
           style: TextTheme.of(context).bodyMedium,
         ),
         SizedBox(height: 24),
-        // Questionsection;
       ],
     );
   }

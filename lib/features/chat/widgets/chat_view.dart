@@ -6,12 +6,13 @@ import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class ChatView extends StatelessWidget {
+  final bool isSmallView;
+
   const ChatView({
     super.key,
     required this.isSmallView,
   });
 
-  final bool isSmallView;
   @override
   Widget build(BuildContext context) {
     ChatMockDatabase db = ChatMockDatabase();

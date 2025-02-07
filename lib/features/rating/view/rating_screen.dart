@@ -4,15 +4,17 @@ import 'package:designhub/features/rating/widgets/rating_question_section.dart';
 import 'package:flutter/material.dart';
 
 class RatingScreen extends StatelessWidget {
+  final int activeQuestion;
+  final Function callback;
+  final Post post;
+
   const RatingScreen({
     super.key,
     required this.callback,
     required this.post,
     required this.activeQuestion,
   });
-  final int activeQuestion;
-  final Function callback;
-  final Post post;
+
   @override
   Widget build(BuildContext context) {
     return Container(

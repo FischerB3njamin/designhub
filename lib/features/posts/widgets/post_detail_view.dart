@@ -7,12 +7,12 @@ import 'package:designhub/features/profile/models/profile_singleton.dart';
 import 'package:flutter/material.dart';
 
 class PostDetailView extends StatelessWidget {
+  final Post post;
+
   const PostDetailView({
     super.key,
     required this.post,
   });
-
-  final Post post;
 
   @override
   Widget build(BuildContext context) {

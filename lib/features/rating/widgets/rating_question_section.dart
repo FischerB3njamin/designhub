@@ -1,5 +1,7 @@
+import 'package:designhub/features/posts/models/closed_question.dart';
 import 'package:designhub/features/posts/models/post.dart';
-import 'package:designhub/features/posts/view/new_post_page.dart';
+import 'package:designhub/features/posts/models/question.dart';
+import 'package:designhub/features/posts/models/question_type.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -19,13 +21,14 @@ class RatingQuestionSection extends StatefulWidget {
 }
 
 class _RatingQuestionSectionState extends State<RatingQuestionSection> {
+  String activeState = '';
+  TextEditingController answer = TextEditingController();
+
   List<String> getAnswers() {
     return (widget.post.questions[widget.activeQuestion] as ClosedQuestion)
         .answers;
   }
 
-  String activeState = '';
-  TextEditingController answer = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Question question = widget.post.questions[widget.activeQuestion];
@@ -79,16 +82,17 @@ class _RatingQuestionSectionState extends State<RatingQuestionSection> {
           width: double.infinity,
           alignment: Alignment.centerRight,
           child: ElevatedButton(
-              onPressed: () {
-                String returnedAnswer = question.type == QuestionType.open
-                    ? answer.text
-                    : activeState;
-                widget.callback(widget.activeQuestion + 1, returnedAnswer);
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 60.0),
-                child: Text("Next"),
-              )),
+            onPressed: () {
+              String returnedAnswer = question.type == QuestionType.open
+                  ? answer.text
+                  : activeState;
+              widget.callback(widget.activeQuestion + 1, returnedAnswer);
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 60.0),
+              child: Text("Next"),
+            ),
+          ),
         ),
       ],
     );

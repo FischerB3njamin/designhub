@@ -4,12 +4,12 @@ import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class ChatHeader extends StatelessWidget {
+  final Profile senderProfile;
+
   const ChatHeader({
     super.key,
     required this.senderProfile,
   });
-
-  final Profile senderProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +19,7 @@ class ChatHeader extends StatelessWidget {
         padding: EdgeInsets.only(right: 2),
         decoration: BoxDecoration(
           border: Border.all(width: 1, color: DesignhubColors.grey300),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            bottomLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-            bottomRight: Radius.circular(30),
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(30)),
         ),
         child: Row(
           children: [

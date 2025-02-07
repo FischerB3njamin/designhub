@@ -18,15 +18,16 @@ class HeaderSection extends StatelessWidget {
           Spacer(),
           IconButton(onPressed: () {}, icon: Assets.icons.search.svg()),
           IconButton(
-              onPressed: () {
-                ProfileSingleton().logout();
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => LoginPage(),
-                  ),
-                );
-              },
-              icon: Assets.icons.logout.svg())
+            onPressed: () {
+              ProfileSingleton().logout();
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => LoginPage(),
+                ),
+              );
+            },
+            icon: Assets.icons.logout.svg(),
+          )
         ],
       ),
     );

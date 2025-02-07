@@ -6,8 +6,10 @@ import 'package:designhub/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 class IconSection extends StatefulWidget {
-  const IconSection({super.key, required this.post});
   final Post post;
+
+  const IconSection({super.key, required this.post});
+
   @override
   State<IconSection> createState() => _IconSectionState();
 }

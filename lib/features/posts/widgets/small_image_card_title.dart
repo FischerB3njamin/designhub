@@ -6,7 +6,11 @@ import 'package:flutter/material.dart';
 
 class SmallImageCardTitle extends StatelessWidget {
   final String postId;
-  const SmallImageCardTitle({super.key, required this.postId});
+
+  const SmallImageCardTitle({
+    super.key,
+    required this.postId,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 class ChatDetailView extends StatefulWidget {
   final Chat chat;
   final Profile senderProfile;
+
   const ChatDetailView(
       {super.key, required this.chat, required this.senderProfile});
 
@@ -20,6 +21,7 @@ class ChatDetailView extends StatefulWidget {
 
 class _ChatDetailViewState extends State<ChatDetailView> {
   TextEditingController message = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

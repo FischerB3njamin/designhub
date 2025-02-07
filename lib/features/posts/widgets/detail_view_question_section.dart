@@ -1,5 +1,5 @@
 import 'package:designhub/features/posts/models/post.dart';
-import 'package:designhub/features/posts/view/new_post_page.dart';
+import 'package:designhub/features/posts/models/question_type.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
@@ -22,24 +22,23 @@ class DetailViewQuestionSection extends StatelessWidget {
         SizedBox(height: 8),
         ...post.questions.map(
           (e) => GestureDetector(
-            onTap: () {
-              // open bottomsheet with this question
-            },
+            onTap: () {},
             child: Row(
               children: [
                 Expanded(
                   flex: 8,
                   child: Text(
                     e.question,
-                    style: TextTheme.of(context)
-                        .bodyMedium!
-                        .copyWith(fontWeight: FontWeight.bold),
+                    style: TextTheme.of(context).bodyMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                 ),
                 Expanded(
-                    child: e.type == QuestionType.open
-                        ? Assets.icons.addMessage.svg()
-                        : Assets.icons.closed.image()),
+                  child: e.type == QuestionType.open
+                      ? Assets.icons.addMessage.svg()
+                      : Assets.icons.closed.image(),
+                ),
               ],
             ),
           ),

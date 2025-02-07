@@ -35,18 +35,17 @@ class ChatDetailItemSender extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                      color: DesignhubColors.primary100,
-                      border: Border.all(color: DesignhubColors.grey400),
-                      borderRadius: BorderRadius.circular(12)),
-                  child: Text(
-                    item.text,
+                    color: DesignhubColors.primary100,
+                    border: Border.all(color: DesignhubColors.grey400),
+                    borderRadius: BorderRadius.circular(12),
                   ),
+                  child: Text(item.text),
                 ),
                 Text(
                   item.date,
-                  style: TextTheme.of(context)
-                      .labelSmall!
-                      .copyWith(color: DesignhubColors.black.withAlpha(200)),
+                  style: TextTheme.of(context).labelSmall!.copyWith(
+                        color: DesignhubColors.black.withAlpha(200),
+                      ),
                 ),
               ],
             ),

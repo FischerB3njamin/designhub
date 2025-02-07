@@ -7,7 +7,11 @@ import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
   final Profile profile;
-  const ProfilePage({super.key, required this.profile});
+
+  const ProfilePage({
+    super.key,
+    required this.profile,
+  });
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();

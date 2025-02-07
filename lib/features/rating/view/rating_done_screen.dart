@@ -7,12 +7,18 @@ import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class RatingDoneScreen extends StatelessWidget {
-  const RatingDoneScreen({super.key, required this.post});
   final Post post;
+
+  const RatingDoneScreen({
+    super.key,
+    required this.post,
+  });
+
   @override
   Widget build(BuildContext context) {
     ProfileMockDatabase db = ProfileMockDatabase();
     Profile creator = db.getProfile(post.userId);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,

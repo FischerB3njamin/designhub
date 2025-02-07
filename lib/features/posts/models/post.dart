@@ -1,5 +1,5 @@
 import 'package:designhub/features/posts/models/comment.dart';
-import 'package:designhub/features/posts/view/new_post_page.dart';
+import 'package:designhub/features/posts/models/question.dart';
 
 class Post {
   String postId;

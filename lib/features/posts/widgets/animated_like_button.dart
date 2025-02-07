@@ -20,7 +20,6 @@ class _AnimatedLikeButtonState extends State<AnimatedLikeButton> {
 
   @override
   Widget build(BuildContext context) {
-    print(liked);
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 500),
       transitionBuilder: (Widget child, Animation<double> animation) {
@@ -32,9 +31,6 @@ class _AnimatedLikeButtonState extends State<AnimatedLikeButton> {
             setState(() {
               liked = !liked;
             });
-            print(liked);
-
-            // add controller call
           },
           icon: liked
               ? Assets.icons.like

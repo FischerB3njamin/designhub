@@ -2,8 +2,12 @@ import 'package:designhub/features/posts/models/post.dart';
 import 'package:flutter/material.dart';
 
 class PostDetailSection extends StatelessWidget {
-  const PostDetailSection({super.key, required this.post});
   final Post post;
+
+  const PostDetailSection({
+    super.key,
+    required this.post,
+  });
 
   @override
   Widget build(BuildContext context) {

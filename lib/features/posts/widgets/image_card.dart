@@ -4,7 +4,12 @@ import 'package:flutter/material.dart';
 class ImageCard extends StatelessWidget {
   final String imagePath;
   final Function callback;
-  const ImageCard({super.key, required this.imagePath, required this.callback});
+
+  const ImageCard({
+    super.key,
+    required this.imagePath,
+    required this.callback,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +25,6 @@ class ImageCard extends StatelessWidget {
               fit: BoxFit.fill,
             ),
           ),
-          // removebutton
           Positioned(
               right: 8,
               top: 8,

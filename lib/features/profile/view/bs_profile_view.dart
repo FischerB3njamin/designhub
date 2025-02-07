@@ -3,8 +3,12 @@ import 'package:designhub/features/profile/view/profile_page.dart';
 import 'package:flutter/material.dart';
 
 class BsProfileView extends StatelessWidget {
-  const BsProfileView({super.key, required this.profileId});
   final String profileId;
+
+  const BsProfileView({
+    super.key,
+    required this.profileId,
+  });
 
   @override
   Widget build(BuildContext context) {
