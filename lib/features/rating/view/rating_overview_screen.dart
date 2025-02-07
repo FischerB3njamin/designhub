@@ -1,6 +1,5 @@
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/posts/models/question.dart';
-import 'package:designhub/features/posts/view/new_post_page.dart';
 import 'package:designhub/features/rating/view/rating_done_screen.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';

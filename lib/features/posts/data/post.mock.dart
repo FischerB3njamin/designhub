@@ -1,5 +1,8 @@
+import 'package:designhub/features/posts/models/closed_question.dart';
+import 'package:designhub/features/posts/models/open_question.dart';
 import 'package:designhub/features/posts/models/post.dart';
-import 'package:designhub/features/posts/view/new_post_page.dart';
+import 'package:designhub/features/posts/models/question_type.dart';
+import 'package:designhub/features/posts/models/roll_out_type.dart';
 
 List<Post> samplePosts = [
   Post(
