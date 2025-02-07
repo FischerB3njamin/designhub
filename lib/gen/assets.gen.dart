@@ -15,6 +15,10 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/add_message.svg
+  SvgGenImage get addMessage =>
+      const SvgGenImage('assets/icons/add_message.svg');
+
   /// File path: assets/icons/app_icon.png
   AssetGenImage get appIcon => const AssetGenImage('assets/icons/app_icon.png');
 
@@ -25,6 +29,15 @@ class $AssetsIconsGen {
   /// File path: assets/icons/chat.svg
   SvgGenImage get chat => const SvgGenImage('assets/icons/chat.svg');
 
+  /// File path: assets/icons/closed.png
+  AssetGenImage get closed => const AssetGenImage('assets/icons/closed.png');
+
+  /// File path: assets/icons/dislike.png
+  AssetGenImage get dislike => const AssetGenImage('assets/icons/dislike.png');
+
+  /// File path: assets/icons/folder.svg
+  SvgGenImage get folder => const SvgGenImage('assets/icons/folder.svg');
+
   /// File path: assets/icons/google_logo.png
   AssetGenImage get googleLogo =>
       const AssetGenImage('assets/icons/google_logo.png');
@@ -32,8 +45,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home.svg
   SvgGenImage get home => const SvgGenImage('assets/icons/home.svg');
 
+  /// File path: assets/icons/like.png
+  AssetGenImage get like => const AssetGenImage('assets/icons/like.png');
+
   /// File path: assets/icons/logout.svg
   SvgGenImage get logout => const SvgGenImage('assets/icons/logout.svg');
+
+  /// File path: assets/icons/open.png
+  AssetGenImage get open => const AssetGenImage('assets/icons/open.png');
 
   /// File path: assets/icons/profile.svg
   SvgGenImage get profile => const SvgGenImage('assets/icons/profile.svg');
@@ -44,17 +63,32 @@ class $AssetsIconsGen {
   /// File path: assets/icons/search.svg
   SvgGenImage get search => const SvgGenImage('assets/icons/search.svg');
 
+  /// File path: assets/icons/send_message.svg
+  SvgGenImage get sendMessage =>
+      const SvgGenImage('assets/icons/send_message.svg');
+
+  /// File path: assets/icons/share.svg
+  SvgGenImage get share => const SvgGenImage('assets/icons/share.svg');
+
   /// List of all assets
   List<dynamic> get values => [
+        addMessage,
         appIcon,
         appleLogo,
         chat,
+        closed,
+        dislike,
+        folder,
         googleLogo,
         home,
+        like,
         logout,
+        open,
         profile,
         rating,
-        search
+        search,
+        sendMessage,
+        share
       ];
 }
 
@@ -79,13 +113,17 @@ class $AssetsImagesGen {
   AssetGenImage get logoText =>
       const AssetGenImage('assets/images/logo_text.png');
 
+  /// File path: assets/images/rating_bg.png
+  AssetGenImage get ratingBg =>
+      const AssetGenImage('assets/images/rating_bg.png');
+
   /// File path: assets/images/send_message.svg
   SvgGenImage get sendMessage =>
       const SvgGenImage('assets/images/send_message.svg');
 
   /// List of all assets
   List<dynamic> get values =>
-      [bg, bottomBg, floatingButton, logo, logoText, sendMessage];
+      [bg, bottomBg, floatingButton, logo, logoText, ratingBg, sendMessage];
 }
 
 class Assets {
