@@ -9,21 +9,21 @@ class ImageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.only(bottom: 16),
+      clipBehavior: Clip.hardEdge,
       child: Stack(
         children: [
           SizedBox(
-            height: 250,
+            height: 200,
             width: double.infinity,
             child: Image.file(
               File(imagePath),
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
           // removebutton
           Positioned(
-              right: 16,
-              top: 16,
+              right: 8,
+              top: 8,
               child: IconButton(
                   onPressed: () => callback(imagePath),
                   icon: Icon(Icons.delete)))
