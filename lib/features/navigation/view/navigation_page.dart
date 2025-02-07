@@ -1,11 +1,13 @@
 import 'package:designhub/features/chat/view/chat_page.dart';
 import 'package:designhub/features/posts/view/new_post_page.dart';
+import 'package:designhub/features/profile/data/profile.mock.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/features/home/view/home_page.dart';
 import 'package:designhub/features/navigation/data/navigation_data.dart';
 import 'package:designhub/features/navigation/widgets/navigation_item.dart';
 import 'package:designhub/features/profile/view/profile_page.dart';
 import 'package:designhub/features/rating/view/rating_page.dart';
+import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class NavigationPage extends StatefulWidget {
@@ -17,7 +19,15 @@ class NavigationPage extends StatefulWidget {
 
 class _NavigationPageState extends State<NavigationPage> {
   int activeIndex = 0;
-  List<Widget> pages = [HomePage(), ChatPage(), RatingPage(), ProfilePage()];
+
+  List<Widget> pages = [
+    HomePage(),
+    ChatPage(),
+    RatingPage(),
+    ProfilePage(
+      profile: profiles[0],
+    )
+  ];
 
   void handleIconTap(int index) => setState(() {
         activeIndex = index;
@@ -25,14 +35,13 @@ class _NavigationPageState extends State<NavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: DesignhubColors.white,
       body: pages[activeIndex],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Transform.translate(
-        offset: Offset(0, 5), // 5 Pixel nach unten verschieben
-
+        offset: Offset(0, 5),
         child: InkWell(
-          overlayColor: WidgetStateProperty.all(Colors.transparent),
+          overlayColor: WidgetStateProperty.all(DesignhubColors.transparent),
           onTap: () => Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => NewPostPage())),
           child: SizedBox(
@@ -59,8 +68,7 @@ class _NavigationPageState extends State<NavigationPage> {
                     (entry) {
                       List<Widget> returnList = [];
                       if (entry.key == 2) {
-                        returnList.add(SizedBox(
-                            width: 80)); // Platz für FloatingActionButton
+                        returnList.add(SizedBox(width: 80));
                       }
                       returnList.add(NavigationItem(
                         icon: entry.value.icon,

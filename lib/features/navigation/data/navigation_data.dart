@@ -9,7 +9,7 @@ class NavigationData {
     ),
     Navigation(
       icon: Assets.icons.chat,
-      label: "Chat",
+      label: "News",
     ),
     Navigation(
       icon: Assets.icons.rating,
