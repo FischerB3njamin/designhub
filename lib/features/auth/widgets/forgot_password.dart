@@ -1,3 +1,4 @@
+import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPassword extends StatelessWidget {
@@ -11,7 +12,7 @@ class ForgotPassword extends StatelessWidget {
         Text("Forgot your password? "),
         Text(
           "click here ",
-          style: TextStyle(color: Color.fromRGBO(242, 86, 25, 1)),
+          style: TextStyle(color: DesignhubColors.primary),
         ),
         Text("to reset it.")
       ],

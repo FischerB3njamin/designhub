@@ -1,4 +1,5 @@
 import 'package:designhub/features/navigation/view/navigation_page.dart';
+import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class Registration extends StatefulWidget {
@@ -44,9 +45,7 @@ class _RegistrationState extends State<Registration> {
               hintText: 'Repeat Password',
             ),
           ),
-          // SizedBox(height: 4),
           Row(
-            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Checkbox(
                 value: termsAndConditions,
@@ -62,8 +61,8 @@ class _RegistrationState extends State<Registration> {
           ),
           TextButton(
             style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all<Color>(
-                  Color.fromRGBO(242, 86, 25, 1)),
+              backgroundColor:
+                  WidgetStateProperty.all<Color>(DesignhubColors.primary),
             ),
             onPressed: () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => NavigationPage())),
@@ -73,7 +72,7 @@ class _RegistrationState extends State<Registration> {
                 'Signup',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: Colors.white,
+                    color: DesignhubColors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 18),
               ),
