@@ -3,6 +3,8 @@ import 'package:designhub/features/posts/models/open_question.dart';
 import 'package:designhub/features/posts/models/question_type.dart';
 import 'package:designhub/features/posts/models/roll_out_type.dart';
 import 'package:designhub/features/posts/widgets/closed_question_answer.dart';
+import 'package:designhub/features/posts/widgets/segmented_button_question_type.dart';
+import 'package:designhub/features/posts/widgets/segmented_button_rollout_type.dart';
 import 'package:flutter/material.dart';
 
 class QuestionView extends StatefulWidget {
@@ -80,53 +82,24 @@ class _QuestionViewState extends State<QuestionView> {
             ),
             SizedBox(height: 16),
             Text("When should the question been asked?"),
-            SegmentedButton(
-              showSelectedIcon: false,
-              onSelectionChanged: (newSelection) => setState(() {
+            SegmentedButtonRolloutType(
+              rollOutType: _rollOutType,
+              callback: (newSelection) => setState(() {
                 if (newSelection.isNotEmpty) {
                   _rollOutType = newSelection.first;
                 }
               }),
-              emptySelectionAllowed: true,
-              selected: {_rollOutType},
-              segments: [
-                ButtonSegment(
-                  value: RollOutType.like,
-                  label: Text("like"),
-                ),
-                ButtonSegment(
-                  value: RollOutType.dislike,
-                  label: Text("dislike"),
-                ),
-                ButtonSegment(
-                  value: RollOutType.both,
-                  label: Text("both"),
-                ),
-              ],
             ),
             SizedBox(height: 16),
             Text("Which kind of question?"),
             SizedBox(height: 2),
-            SegmentedButton(
-              showSelectedIcon: false,
-              onSelectionChanged: (newSelection) => setState(() {
-                if (newSelection.isNotEmpty) {
-                  _selectedQuestionType = newSelection.first;
-                }
-              }),
-              emptySelectionAllowed: true,
-              selected: {_selectedQuestionType},
-              segments: [
-                ButtonSegment(
-                  value: QuestionType.open,
-                  label: Text("open"),
-                ),
-                ButtonSegment(
-                  value: QuestionType.close,
-                  label: Text("close"),
-                ),
-              ],
-            ),
+            SegmentedButtonQuestionType(
+                callback: (newSelection) => setState(() {
+                      if (newSelection.isNotEmpty) {
+                        _selectedQuestionType = newSelection.first;
+                      }
+                    }),
+                selectedQuestionType: _selectedQuestionType),
             SizedBox(height: 24),
             if (_selectedQuestionType == QuestionType.open)
               Padding(

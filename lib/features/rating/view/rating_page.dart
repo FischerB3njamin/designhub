@@ -31,7 +31,7 @@ class _RatingPageState extends State<RatingPage> {
       padding: const EdgeInsets.all(16.0),
       child: ListWheelScrollView(
         diameterRatio: 0.1,
-        itemExtent: 500,
+        itemExtent: 550,
         children: [
           ...posts.map(
             (e) => Draggable(
