@@ -1,6 +1,6 @@
 import 'package:designhub/features/chat/models/chat_item.dart';
 import 'package:designhub/features/profile/models/profile.dart';
-import 'package:designhub/shared/widgets/avatar_big_circle.dart';
+import 'package:designhub/shared/widgets/avatar_circle.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class ChatDetailItemSender extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          AvatarBigCircle(
+          AvatarCircle(
             width: 50,
             height: 50,
             imagePath: senderProfile.avatarImagePath,

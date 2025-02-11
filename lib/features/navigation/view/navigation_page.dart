@@ -1,4 +1,4 @@
-import 'package:designhub/features/chat/view/chat_page.dart';
+import 'package:designhub/features/chat/view/chat_news_page.dart';
 import 'package:designhub/features/posts/view/new_post_page.dart';
 import 'package:designhub/features/profile/data/profile.mock.dart';
 import 'package:designhub/gen/assets.gen.dart';
@@ -6,7 +6,7 @@ import 'package:designhub/features/home/view/home_page.dart';
 import 'package:designhub/features/navigation/data/navigation_data.dart';
 import 'package:designhub/features/navigation/widgets/navigation_item.dart';
 import 'package:designhub/features/profile/view/profile_page.dart';
-import 'package:designhub/features/rating/view/rating_page.dart';
+import 'package:designhub/features/rating/view/rating_overview_page.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -22,8 +22,8 @@ class _NavigationPageState extends State<NavigationPage> {
 
   List<Widget> pages = [
     HomePage(),
-    ChatPage(),
-    RatingPage(),
+    ChatNewsPage(),
+    RatingOverviewPage(),
     ProfilePage(
       profile: profiles[0],
     )

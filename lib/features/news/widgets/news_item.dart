@@ -1,8 +1,8 @@
-import 'package:designhub/features/chat/models/news.dart';
-import 'package:designhub/features/chat/models/news_type.dart';
-import 'package:designhub/features/posts/data/post_mock_database.dart';
-import 'package:designhub/features/posts/widgets/post_detail_view.dart';
-import 'package:designhub/features/profile/data/profile_mock_database.dart';
+import 'package:designhub/features/news/models/news.dart';
+import 'package:designhub/features/news/models/news_type.dart';
+import 'package:designhub/features/posts/data/post_mock_db.dart';
+import 'package:designhub/features/posts/view/post_detail_view.dart';
+import 'package:designhub/features/profile/data/profile_mock_db.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/features/profile/view/profile_page.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
@@ -42,13 +42,13 @@ class NewsItem extends StatelessWidget {
           NewsType.follow == news.type
               ? ProfilePage(profile: profile)
               : PostDetailView(
-                  post: PostMockDatabase().getPostById(news.postId!),
+                  post: PostMockDB().getPostById(news.postId!),
                 ),
           0.9);
 
   @override
   Widget build(BuildContext context) {
-    ProfileMockDatabase db = ProfileMockDatabase();
+    ProfileMockDB db = ProfileMockDB();
     Profile profile = db.getProfile(news.profilId);
 
     return Padding(

@@ -27,7 +27,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               Column(
-                mainAxisSize: MainAxisSize.min, // Begrenze die Höhe der Column
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(height: 65),
                   Hero(

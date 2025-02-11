@@ -1,4 +1,4 @@
-import 'package:designhub/features/auth/data/login_mock_database.dart';
+import 'package:designhub/features/auth/data/login_mock_db.dart';
 import 'package:designhub/features/auth/view/registration_page.dart';
 import 'package:designhub/features/navigation/view/navigation_page.dart';
 import 'package:designhub/features/profile/models/profile_singleton.dart';
@@ -17,7 +17,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    final LoginMockDatabase db = LoginMockDatabase();
+    final LoginMockDB db = LoginMockDB();
     TextEditingController email = TextEditingController();
     TextEditingController pwd = TextEditingController();
     return Padding(

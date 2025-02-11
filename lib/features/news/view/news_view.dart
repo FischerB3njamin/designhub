@@ -1,5 +1,5 @@
-import 'package:designhub/features/news/data/news_mock_database.dart';
-import 'package:designhub/features/chat/models/news.dart';
+import 'package:designhub/features/news/data/news_mock_db.dart';
+import 'package:designhub/features/news/models/news.dart';
 import 'package:designhub/features/news/widgets/news_item.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:designhub/theme/designhub_colors.dart';
@@ -14,7 +14,7 @@ class NewsView extends StatefulWidget {
 }
 
 class _NewsViewState extends State<NewsView> {
-  NewsMockDatabase db = NewsMockDatabase();
+  NewsMockDB db = NewsMockDB();
   late List<News> newsData = db.getNews();
 
   @override

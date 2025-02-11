@@ -1,4 +1,4 @@
-import 'package:designhub/features/profile/data/profile_mock_database.dart';
+import 'package:designhub/features/profile/data/profile_mock_db.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 
 class ProfileSingleton {
@@ -13,7 +13,7 @@ class ProfileSingleton {
   }
 
   void setProfile(String userId) {
-    profile = ProfileMockDatabase().getProfile(userId);
+    profile = ProfileMockDB().getProfile(userId);
   }
 
   void logout() {

@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomBottomSheet extends StatelessWidget {
-  static void show(
-    BuildContext context,
-    Widget widget,
-    double height,
-  ) async =>
-      await showModalBottomSheet(
+  static void show(BuildContext context, Widget widget, double height) =>
+      showModalBottomSheet(
         isScrollControlled: true,
         context: context,
         clipBehavior: Clip.hardEdge,

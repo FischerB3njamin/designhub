@@ -1,4 +1,4 @@
-import 'package:designhub/features/chat/models/news.dart';
+import 'package:designhub/features/news/models/news.dart';
 
 abstract class NewsRepo {
   List<News> getNews();

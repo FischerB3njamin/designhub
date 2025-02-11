@@ -1,10 +1,10 @@
 import 'package:designhub/features/chat/models/chat.dart';
-import 'package:designhub/features/chat/view/chat_detail_view.dart';
-import 'package:designhub/features/profile/data/profile_mock_database.dart';
+import 'package:designhub/features/chat/view/chat_detail_screen.dart';
+import 'package:designhub/features/profile/data/profile_mock_db.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/features/profile/models/profile_singleton.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
-import 'package:designhub/shared/widgets/avatar_big_circle.dart';
+import 'package:designhub/shared/widgets/avatar_circle.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class ChatItemView extends StatelessWidget {
   });
 
   Profile getProfileFromParticipants() {
-    ProfileMockDatabase db = ProfileMockDatabase();
+    ProfileMockDB db = ProfileMockDB();
     for (final userId in chat.participants) {
       if (ProfileSingleton().profile!.userId != userId) {
         return db.getProfile(userId);
@@ -32,7 +32,7 @@ class ChatItemView extends StatelessWidget {
     return GestureDetector(
       onTap: () => CustomBottomSheet.show(
         context,
-        ChatDetailView(chat: chat, senderProfile: senderProfile),
+        ChatDetailScreen(chat: chat, senderProfile: senderProfile),
         1,
       ),
       child: Padding(
@@ -50,7 +50,7 @@ class ChatItemView extends StatelessWidget {
           ),
           child: Row(
             children: [
-              AvatarBigCircle(
+              AvatarCircle(
                   imagePath: senderProfile.avatarImagePath,
                   height: 50,
                   width: 50),

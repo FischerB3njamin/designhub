@@ -1,8 +1,9 @@
 import 'package:designhub/features/profile/models/profile.dart';
-import 'package:designhub/features/profile/models/profile_singleton.dart';
-import 'package:designhub/features/profile/widgets/profile_info_view.dart';
-import 'package:designhub/features/profile/widgets/profile_saved_view.dart';
-import 'package:designhub/features/profile/widgets/profile_work_view.dart';
+import 'package:designhub/features/profile/widgets/btn_sg_profile_sections.dart';
+import 'package:designhub/features/profile/widgets/profile_info.dart';
+import 'package:designhub/features/profile/widgets/profile_saved.dart';
+import 'package:designhub/features/profile/widgets/profile_work.dart';
+import 'package:designhub/shared/widgets/avatar_circle.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -23,17 +24,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    bool ownProfile =
-        ProfileSingleton().profile?.userId == widget.profile.userId;
-
     Map pages = {
-      'Work': ProfileWorkView(
+      'Work': ProfileWork(
         profile: widget.profile,
       ),
-      'Info': ProfileInfoView(
+      'Info': ProfileInfo(
         profile: widget.profile,
       ),
-      'Saved': ProfileSavedView(
+      'Saved': ProfileSaved(
         profile: widget.profile,
       )
     };
@@ -52,18 +50,15 @@ class _ProfilePageState extends State<ProfilePage> {
                 fit: BoxFit.cover,
               ),
               Center(
-                child: Container(
-                  margin: EdgeInsets.only(top: 55),
-                  width: 200,
-                  height: 200,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(shape: BoxShape.circle),
-                  child: Image.network(
-                    widget.profile.avatarImagePath,
-                    fit: BoxFit.cover,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 53.0),
+                  child: AvatarCircle(
+                    imagePath: widget.profile.avatarImagePath,
+                    height: 200,
+                    width: 200,
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -75,33 +70,12 @@ class _ProfilePageState extends State<ProfilePage> {
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: SegmentedButton(
-            showSelectedIcon: false,
-            onSelectionChanged: (newSelection) => setState(() {
-              if (newSelection.isNotEmpty) {
-                selectedTab = newSelection.first;
-              }
-            }),
-            emptySelectionAllowed: true,
-            selected: {selectedTab},
-            segments: [
-              ButtonSegment(
-                value: "Work",
-                label: Text("Work"),
-              ),
-              ButtonSegment(
-                value: "Info",
-                label: Text("Info"),
-              ),
-              if (ownProfile)
-                ButtonSegment(
-                  value: "Saved",
-                  label: Text("Saved"),
-                ),
-            ],
-          ),
+        BtnSgProfileSections(
+          callback: (value) => setState(() {
+            if (value.isNotEmpty) selectedTab = value.first;
+          }),
+          selectedTab: selectedTab,
+          profileId: widget.profile.userId,
         ),
         SizedBox(height: 16),
         pages[selectedTab]

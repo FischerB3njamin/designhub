@@ -1,5 +1,5 @@
-import 'package:designhub/features/posts/widgets/image_card.dart';
-import 'package:designhub/features/posts/widgets/question_section.dart';
+import 'package:designhub/features/posts/widgets/card_custom.dart';
+import 'package:designhub/features/posts/widgets/section_question.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -100,7 +100,7 @@ class _NewPostPageState extends State<NewPostPage> {
                   crossAxisCount:
                       uploadedImage.length < 3 ? uploadedImage.length + 1 : 3,
                   children: [
-                    ...uploadedImage.map((path) => ImageCard(
+                    ...uploadedImage.map((path) => CardCustom(
                           callback: removeImage,
                           imagePath: path,
                         )),
@@ -150,7 +150,7 @@ class _NewPostPageState extends State<NewPostPage> {
                   ),
                 ),
               ),
-            if (uploadedImage.isNotEmpty) QuestionSection(),
+            if (uploadedImage.isNotEmpty) SectionQuestion(),
           ],
         ),
       ),

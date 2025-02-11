@@ -1,6 +1,6 @@
 import 'package:designhub/features/chat/models/chat_item.dart';
 import 'package:designhub/features/profile/models/profile_singleton.dart';
-import 'package:designhub/shared/widgets/avatar_big_circle.dart';
+import 'package:designhub/shared/widgets/avatar_circle.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +48,7 @@ class ChatDetailItemReciever extends StatelessWidget {
             ),
           ),
           SizedBox(width: 4),
-          AvatarBigCircle(
+          AvatarCircle(
             width: 50,
             height: 50,
             imagePath: ProfileSingleton().profile!.avatarImagePath,

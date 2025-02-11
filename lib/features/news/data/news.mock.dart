@@ -1,5 +1,5 @@
-import 'package:designhub/features/chat/models/news.dart';
-import 'package:designhub/features/chat/models/news_type.dart';
+import 'package:designhub/features/news/models/news.dart';
+import 'package:designhub/features/news/models/news_type.dart';
 
 final List<News> newsData = [
   News(

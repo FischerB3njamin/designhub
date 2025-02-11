@@ -1,74 +1,61 @@
-import 'package:designhub/features/posts/data/post_mock_database.dart';
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/posts/models/roll_out_type.dart';
-import 'package:designhub/features/profile/models/profile_singleton.dart';
-import 'package:designhub/features/rating/view/rating_view.dart';
-import 'package:designhub/features/rating/widgets/on_drag_background.dart';
-import 'package:designhub/features/rating/widgets/rating_post_detail_section.dart';
-import 'package:designhub/shared/view/custom_bottom_sheet.dart';
+import 'package:designhub/features/rating/widgets/section_rating_overview.dart';
+import 'package:designhub/features/rating/widgets/section_rating.dart';
+import 'package:designhub/features/rating/widgets/section_rating_footer.dart';
 import 'package:flutter/material.dart';
 
 class RatingPage extends StatefulWidget {
-  const RatingPage({super.key, this.posts});
-  final List<Post>? posts;
+  final Post post;
+  final RollOutType rolloutType;
+
+  const RatingPage({
+    super.key,
+    required this.post,
+    required this.rolloutType,
+  });
+
   @override
   State<RatingPage> createState() => _RatingPageState();
 }
 
 class _RatingPageState extends State<RatingPage> {
-  PostMockDatabase db = PostMockDatabase();
-  late List<Post> posts;
-  int index = 0;
-  bool notDragged = true;
+  int activeQuestion = 0;
+  List<String> answers = [];
+
+  void addAnswer(int index, answer) => setState(() {
+        answers.add(answer);
+        activeQuestion = index;
+      });
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      posts = widget.posts ?? db.getPosts(ProfileSingleton().profile!.userId);
-    });
+    widget.post.questions = widget.post.questions
+        .where((e) =>
+            e.rollOut == widget.rolloutType || e.rollOut == RollOutType.both)
+        .toList();
+    int numberOfQuestions = widget.post.questions.length;
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ListWheelScrollView(
-        diameterRatio: 0.1,
-        itemExtent: 550,
+    return SizedBox(
+      child: ListView(
+        physics: NeverScrollableScrollPhysics(),
         children: [
-          ...posts.map(
-            (e) => Draggable(
-              onDragStarted: () => setState(() {
-                notDragged = false;
-              }),
-              onDragEnd: (details) => setState(
-                () {
-                  notDragged = true;
-                  bool like = details.offset.dx > 140;
-                  bool dislike = details.offset.dx < -140;
-
-                  if (like || dislike) {
-                    CustomBottomSheet.show(
-                      context,
-                      RatingView(
-                        post: e,
-                        rolloutType:
-                            like ? RollOutType.like : RollOutType.dislike,
-                      ),
-                      1,
-                    );
-                  }
-                },
-              ),
-              feedback: Card(
-                child: RatingPostDetailSection(post: e),
-              ),
-              child: notDragged
-                  ? Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: RatingPostDetailSection(post: e),
-                      ),
-                    )
-                  : OnDragBackground(),
+          if (activeQuestion < numberOfQuestions)
+            SectionRating(
+              callback: addAnswer,
+              post: widget.post,
+              activeQuestion: activeQuestion,
             ),
+          if (activeQuestion == numberOfQuestions)
+            SectionRatingOverview(
+              questions: widget.post.questions,
+              answers: answers,
+              post: widget.post,
+            ),
+          SectionRatingFooter(
+            activeQuestion: activeQuestion,
+            callback: (int index) => setState(() => activeQuestion = index),
+            numberOfQuestions: numberOfQuestions + 1,
           ),
         ],
       ),

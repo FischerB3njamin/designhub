@@ -3,8 +3,8 @@ import 'package:designhub/features/posts/models/open_question.dart';
 import 'package:designhub/features/posts/models/question_type.dart';
 import 'package:designhub/features/posts/models/roll_out_type.dart';
 import 'package:designhub/features/posts/widgets/closed_question_answer.dart';
-import 'package:designhub/features/posts/widgets/segmented_button_question_type.dart';
-import 'package:designhub/features/posts/widgets/segmented_button_rollout_type.dart';
+import 'package:designhub/features/posts/widgets/btn_sg_question_type.dart';
+import 'package:designhub/features/posts/widgets/btn_sg_rollout_type.dart';
 import 'package:flutter/material.dart';
 
 class QuestionView extends StatefulWidget {
@@ -28,11 +28,9 @@ class _QuestionViewState extends State<QuestionView> {
     }
   }
 
-  void removeItem(int index) {
-    setState(() {
-      possibleAnswers.removeAt(index);
-    });
-  }
+  void removeItem(int index) => setState(() {
+        possibleAnswers.removeAt(index);
+      });
 
   void returnToOverview(bool isOpen) {
     if (isOpen) {
@@ -52,6 +50,12 @@ class _QuestionViewState extends State<QuestionView> {
             answers,
           ));
     }
+  }
+
+  @override
+  void dispose() {
+    possibleAnswers.map((e) => e.dispose());
+    super.dispose();
   }
 
   @override
@@ -83,7 +87,7 @@ class _QuestionViewState extends State<QuestionView> {
               ),
               SizedBox(height: 16),
               Text("When should the question been asked?"),
-              SegmentedButtonRolloutType(
+              BtnSgRolloutType(
                 rollOutType: _rollOutType,
                 callback: (newSelection) => setState(() {
                   if (newSelection.isNotEmpty) {
@@ -94,7 +98,7 @@ class _QuestionViewState extends State<QuestionView> {
               SizedBox(height: 16),
               Text("Which kind of question?"),
               SizedBox(height: 2),
-              SegmentedButtonQuestionType(
+              BtnSgQuestionType(
                   callback: (newSelection) => setState(() {
                         if (newSelection.isNotEmpty) {
                           _selectedQuestionType = newSelection.first;
