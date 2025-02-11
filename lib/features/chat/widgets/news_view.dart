@@ -1,7 +1,7 @@
 import 'package:designhub/features/chat/data/news/news_mock_database.dart';
 import 'package:designhub/features/chat/models/news.dart';
-import 'package:designhub/features/chat/view/bs_news_page.dart';
 import 'package:designhub/features/chat/widgets/news_item.dart';
+import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +27,10 @@ class _NewsViewState extends State<NewsView> {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: widget.smallView ? 0 : 60,
+      ),
       child: ListView(children: [
         Row(
           children: [
@@ -39,10 +42,8 @@ class _NewsViewState extends State<NewsView> {
             widget.smallView
                 ? OutlinedButton(
                     onPressed: () async {
-                      await showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (context) => BsNewsPage());
+                      CustomBottomSheet.show(
+                          context, NewsView(smallView: false), 1);
                       setState(() {});
                     },
                     child: Text(

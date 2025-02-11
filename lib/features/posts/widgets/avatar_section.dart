@@ -1,5 +1,8 @@
 import 'package:designhub/features/posts/models/post.dart';
-import 'package:designhub/features/profile/view/bs_profile_view.dart';
+import 'package:designhub/features/profile/data/profile_mock_database.dart';
+import 'package:designhub/features/profile/view/profile_page.dart';
+import 'package:designhub/shared/view/custom_bottom_sheet.dart';
+import 'package:designhub/shared/widgets/avatar_big_circle.dart';
 import 'package:flutter/material.dart';
 
 class AvatarSection extends StatelessWidget {
@@ -13,19 +16,17 @@ class AvatarSection extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                builder: (context) => BsProfileView(profileId: post.userId),
-              );
-            },
-            child: Container(
+            onTap: () => CustomBottomSheet.show(
+              context,
+              ProfilePage(
+                profile: ProfileMockDatabase().getProfile(post.userId),
+              ),
+              0.9,
+            ),
+            child: AvatarBigCircle(
               height: 60,
               width: 60,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(shape: BoxShape.circle),
-              child: Image.network(post.creatorImage, fit: BoxFit.cover),
+              imagePath: post.creatorImage,
             ),
           ),
           SizedBox(width: 6),

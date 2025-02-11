@@ -1,10 +1,11 @@
 import 'package:designhub/features/chat/models/news.dart';
 import 'package:designhub/features/chat/models/news_type.dart';
 import 'package:designhub/features/posts/data/post_mock_database.dart';
-import 'package:designhub/features/posts/view/bs_detail_view.dart';
+import 'package:designhub/features/posts/widgets/post_detail_view.dart';
 import 'package:designhub/features/profile/data/profile_mock_database.dart';
 import 'package:designhub/features/profile/models/profile.dart';
-import 'package:designhub/features/profile/view/bs_profile_view.dart';
+import 'package:designhub/features/profile/view/profile_page.dart';
+import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -35,19 +36,15 @@ class NewsItem extends StatelessWidget {
     handleNavigation(context, profile);
   }
 
-  void handleNavigation(BuildContext context, Profile profile) {
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (context) {
-          if (NewsType.follow == news.type) {
-            return BsProfileView(profileId: profile.userId);
-          }
-          PostMockDatabase db = PostMockDatabase();
-
-          return BsDetailView(post: db.getPostById(news.postId!));
-        });
-  }
+  void handleNavigation(BuildContext context, Profile profile) =>
+      CustomBottomSheet.show(
+          context,
+          NewsType.follow == news.type
+              ? ProfilePage(profile: profile)
+              : PostDetailView(
+                  post: PostMockDatabase().getPostById(news.postId!),
+                ),
+          0.9);
 
   @override
   Widget build(BuildContext context) {

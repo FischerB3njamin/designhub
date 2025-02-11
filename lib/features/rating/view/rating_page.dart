@@ -2,10 +2,10 @@ import 'package:designhub/features/posts/data/post_mock_database.dart';
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/posts/models/roll_out_type.dart';
 import 'package:designhub/features/profile/models/profile_singleton.dart';
-import 'package:designhub/features/rating/view/bs_rating_view.dart';
+import 'package:designhub/features/rating/view/rating_view.dart';
+import 'package:designhub/features/rating/widgets/on_drag_background.dart';
 import 'package:designhub/features/rating/widgets/rating_post_detail_section.dart';
-import 'package:designhub/gen/assets.gen.dart';
-import 'package:designhub/theme/designhub_colors.dart';
+import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class RatingPage extends StatefulWidget {
@@ -41,21 +41,18 @@ class _RatingPageState extends State<RatingPage> {
               onDragEnd: (details) => setState(
                 () {
                   notDragged = true;
+                  bool like = details.offset.dx > 140;
+                  bool dislike = details.offset.dx < -140;
 
-                  if (details.offset.dx < -140) {
-                    showModalBottomSheet(
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (context) => BsRatingView(
-                          post: e, rolloutType: RollOutType.dislike),
-                    );
-                  }
-                  if (details.offset.dx > 140) {
-                    showModalBottomSheet(
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (context) =>
-                          BsRatingView(post: e, rolloutType: RollOutType.like),
+                  if (like || dislike) {
+                    CustomBottomSheet.show(
+                      context,
+                      RatingView(
+                        post: e,
+                        rolloutType:
+                            like ? RollOutType.like : RollOutType.dislike,
+                      ),
+                      1,
                     );
                   }
                 },
@@ -70,21 +67,7 @@ class _RatingPageState extends State<RatingPage> {
                         child: RatingPostDetailSection(post: e),
                       ),
                     )
-                  : Row(
-                      children: [
-                        Assets.icons.like.image(
-                          width: 100,
-                          height: 100,
-                          color: DesignhubColors.primary,
-                        ),
-                        Spacer(),
-                        Assets.icons.dislike.image(
-                          width: 100,
-                          height: 100,
-                          color: DesignhubColors.primary,
-                        ),
-                      ],
-                    ),
+                  : OnDragBackground(),
             ),
           ),
         ],

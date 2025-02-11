@@ -16,25 +16,29 @@ class PostDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
-      child: Column(
-        children: [
-          ...post.images.map(
-            (e) => Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: Image.network(e,
-                  width: double.infinity, fit: BoxFit.fitWidth),
-            ),
+    return SingleChildScrollView(
+      child: SizedBox(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
+          child: Column(
+            children: [
+              ...post.images.map(
+                (e) => Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Image.network(e,
+                      width: double.infinity, fit: BoxFit.fitWidth),
+                ),
+              ),
+              IconSection(post: post),
+              AvatarSection(post: post),
+              PostDetailSection(post: post),
+              if (post.userId != ProfileSingleton().profile?.userId)
+                SizedBox(height: 50),
+              if (post.userId == ProfileSingleton().profile?.userId)
+                DetailViewQuestionSection(post: post),
+            ],
           ),
-          IconSection(post: post),
-          AvatarSection(post: post),
-          PostDetailSection(post: post),
-          if (post.userId != ProfileSingleton().profile?.userId)
-            SizedBox(height: 50),
-          if (post.userId == ProfileSingleton().profile?.userId)
-            DetailViewQuestionSection(post: post),
-        ],
+        ),
       ),
     );
   }

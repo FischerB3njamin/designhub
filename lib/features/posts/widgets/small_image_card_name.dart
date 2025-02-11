@@ -1,6 +1,7 @@
 import 'package:designhub/features/posts/data/post_mock_database.dart';
 import 'package:designhub/features/posts/models/post.dart';
-import 'package:designhub/features/posts/view/bs_detail_view.dart';
+import 'package:designhub/features/posts/widgets/post_detail_view.dart';
+import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -18,15 +19,13 @@ class SmallImageCardName extends StatelessWidget {
     Post post = db.getPostById(postId);
 
     return GestureDetector(
-      onTap: () {
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          builder: (context) => BsDetailView(
-            post: post,
-          ),
-        );
-      },
+      onTap: () => CustomBottomSheet.show(
+        context,
+        PostDetailView(
+          post: post,
+        ),
+        0.9,
+      ),
       child: SizedBox.expand(
         child: Card(
           shape: RoundedRectangleBorder(

@@ -1,6 +1,7 @@
 import 'package:designhub/features/posts/models/question.dart';
 import 'package:designhub/features/posts/view/question_overview.dart';
 import 'package:designhub/features/posts/view/question_view.dart';
+import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class QuestionSection extends StatefulWidget {
 
 class _QuestionSectionState extends State<QuestionSection> {
   List<Question> questions = [];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -36,14 +38,9 @@ class _QuestionSectionState extends State<QuestionSection> {
                 Question? question = await showModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
-                  builder: (context) => Padding(
-                    padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom,
-                    ),
-                    child: FractionallySizedBox(
-                      heightFactor: 0.9,
-                      child: SingleChildScrollView(child: QuestionView()),
-                    ),
+                  builder: (context) => CustomBottomSheet(
+                    widget: QuestionView(),
+                    height: 0.9,
                   ),
                 );
                 if (question != null) {

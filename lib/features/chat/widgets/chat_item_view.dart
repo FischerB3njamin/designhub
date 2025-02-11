@@ -3,6 +3,8 @@ import 'package:designhub/features/chat/view/chat_detail_view.dart';
 import 'package:designhub/features/profile/data/profile_mock_database.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/features/profile/models/profile_singleton.dart';
+import 'package:designhub/shared/view/custom_bottom_sheet.dart';
+import 'package:designhub/shared/widgets/avatar_big_circle.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -28,11 +30,10 @@ class ChatItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     Profile senderProfile = getProfileFromParticipants();
     return GestureDetector(
-      onTap: () => showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        builder: (context) =>
-            ChatDetailView(chat: chat, senderProfile: senderProfile),
+      onTap: () => CustomBottomSheet.show(
+        context,
+        ChatDetailView(chat: chat, senderProfile: senderProfile),
+        1,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -49,14 +50,10 @@ class ChatItemView extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Container(
-                height: 50,
-                width: 50,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(shape: BoxShape.circle),
-                child: Image.network(senderProfile.avatarImagePath,
-                    fit: BoxFit.cover),
-              ),
+              AvatarBigCircle(
+                  imagePath: senderProfile.avatarImagePath,
+                  height: 50,
+                  width: 50),
               SizedBox(width: 8),
               Expanded(
                 child: Column(

@@ -11,10 +11,11 @@ class ChatPage extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-              flex: 2,
-              child: NewsView(
-                smallView: true,
-              )),
+            flex: 2,
+            child: NewsView(
+              smallView: true,
+            ),
+          ),
           Expanded(
             flex: 3,
             child: ChatView(isSmallView: true),
