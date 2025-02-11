@@ -1,5 +1,5 @@
 import 'package:designhub/features/chat/widgets/chat_view.dart';
-import 'package:designhub/features/chat/widgets/news_view.dart';
+import 'package:designhub/features/news/view/news_view.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
