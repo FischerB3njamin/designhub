@@ -1,6 +1,6 @@
-import 'package:designhub/features/chat/data/news/news_mock_database.dart';
+import 'package:designhub/features/news/data/news_mock_database.dart';
 import 'package:designhub/features/chat/models/news.dart';
-import 'package:designhub/features/chat/widgets/news_item.dart';
+import 'package:designhub/features/news/widgets/news_item.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';

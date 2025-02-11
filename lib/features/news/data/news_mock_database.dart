@@ -1,5 +1,5 @@
-import 'package:designhub/features/chat/data/news/news.mock.dart';
-import 'package:designhub/features/chat/data/news/news_repo.dart';
+import 'package:designhub/features/news/data/news.mock.dart';
+import 'package:designhub/features/news/data/news_repo.dart';
 import 'package:designhub/features/chat/models/news.dart';
 
 class NewsMockDatabase extends NewsRepo {
