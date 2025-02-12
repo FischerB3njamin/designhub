@@ -7,10 +7,12 @@ import 'package:flutter/material.dart';
 
 class CardWithProfileName extends StatelessWidget {
   final String postId;
+  final Function callback;
 
   const CardWithProfileName({
     super.key,
     required this.postId,
+    required this.callback,
   });
 
   @override
@@ -19,13 +21,11 @@ class CardWithProfileName extends StatelessWidget {
     Post post = db.getPostById(postId);
 
     return GestureDetector(
-      onTap: () => CustomBottomSheet.show(
-        context,
-        PostDetailView(
-          post: post,
-        ),
-        0.9,
-      ),
+      onTap: () async {
+        await CustomBottomSheet.showAsync(
+            context, PostDetailView(post: post), 0.9);
+        callback();
+      },
       child: SizedBox.expand(
         child: Card(
           shape: RoundedRectangleBorder(

@@ -12,6 +12,20 @@ class CustomBottomSheet extends StatelessWidget {
         ),
       );
 
+  static Future<bool> showAsync(
+      BuildContext context, Widget widget, double height) async {
+    await showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      clipBehavior: Clip.hardEdge,
+      builder: (context) => CustomBottomSheet(
+        widget: widget,
+        height: height,
+      ),
+    );
+    return true;
+  }
+
   static void close(BuildContext context) {
     Navigator.pop(context);
   }
