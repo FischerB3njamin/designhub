@@ -6,8 +6,15 @@ class LoginMockDB extends LoginRepo {
   List<LoginData> data = loginData;
 
   @override
-  void addUser(String name, String email, String pwd) {
-    data.add(LoginData(email, pwd, "uid-00${data.length + 1}"));
+  bool mailNotInDb(String mail) {
+    return data.where((e) => e.mail == mail).isEmpty;
+  }
+
+  @override
+  String addUser(String name, String email, String pwd) {
+    String userId = "uid-00${data.length + 1}";
+    data.add(LoginData(email, pwd, userId));
+    return userId;
   }
 
   @override

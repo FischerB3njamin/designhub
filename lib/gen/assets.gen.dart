@@ -113,6 +113,10 @@ class $AssetsImagesGen {
   AssetGenImage get logoText =>
       const AssetGenImage('assets/images/logo_text.png');
 
+  /// File path: assets/images/no_image.png
+  AssetGenImage get noImage =>
+      const AssetGenImage('assets/images/no_image.png');
+
   /// File path: assets/images/rating_bg.png
   AssetGenImage get ratingBg =>
       const AssetGenImage('assets/images/rating_bg.png');
@@ -122,8 +126,16 @@ class $AssetsImagesGen {
       const SvgGenImage('assets/images/send_message.svg');
 
   /// List of all assets
-  List<dynamic> get values =>
-      [bg, bottomBg, floatingButton, logo, logoText, ratingBg, sendMessage];
+  List<dynamic> get values => [
+        bg,
+        bottomBg,
+        floatingButton,
+        logo,
+        logoText,
+        noImage,
+        ratingBg,
+        sendMessage
+      ];
 }
 
 class Assets {

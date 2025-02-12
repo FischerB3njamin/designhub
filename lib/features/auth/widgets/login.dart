@@ -1,7 +1,7 @@
-import 'package:designhub/features/auth/data/login_mock_db.dart';
 import 'package:designhub/features/auth/view/registration_page.dart';
 import 'package:designhub/features/navigation/view/navigation_page.dart';
 import 'package:designhub/features/profile/models/profile_singleton.dart';
+import 'package:designhub/shared/controller/controller.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -14,21 +14,27 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool isError = false;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController pwdController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    pwdController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final LoginMockDB db = LoginMockDB();
-    TextEditingController email = TextEditingController();
-    TextEditingController pwd = TextEditingController();
     return Padding(
       padding: EdgeInsets.all(35),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           TextField(
-            controller: email,
+            controller: emailController,
             decoration: InputDecoration(
-              hintText: 'Email',
+              labelText: 'Email',
             ),
           ),
           SizedBox(
@@ -36,9 +42,9 @@ class _LoginState extends State<Login> {
           ),
           TextField(
             obscureText: true,
-            controller: pwd,
+            controller: pwdController,
             decoration: InputDecoration(
-              hintText: 'Password',
+              labelText: 'Password',
             ),
           ),
           SizedBox(
@@ -60,7 +66,9 @@ class _LoginState extends State<Login> {
                   WidgetStateProperty.all<Color>(DesignhubColors.primary),
             ),
             onPressed: () {
-              String userId = db.checkLogin(email.text, pwd.text);
+              String userId = Controller()
+                  .loginDB
+                  .checkLogin(emailController.text, pwdController.text);
               if (userId.isNotEmpty) {
                 ProfileSingleton().setProfile(userId);
                 Navigator.of(context).pushReplacement(

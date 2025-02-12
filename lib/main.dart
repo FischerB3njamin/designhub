@@ -1,20 +1,9 @@
-import 'package:designhub/features/auth/view/login_page.dart';
-import 'package:designhub/theme/custom_theme.dart';
+import 'package:designhub/main_app.dart';
+import 'package:designhub/shared/controller/controller.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  // init global controller to handle mock_dbs in the app
+  Controller controller = Controller();
   runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: getCustomTheme(),
-      debugShowCheckedModeBanner: false,
-      home: const LoginPage(),
-    );
-  }
 }

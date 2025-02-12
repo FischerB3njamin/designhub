@@ -11,4 +11,9 @@ class ProfileMockDB extends ProfileRepo {
     }
     throw Exception('Profile not found');
   }
+
+  @override
+  void createProfile(String name, String userId) {
+    data.add(Profile(name: name, userId: userId));
+  }
 }
