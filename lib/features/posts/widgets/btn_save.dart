@@ -1,5 +1,6 @@
 import 'package:designhub/features/profile/models/profile_singleton.dart';
 import 'package:designhub/gen/assets.gen.dart';
+import 'package:designhub/shared/controller/controller.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -31,19 +32,27 @@ class _BtnSaveState extends State<BtnSave> {
           setState(() {
             saved = !saved;
           });
+          print(saved);
+          saved
+              ? Controller()
+                  .profileDB
+                  .savePost(ProfileSingleton().profile!, widget.postId)
+              : Controller()
+                  .profileDB
+                  .removeSavePost(ProfileSingleton().profile!, widget.postId);
         },
         icon: saved
             ? Assets.icons.folder.svg(
-                height: 35,
-                width: 35,
-              )
-            : Assets.icons.folder.svg(
                 height: 35,
                 width: 35,
                 colorFilter: ColorFilter.mode(
                   DesignhubColors.primary,
                   BlendMode.srcIn,
                 ),
+              )
+            : Assets.icons.folder.svg(
+                height: 35,
+                width: 35,
               ),
       ),
     );

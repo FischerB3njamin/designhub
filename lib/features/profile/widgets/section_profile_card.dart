@@ -18,11 +18,13 @@ class SectionProfileCard extends StatelessWidget {
           crossAxisCount: 2,
           mainAxisSpacing: 8,
           crossAxisSpacing: 8,
-          physics: NeverScrollableScrollPhysics(),
           children: [
-            ...postIds.map((e) => type == "title"
-                ? CardWithTitle(postId: e)
-                : CardWithProfileName(postId: e)),
+            ...postIds.map(
+              (e) => type == "title"
+                  ? CardWithTitle(postId: e)
+                  : CardWithProfileName(postId: e),
+            ),
+            SizedBox(height: 10)
           ],
         ),
       ),
