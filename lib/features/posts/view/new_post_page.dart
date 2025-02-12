@@ -39,6 +39,13 @@ class _NewPostPageState extends State<NewPostPage> {
       });
 
   void createPost() {}
+  @override
+  void dispose() {
+    _title.dispose();
+    _description.dispose();
+    _hashtag.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

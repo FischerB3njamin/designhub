@@ -30,6 +30,12 @@ class _SectionRatingQuestionState extends State<SectionRatingQuestion> {
   }
 
   @override
+  void dispose() {
+    answer.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Question question = widget.post.questions[widget.activeQuestion];
     return Column(
