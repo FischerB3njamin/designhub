@@ -30,6 +30,8 @@ class _RatingOverviewPageState extends State<RatingOverviewPage> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: ListWheelScrollView(
+        physics: FixedExtentScrollPhysics(),
+        onSelectedItemChanged: (value) {},
         diameterRatio: 0.1,
         itemExtent: 550,
         children: [
