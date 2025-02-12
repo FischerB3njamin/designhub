@@ -10,7 +10,7 @@ ThemeData getCustomTheme() => ThemeData(
           gapPadding: 16,
           borderSide: BorderSide.none,
         ),
-        hintStyle: TextStyle(color: DesignhubColors.grey),
+        labelStyle: TextStyle(color: DesignhubColors.grey),
       ),
       iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(

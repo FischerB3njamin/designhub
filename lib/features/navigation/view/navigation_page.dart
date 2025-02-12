@@ -1,6 +1,6 @@
 import 'package:designhub/features/chat/view/chat_news_page.dart';
 import 'package:designhub/features/posts/view/new_post_page.dart';
-import 'package:designhub/features/profile/data/profile.mock.dart';
+import 'package:designhub/features/profile/models/profile_singleton.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/features/home/view/home_page.dart';
 import 'package:designhub/features/navigation/data/navigation_data.dart';
@@ -25,7 +25,7 @@ class _NavigationPageState extends State<NavigationPage> {
     ChatNewsPage(),
     RatingOverviewPage(),
     ProfilePage(
-      profile: profiles[0],
+      profile: ProfileSingleton().profile!,
     )
   ];
 
