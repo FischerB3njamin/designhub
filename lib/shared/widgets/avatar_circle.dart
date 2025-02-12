@@ -1,3 +1,4 @@
+import 'package:designhub/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 class AvatarCircle extends StatelessWidget {
@@ -19,7 +20,16 @@ class AvatarCircle extends StatelessWidget {
       width: width,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(shape: BoxShape.circle),
-      child: Image.network(imagePath, fit: BoxFit.cover),
+      child: Image.network(
+        imagePath,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) =>
+            Assets.images.noImage.image(
+          height: height,
+          width: width,
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 }
