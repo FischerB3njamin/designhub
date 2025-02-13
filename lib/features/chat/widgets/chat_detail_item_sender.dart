@@ -24,7 +24,7 @@ class ChatDetailItemSender extends StatelessWidget {
           AvatarCircle(
             width: 50,
             height: 50,
-            imagePath: senderProfile.avatarImagePath,
+            profilId: senderProfile.userId,
           ),
           SizedBox(width: 4),
           Flexible(

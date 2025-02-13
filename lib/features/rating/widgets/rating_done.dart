@@ -26,7 +26,7 @@ class RatingDone extends StatelessWidget {
         AvatarCircle(
           width: 250,
           height: 250,
-          imagePath: creator.avatarImagePath,
+          profilId: post.userId,
         ),
         SizedBox(height: 8),
         Text(

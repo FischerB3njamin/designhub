@@ -58,9 +58,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 53.0),
                   child: AvatarCircle(
-                    imagePath: widget.profile.avatarImagePath,
+                    profilId: widget.profile.userId,
                     height: 200,
                     width: 200,
+                    allowNavigation: false,
                   ),
                 ),
               ),

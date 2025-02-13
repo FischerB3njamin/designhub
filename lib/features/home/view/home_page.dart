@@ -14,9 +14,21 @@ class HomePage extends StatelessWidget {
     List<Post> posts = db.getPosts(ProfileSingleton().profile!.userId);
 
     return SafeArea(
-      child: ListView(
-        shrinkWrap: true,
-        children: [SectionHeader(), ...posts.map((e) => CardSwitcher(post: e))],
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          SectionHeader(),
+          Container(
+            height: 580,
+            child: ListWheelScrollView(
+              itemExtent: 550,
+              diameterRatio: 10,
+              physics: FixedExtentScrollPhysics(),
+              controller: FixedExtentScrollController(),
+              children: [...posts.map((e) => CardSwitcher(post: e))],
+            ),
+          ),
+        ],
       ),
     );
   }

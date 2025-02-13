@@ -51,9 +51,7 @@ class ChatItemView extends StatelessWidget {
           child: Row(
             children: [
               AvatarCircle(
-                  imagePath: senderProfile.avatarImagePath,
-                  height: 50,
-                  width: 50),
+                  profilId: senderProfile.userId, height: 50, width: 50),
               SizedBox(width: 8),
               Expanded(
                 child: Column(

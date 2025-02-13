@@ -26,7 +26,7 @@ class SectionAvatar extends StatelessWidget {
             child: AvatarCircle(
               height: 60,
               width: 60,
-              imagePath: post.creatorImage,
+              profilId: post.userId,
             ),
           ),
           SizedBox(width: 6),

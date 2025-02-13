@@ -29,13 +29,10 @@ class _CardSwitcherState extends State<CardSwitcher> {
                 key: ValueKey<bool>(isMedium),
                 post: widget.post,
               )
-            : Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Card(
-                  child: PostDetailView(
-                    key: ValueKey<bool>(isMedium),
-                    post: widget.post,
-                  ),
+            : Card(
+                child: PostDetailView(
+                  key: ValueKey<bool>(isMedium),
+                  post: widget.post,
                 ),
               ),
       ),

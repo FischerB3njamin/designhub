@@ -90,6 +90,7 @@ class _RegistrationState extends State<Registration> {
           Row(
             children: [
               Checkbox(
+                activeColor: DesignhubColors.primary,
                 value: termsAndConditions,
                 onChanged: (value) => setState(() {
                   termsAndConditions = value!;
