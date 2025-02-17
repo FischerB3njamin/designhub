@@ -50,7 +50,8 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
+      padding:
+          const EdgeInsets.only(left: 16.0, right: 16, top: 60, bottom: 24),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [

@@ -32,7 +32,6 @@ class _BtnSaveState extends State<BtnSave> {
           setState(() {
             saved = !saved;
           });
-          print(saved);
           saved
               ? Controller()
                   .profileDB

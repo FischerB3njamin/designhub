@@ -13,35 +13,33 @@ class SectionChatInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Row(
-        children: [
-          Expanded(
-            child: SizedBox(
-              height: 44,
-              child: TextField(
-                controller: messageController,
-                maxLines: null,
-                decoration: InputDecoration(
-                  hintText: 'Message',
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 10,
-                  ),
+    return Row(
+      children: [
+        Expanded(
+          child: SizedBox(
+            height: 44,
+            child: TextField(
+              controller: messageController,
+              maxLines: null,
+              decoration: InputDecoration(
+                hintText: 'Message',
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
                 ),
               ),
             ),
           ),
-          SizedBox(width: 12),
-          IconButton(
-            onPressed: () => handleNewMessage(),
-            icon: Assets.icons.sendMessage.svg(
-              height: 30,
-              width: 30,
-            ),
+        ),
+        SizedBox(width: 12),
+        IconButton(
+          onPressed: () => handleNewMessage(),
+          icon: Assets.icons.sendMessage.svg(
+            height: 30,
+            width: 30,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

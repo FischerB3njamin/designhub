@@ -1,3 +1,4 @@
+import 'package:designhub/features/comment/view/comment_page.dart';
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/posts/widgets/btn_like.dart';
 import 'package:designhub/features/posts/widgets/btn_save.dart';
@@ -33,7 +34,8 @@ class _SectionIconState extends State<SectionIcon> {
           BtnSave(postId: widget.post.postId),
           BtnLike(postId: widget.post.postId),
           IconButton(
-              onPressed: () {},
+              onPressed: () => CustomBottomSheet.show(
+                  context, CommentPage(postId: widget.post.postId), 0.5),
               icon: Assets.icons.open.image(height: 30, width: 30)),
           IconButton(
               onPressed: () {},

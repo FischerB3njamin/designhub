@@ -33,15 +33,8 @@ class _RegistrationState extends State<Registration> {
     final String pwd = pwdController.text;
     final String repeatedPwd = repeatPwdController.text;
 
-    // check if mail exist in db
-    if (!Controller().loginDB.mailNotInDb(mail)) {
-      print('mail already registered');
-      return;
-    }
-    if (pwd != repeatedPwd) {
-      print("pwd's not identical");
-      return;
-    }
+    if (!Controller().loginDB.mailNotInDb(mail)) return;
+    if (pwd != repeatedPwd) return;
 
     String userId = Controller().loginDB.addUser(name, mail, pwd);
     Controller().profileDB.createProfile(name, userId);

@@ -18,14 +18,14 @@ class HomePage extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           SectionHeader(),
-          Container(
+          SizedBox(
             height: 580,
             child: ListWheelScrollView(
               itemExtent: 550,
               diameterRatio: 10,
               physics: FixedExtentScrollPhysics(),
               controller: FixedExtentScrollController(),
-              children: [...posts.map((e) => CardSwitcher(post: e))],
+              children: posts.map((e) => CardSwitcher(post: e)).toList(),
             ),
           ),
         ],
