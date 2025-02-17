@@ -1,7 +1,6 @@
 import 'package:designhub/features/comment/data/comments_repo.dart';
 import 'package:designhub/features/comment/models/comment.dart';
 import 'package:designhub/features/comment/models/comment_item.dart';
-import 'package:designhub/features/comment/view/comment_page.dart';
 
 class CommentMockDb implements CommentsRepo {
   List<Comment> data = [

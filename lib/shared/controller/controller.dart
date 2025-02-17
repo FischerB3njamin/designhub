@@ -4,7 +4,6 @@ import 'package:designhub/features/chat/data/chat_mock_db.dart';
 import 'package:designhub/features/chat/data/chat_repo.dart';
 import 'package:designhub/features/comment/data/comment_mock_db.dart';
 import 'package:designhub/features/comment/data/comments_repo.dart';
-import 'package:designhub/features/comment/view/comment_page.dart';
 import 'package:designhub/features/news/data/news_mock_db.dart';
 import 'package:designhub/features/news/data/news_repo.dart';
 import 'package:designhub/features/posts/data/post_mock_db.dart';
