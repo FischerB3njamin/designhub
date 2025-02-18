@@ -1,4 +1,4 @@
-import 'package:designhub/features/chat/data/chat_mock_db.dart';
+import 'package:designhub/features/chat/controller/chat_controller.dart';
 import 'package:designhub/features/chat/models/chat.dart';
 import 'package:designhub/features/chat/widgets/chat_item_view.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 
 class ChatView extends StatelessWidget {
   final bool isSmallView;
+  final controller = ChatController();
 
-  const ChatView({
+  ChatView({
     super.key,
     required this.isSmallView,
   });
 
   @override
   Widget build(BuildContext context) {
-    ChatMockDB db = ChatMockDB();
-    List<Chat> mockChats = db.getChats();
+    List<Chat> mockChats = controller.getChats();
     List<Chat> chats = isSmallView ? mockChats.sublist(0, 5) : mockChats;
 
     return Padding(
@@ -44,7 +44,7 @@ class ChatView extends StatelessWidget {
                       ),
                     )
                   : IconButton(
-                      onPressed: () => CustomBottomSheet.close(context),
+                      onPressed: () => Navigator.pop(context),
                       icon: Icon(Icons.close),
                     ),
             ],

@@ -26,10 +26,6 @@ class CustomBottomSheet extends StatelessWidget {
     return true;
   }
 
-  static void close(BuildContext context) {
-    Navigator.pop(context);
-  }
-
   final Widget widget;
   final double height;
 
