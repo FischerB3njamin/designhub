@@ -11,14 +11,15 @@ import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class NavigationPage extends StatefulWidget {
-  const NavigationPage({super.key});
+  const NavigationPage({super.key, this.index = 0});
+  final int index;
 
   @override
   State<NavigationPage> createState() => _NavigationPageState();
 }
 
 class _NavigationPageState extends State<NavigationPage> {
-  int activeIndex = 0;
+  late int activeIndex = widget.index;
 
   List<Widget> pages = [
     HomePage(),
@@ -32,6 +33,7 @@ class _NavigationPageState extends State<NavigationPage> {
   void handleIconTap(int index) => setState(() {
         activeIndex = index;
       });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
