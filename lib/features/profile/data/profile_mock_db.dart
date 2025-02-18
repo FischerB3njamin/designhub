@@ -3,6 +3,11 @@ import 'package:designhub/features/profile/data/profile_repo.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 
 class ProfileMockDB extends ProfileRepo {
+  static final ProfileMockDB _ = ProfileMockDB._internal();
+  ProfileMockDB._internal();
+
+  factory ProfileMockDB() => _;
+
   List<Profile> data = profiles;
   @override
   Profile getProfile(String userId) {

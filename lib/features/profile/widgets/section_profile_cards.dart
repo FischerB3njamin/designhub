@@ -1,7 +1,7 @@
 import 'package:designhub/features/posts/widgets/card_with_profile_name.dart';
 import 'package:designhub/features/posts/widgets/card_with_title.dart';
+import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/models/profile.dart';
-import 'package:designhub/shared/controller/controller.dart';
 import 'package:flutter/material.dart';
 
 class SectionProfilCard extends StatefulWidget {
@@ -15,11 +15,13 @@ class SectionProfilCard extends StatefulWidget {
 }
 
 class _SectionProfilCardState extends State<SectionProfilCard> {
+  ProfileController profileController = ProfileController();
+
   @override
   Widget build(BuildContext context) {
     List<String> postIds = widget.type == 'title'
-        ? Controller().profileDB.getProfile(widget.profile.userId).posts
-        : Controller().profileDB.getProfile(widget.profile.userId).savedPosts;
+        ? profileController.getProfile(widget.profile.userId).posts
+        : profileController.getProfile(widget.profile.userId).savedPosts;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),

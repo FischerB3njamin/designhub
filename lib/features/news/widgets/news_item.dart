@@ -1,8 +1,8 @@
 import 'package:designhub/features/news/models/news.dart';
 import 'package:designhub/features/news/models/news_type.dart';
-import 'package:designhub/features/posts/data/post_mock_db.dart';
+import 'package:designhub/features/posts/controller/post_controller.dart';
 import 'package:designhub/features/posts/view/post_detail_view.dart';
-import 'package:designhub/features/profile/data/profile_mock_db.dart';
+import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/features/profile/view/profile_page.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
@@ -12,7 +12,10 @@ import 'package:flutter/material.dart';
 class NewsItem extends StatelessWidget {
   final News news;
   final Function callback;
-  const NewsItem({
+  final controller = ProfileController();
+  late final Profile profile = controller.getProfile(news.profilId);
+  final postController = PostController();
+  NewsItem({
     super.key,
     required this.news,
     required this.callback,
@@ -42,15 +45,12 @@ class NewsItem extends StatelessWidget {
           NewsType.follow == news.type
               ? ProfilePage(profile: profile)
               : PostDetailView(
-                  post: PostMockDB().getPostById(news.postId!),
+                  post: postController.getPostById(news.postId!),
                 ),
           0.9);
 
   @override
   Widget build(BuildContext context) {
-    ProfileMockDB db = ProfileMockDB();
-    Profile profile = db.getProfile(news.profilId);
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2.0),
       child: GestureDetector(

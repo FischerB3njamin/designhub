@@ -10,7 +10,10 @@ import 'package:flutter/material.dart';
 class SectionIcon extends StatefulWidget {
   final Post post;
 
-  const SectionIcon({super.key, required this.post});
+  const SectionIcon({
+    super.key,
+    required this.post,
+  });
 
   @override
   State<SectionIcon> createState() => _SectionIconState();

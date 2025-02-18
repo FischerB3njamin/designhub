@@ -1,5 +1,4 @@
-import 'package:designhub/features/posts/data/post_mock_db.dart';
-import 'package:designhub/features/posts/models/post.dart';
+import 'package:designhub/features/posts/controller/post_controller.dart';
 import 'package:designhub/features/posts/view/post_detail_view.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:designhub/theme/designhub_colors.dart';
@@ -7,17 +6,16 @@ import 'package:flutter/material.dart';
 
 class CardWithTitle extends StatelessWidget {
   final String postId;
+  final controller = PostController();
+  late final post = controller.getPostById(postId);
 
-  const CardWithTitle({
+  CardWithTitle({
     super.key,
     required this.postId,
   });
 
   @override
   Widget build(BuildContext context) {
-    PostMockDB db = PostMockDB();
-    Post post = db.getPostById(postId);
-
     return GestureDetector(
       onTap: () => CustomBottomSheet.show(
         context,

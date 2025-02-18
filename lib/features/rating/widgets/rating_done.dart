@@ -1,5 +1,6 @@
 import 'package:designhub/features/navigation/view/navigation_page.dart';
 import 'package:designhub/features/posts/models/post.dart';
+import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/data/profile_mock_db.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/shared/widgets/avatar_circle.dart';
@@ -8,8 +9,9 @@ import 'package:flutter/material.dart';
 
 class RatingDone extends StatelessWidget {
   final Post post;
-
-  const RatingDone({
+  final controller = ProfileController();
+  late final creator = controller.getProfile(post.userId);
+  RatingDone({
     super.key,
     required this.post,
   });

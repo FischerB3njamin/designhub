@@ -1,5 +1,7 @@
+import 'package:designhub/features/answer/controller/answer_controller.dart';
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/posts/models/question.dart';
+import 'package:designhub/features/profile/models/profile_singleton.dart';
 import 'package:designhub/features/rating/widgets/rating_done.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:designhub/theme/designhub_colors.dart';
@@ -9,13 +11,15 @@ class SectionRatingOverview extends StatelessWidget {
   final Post post;
   final List<Question> questions;
   final List<String> answers;
+  final AnswerController controller;
 
-  const SectionRatingOverview({
-    super.key,
-    required this.questions,
-    required this.answers,
-    required this.post,
-  });
+  SectionRatingOverview(
+      {super.key,
+      required this.questions,
+      required this.answers,
+      required this.post,
+      AnswerController? controller})
+      : controller = controller ?? AnswerController();
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +71,17 @@ class SectionRatingOverview extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               ElevatedButton(
-                  onPressed: () => CustomBottomSheet.show(
-                      context, RatingDone(post: post), 1),
+                  onPressed: () {
+                    for (final item in answers) {
+                      controller.addAnswerItem(
+                          post.postId,
+                          questions[answers.indexOf(item)].question,
+                          item,
+                          ProfileSingleton().profile!.userId,
+                          questions[answers.indexOf(item)].type);
+                    }
+                    CustomBottomSheet.show(context, RatingDone(post: post), 1);
+                  },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 60.0),
                     child: Text('Done'),

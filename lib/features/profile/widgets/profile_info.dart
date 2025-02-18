@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 
 class ProfileInfo extends StatelessWidget {
   final Profile profile;
-  const ProfileInfo({super.key, required this.profile});
+
+  const ProfileInfo({
+    super.key,
+    required this.profile,
+  });
 
   @override
   Widget build(BuildContext context) {

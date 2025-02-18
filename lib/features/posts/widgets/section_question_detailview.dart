@@ -1,11 +1,17 @@
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/posts/models/question_type.dart';
+import 'package:designhub/features/answer/view/answer_page.dart';
 import 'package:designhub/gen/assets.gen.dart';
+import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class SectionQuestionDetailview extends StatelessWidget {
-  const SectionQuestionDetailview({super.key, required this.post});
   final Post post;
+
+  const SectionQuestionDetailview({
+    super.key,
+    required this.post,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +28,13 @@ class SectionQuestionDetailview extends StatelessWidget {
         SizedBox(height: 8),
         ...post.questions.map(
           (e) => GestureDetector(
-            onTap: () {},
+            onTap: () => CustomBottomSheet.show(
+                context,
+                AnswerPage(
+                  postId: post.postId,
+                  question: e.question,
+                ),
+                0.8),
             child: Row(
               children: [
                 Expanded(

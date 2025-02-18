@@ -1,8 +1,12 @@
-import 'package:designhub/features/auth/data/login.mock.dart';
-import 'package:designhub/features/auth/data/login_repo.dart';
+import 'package:designhub/features/auth/data/auth.mock.dart';
+import 'package:designhub/features/auth/data/auth_repo.dart';
 import 'package:designhub/features/auth/models/login_data.dart';
 
-class LoginMockDB extends LoginRepo {
+class AuthMockDB extends AuthRepo {
+  static final AuthMockDB _ = AuthMockDB._internal();
+  AuthMockDB._internal();
+
+  factory AuthMockDB() => _;
   List<LoginData> data = loginData;
 
   @override

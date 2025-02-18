@@ -1,4 +1,4 @@
-import 'package:designhub/features/chat/data/chat_mock_db.dart';
+import 'package:designhub/features/chat/controller/chat_controller.dart';
 import 'package:designhub/features/chat/models/chat.dart';
 import 'package:designhub/features/chat/models/chat_item.dart';
 import 'package:designhub/features/chat/widgets/section_chat_header.dart';
@@ -21,9 +21,10 @@ class ChatDetailScreen extends StatefulWidget {
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
   TextEditingController messageController = TextEditingController();
+  final controller = ChatController();
 
   void handleNewMessage() {
-    ChatMockDB().addNewMessage(widget.chat, createChatItem());
+    controller.addNewMessage(widget.chat, createChatItem());
     setState(() {});
     messageController.clear();
   }

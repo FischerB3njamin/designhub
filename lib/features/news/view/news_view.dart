@@ -1,4 +1,4 @@
-import 'package:designhub/features/news/data/news_mock_db.dart';
+import 'package:designhub/features/news/controller/news_controller.dart';
 import 'package:designhub/features/news/models/news.dart';
 import 'package:designhub/features/news/widgets/news_item.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
@@ -14,15 +14,15 @@ class NewsView extends StatefulWidget {
 }
 
 class _NewsViewState extends State<NewsView> {
-  NewsMockDB db = NewsMockDB();
-  late List<News> newsData = db.getNews();
+  final controller = NewsController();
+  late List<News> newsData = controller.getNews();
 
   @override
   Widget build(BuildContext context) {
     List<News> news = widget.smallView ? newsData.sublist(0, 5) : newsData;
 
     void callBack(News news) {
-      db.markNewsAsReaded(news);
+      controller.markNewsAsReaded(news);
       setState(() {});
     }
 

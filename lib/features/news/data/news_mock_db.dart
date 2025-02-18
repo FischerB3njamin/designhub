@@ -3,17 +3,15 @@ import 'package:designhub/features/news/data/news_repo.dart';
 import 'package:designhub/features/news/models/news.dart';
 
 class NewsMockDB extends NewsRepo {
-  static NewsMockDB? _instance = NewsMockDB._internal();
+  static final NewsMockDB _ = NewsMockDB._internal();
+  NewsMockDB._internal();
+
+  factory NewsMockDB() => _;
   List<News> data = newsData;
+
   @override
   List<News> getNews() {
     return data;
-  }
-
-  NewsMockDB._internal();
-  factory NewsMockDB() {
-    _instance ??= NewsMockDB._internal();
-    return _instance!;
   }
 
   @override

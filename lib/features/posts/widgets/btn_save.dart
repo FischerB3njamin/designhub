@@ -1,6 +1,6 @@
+import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/models/profile_singleton.dart';
 import 'package:designhub/gen/assets.gen.dart';
-import 'package:designhub/shared/controller/controller.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +17,8 @@ class BtnSave extends StatefulWidget {
 }
 
 class _BtnSaveState extends State<BtnSave> {
+  ProfileController profileController = ProfileController();
+
   late bool saved =
       ProfileSingleton().profile!.savedPosts.contains(widget.postId);
   @override
@@ -33,12 +35,10 @@ class _BtnSaveState extends State<BtnSave> {
             saved = !saved;
           });
           saved
-              ? Controller()
-                  .profileDB
-                  .savePost(ProfileSingleton().profile!, widget.postId)
-              : Controller()
-                  .profileDB
-                  .removeSavePost(ProfileSingleton().profile!, widget.postId);
+              ? profileController.savePost(
+                  ProfileSingleton().profile!, widget.postId)
+              : profileController.removeSavePost(
+                  ProfileSingleton().profile!, widget.postId);
         },
         icon: saved
             ? Assets.icons.folder.svg(

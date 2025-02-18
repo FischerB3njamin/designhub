@@ -1,7 +1,7 @@
+import 'package:designhub/features/auth/controller/auth_controller.dart';
 import 'package:designhub/features/auth/view/registration_page.dart';
 import 'package:designhub/features/navigation/view/navigation_page.dart';
 import 'package:designhub/features/profile/models/profile_singleton.dart';
-import 'package:designhub/shared/controller/controller.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +14,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool isError = false;
+  AuthController controller = AuthController();
   TextEditingController emailController = TextEditingController();
   TextEditingController pwdController = TextEditingController();
 
@@ -66,9 +67,8 @@ class _LoginState extends State<Login> {
                   WidgetStateProperty.all<Color>(DesignhubColors.primary),
             ),
             onPressed: () {
-              String userId = Controller()
-                  .loginDB
-                  .checkLogin(emailController.text, pwdController.text);
+              String userId = controller.checkLogin(
+                  emailController.text, pwdController.text);
               if (userId.isNotEmpty) {
                 ProfileSingleton().setProfile(userId);
                 Navigator.of(context).pushReplacement(

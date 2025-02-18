@@ -1,4 +1,4 @@
-import 'package:designhub/features/posts/data/post_mock_db.dart';
+import 'package:designhub/features/posts/controller/post_controller.dart';
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/posts/models/roll_out_type.dart';
 import 'package:designhub/features/profile/models/profile_singleton.dart';
@@ -16,7 +16,8 @@ class RatingOverviewPage extends StatefulWidget {
 }
 
 class _RatingOverviewPageState extends State<RatingOverviewPage> {
-  PostMockDB db = PostMockDB();
+  final controller = PostController();
+
   late List<Post> posts;
   int index = 0;
   bool notDragged = true;
@@ -24,7 +25,8 @@ class _RatingOverviewPageState extends State<RatingOverviewPage> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      posts = widget.posts ?? db.getPosts(ProfileSingleton().profile!.userId);
+      posts = widget.posts ??
+          controller.getPosts(ProfileSingleton().profile!.userId);
     });
 
     return Padding(

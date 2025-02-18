@@ -1,18 +1,15 @@
 import 'package:designhub/features/home/widgets/card_switcher.dart';
 import 'package:designhub/features/home/widgets/section_header.dart';
-import 'package:designhub/features/posts/data/post_mock_db.dart';
-import 'package:designhub/features/posts/models/post.dart';
+import 'package:designhub/features/posts/controller/post_controller.dart';
 import 'package:designhub/features/profile/models/profile_singleton.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
+  HomePage({super.key});
+  final controller = PostController();
+  late final posts = controller.getPosts(ProfileSingleton().profile!.userId);
   @override
   Widget build(BuildContext context) {
-    PostMockDB db = PostMockDB();
-    List<Post> posts = db.getPosts(ProfileSingleton().profile!.userId);
-
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.max,

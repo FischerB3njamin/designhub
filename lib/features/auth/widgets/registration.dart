@@ -1,6 +1,7 @@
+import 'package:designhub/features/auth/controller/auth_controller.dart';
 import 'package:designhub/features/navigation/view/navigation_page.dart';
+import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/models/profile_singleton.dart';
-import 'package:designhub/shared/controller/controller.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,8 @@ class Registration extends StatefulWidget {
 
 class _RegistrationState extends State<Registration> {
   bool termsAndConditions = false;
+  AuthController controller = AuthController();
+  ProfileController profileController = ProfileController();
   TextEditingController nameController = TextEditingController();
   TextEditingController mailController = TextEditingController();
   TextEditingController pwdController = TextEditingController();
@@ -33,11 +36,11 @@ class _RegistrationState extends State<Registration> {
     final String pwd = pwdController.text;
     final String repeatedPwd = repeatPwdController.text;
 
-    if (!Controller().loginDB.mailNotInDb(mail)) return;
+    if (!controller.mailNotInDb(mail)) return;
     if (pwd != repeatedPwd) return;
 
-    String userId = Controller().loginDB.addUser(name, mail, pwd);
-    Controller().profileDB.createProfile(name, userId);
+    String userId = controller.addUser(name, mail, pwd);
+    profileController.createProfile(name, userId);
     ProfileSingleton().setProfile(userId);
 
     Navigator.of(context).pushReplacement(

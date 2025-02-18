@@ -3,6 +3,10 @@ import 'package:designhub/features/posts/data/post_repo.dart';
 import 'package:designhub/features/posts/models/post.dart';
 
 class PostMockDB extends PostRepo {
+  static final PostMockDB _ = PostMockDB._internal();
+  PostMockDB._internal();
+
+  factory PostMockDB() => _;
   final List<Post> data = samplePosts;
 
   @override

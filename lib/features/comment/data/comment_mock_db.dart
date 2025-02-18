@@ -3,6 +3,11 @@ import 'package:designhub/features/comment/models/comment.dart';
 import 'package:designhub/features/comment/models/comment_item.dart';
 
 class CommentMockDb implements CommentsRepo {
+  static final CommentMockDb _ = CommentMockDb._internal();
+  CommentMockDb._internal();
+
+  factory CommentMockDb() => _;
+
   List<Comment> data = [
     Comment(postId: 'po-001'),
     Comment(postId: 'po-002'),
