@@ -1,4 +1,4 @@
-import 'package:designhub/features/posts/models/roll_out_type.dart';
+import 'package:designhub/features/question/models/roll_out_type.dart';
 import 'package:flutter/material.dart';
 
 class BtnSgRolloutType extends StatelessWidget {

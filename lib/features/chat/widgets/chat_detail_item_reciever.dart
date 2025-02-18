@@ -1,13 +1,13 @@
 import 'package:designhub/features/chat/models/chat_item.dart';
-import 'package:designhub/features/profile/models/profile_singleton.dart';
+import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/shared/widgets/avatar_circle.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class ChatDetailItemReciever extends StatelessWidget {
   final ChatItem item;
-
-  const ChatDetailItemReciever({
+  final ProfileController profileController = ProfileController();
+  ChatDetailItemReciever({
     super.key,
     required this.item,
   });
@@ -51,7 +51,7 @@ class ChatDetailItemReciever extends StatelessWidget {
           AvatarCircle(
             width: 50,
             height: 50,
-            profilId: ProfileSingleton().profile!.userId,
+            profilId: profileController.getCurrentProfile().userId,
           ),
         ],
       ),

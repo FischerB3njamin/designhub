@@ -1,4 +1,4 @@
-import 'package:designhub/features/posts/models/question.dart';
+import 'package:designhub/features/question/models/question.dart';
 
 class OpenQuestion extends Question {
   OpenQuestion(

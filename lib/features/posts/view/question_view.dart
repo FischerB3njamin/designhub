@@ -1,7 +1,7 @@
-import 'package:designhub/features/posts/models/closed_question.dart';
-import 'package:designhub/features/posts/models/open_question.dart';
-import 'package:designhub/features/posts/models/question_type.dart';
-import 'package:designhub/features/posts/models/roll_out_type.dart';
+import 'package:designhub/features/question/models/closed_question.dart';
+import 'package:designhub/features/question/models/open_question.dart';
+import 'package:designhub/features/question/models/question_type.dart';
+import 'package:designhub/features/question/models/roll_out_type.dart';
 import 'package:designhub/features/posts/widgets/closed_question_answer.dart';
 import 'package:designhub/features/posts/widgets/btn_sg_question_type.dart';
 import 'package:designhub/features/posts/widgets/btn_sg_rollout_type.dart';

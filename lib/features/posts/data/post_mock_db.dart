@@ -18,4 +18,14 @@ class PostMockDB extends PostRepo {
   List<Post> getPosts(String userId) {
     return data.where((e) => e.userId != userId).toList();
   }
+
+  @override
+  void createPost(Post post) {
+    data.add(post);
+  }
+
+  @override
+  String createPostId() {
+    return "p-${data.length}";
+  }
 }

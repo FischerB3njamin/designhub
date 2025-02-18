@@ -17,7 +17,12 @@ class CommentMockDb implements CommentsRepo {
 
   @override
   void addComment(String postId, CommentItem comment) {
-    data.where((e) => postId == e.postId).first.comments.insert(0, comment);
+    final result = data.where((e) => postId == e.postId);
+    if (result.isNotEmpty) {
+      result.first.comments.insert(0, comment);
+    } else {
+      data.add(Comment(postId: postId, comments: [comment]));
+    }
   }
 
   @override

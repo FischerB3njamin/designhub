@@ -1,7 +1,7 @@
 import 'package:designhub/features/answer/controller/answer_controller.dart';
 import 'package:designhub/features/posts/models/post.dart';
-import 'package:designhub/features/posts/models/question.dart';
-import 'package:designhub/features/profile/models/profile_singleton.dart';
+import 'package:designhub/features/profile/controller/profile_controller.dart';
+import 'package:designhub/features/question/models/question.dart';
 import 'package:designhub/features/rating/widgets/rating_done.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:designhub/theme/designhub_colors.dart';
@@ -11,15 +11,15 @@ class SectionRatingOverview extends StatelessWidget {
   final Post post;
   final List<Question> questions;
   final List<String> answers;
-  final AnswerController controller;
+  final AnswerController answerController = AnswerController();
+  final ProfileController profileController = ProfileController();
 
-  SectionRatingOverview(
-      {super.key,
-      required this.questions,
-      required this.answers,
-      required this.post,
-      AnswerController? controller})
-      : controller = controller ?? AnswerController();
+  SectionRatingOverview({
+    super.key,
+    required this.questions,
+    required this.answers,
+    required this.post,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -73,11 +73,11 @@ class SectionRatingOverview extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     for (final item in answers) {
-                      controller.addAnswerItem(
+                      answerController.addAnswerItem(
                           post.postId,
                           questions[answers.indexOf(item)].question,
                           item,
-                          ProfileSingleton().profile!.userId,
+                          profileController.getCurrentProfile().userId,
                           questions[answers.indexOf(item)].type);
                     }
                     CustomBottomSheet.show(context, RatingDone(post: post), 1);

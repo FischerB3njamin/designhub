@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 
 class CardCustom extends StatelessWidget {
@@ -20,8 +19,8 @@ class CardCustom extends StatelessWidget {
           SizedBox(
             height: 200,
             width: double.infinity,
-            child: Image.file(
-              File(imagePath),
+            child: Image.network(
+              imagePath,
               fit: BoxFit.fill,
             ),
           ),

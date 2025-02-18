@@ -1,6 +1,10 @@
 import 'package:designhub/features/profile/models/profile.dart';
 
 abstract class ProfileRepo {
+  late Profile? currentProfile;
+
+  void setCurrentProfile(String id);
+
   Profile getProfile(String userId);
   void createProfile(String name, String userId);
 
@@ -9,4 +13,6 @@ abstract class ProfileRepo {
 
   void savePost(Profile profile, String postId);
   void removeSavePost(Profile profile, String postId);
+  void addPost(String postId);
+  void logout();
 }

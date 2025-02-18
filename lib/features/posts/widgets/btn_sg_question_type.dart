@@ -1,4 +1,4 @@
-import 'package:designhub/features/posts/models/question_type.dart';
+import 'package:designhub/features/question/models/question_type.dart';
 import 'package:flutter/material.dart';
 
 class BtnSgQuestionType extends StatelessWidget {

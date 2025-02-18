@@ -1,6 +1,6 @@
 import 'package:designhub/features/chat/view/chat_news_page.dart';
 import 'package:designhub/features/posts/view/new_post_page.dart';
-import 'package:designhub/features/profile/models/profile_singleton.dart';
+import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/features/home/view/home_page.dart';
 import 'package:designhub/features/navigation/data/navigation_data.dart';
@@ -20,15 +20,20 @@ class NavigationPage extends StatefulWidget {
 
 class _NavigationPageState extends State<NavigationPage> {
   late int activeIndex = widget.index;
+  final ProfileController profileController = ProfileController();
 
-  List<Widget> pages = [
-    HomePage(),
-    ChatNewsPage(),
-    RatingOverviewPage(),
-    ProfilePage(
-      profile: ProfileSingleton().profile!,
-    )
-  ];
+  late List<Widget> pages;
+
+  @override
+  void initState() {
+    super.initState();
+    pages = [
+      HomePage(),
+      ChatNewsPage(),
+      RatingOverviewPage(),
+      ProfilePage(profile: profileController.getCurrentProfile())
+    ];
+  }
 
   void handleIconTap(int index) => setState(() {
         activeIndex = index;

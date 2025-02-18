@@ -3,19 +3,21 @@ import 'package:designhub/features/posts/widgets/section_avatar.dart';
 import 'package:designhub/features/posts/widgets/section_question_detailview.dart';
 import 'package:designhub/features/posts/widgets/section_icon.dart';
 import 'package:designhub/features/posts/widgets/section_post_detail.dart';
-import 'package:designhub/features/profile/models/profile_singleton.dart';
+import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:flutter/material.dart';
 
 class PostDetailView extends StatelessWidget {
   final Post post;
+  final ProfileController profileController = ProfileController();
 
-  const PostDetailView({
+  PostDetailView({
     super.key,
     required this.post,
   });
 
   @override
   Widget build(BuildContext context) {
+    String userId = profileController.getCurrentProfile().userId;
     return SingleChildScrollView(
       child: SizedBox(
         child: Padding(
@@ -32,10 +34,8 @@ class PostDetailView extends StatelessWidget {
               SectionIcon(post: post),
               SectionAvatar(post: post),
               SectionPostDetail(post: post),
-              if (post.userId != ProfileSingleton().profile?.userId)
-                SizedBox(height: 50),
-              if (post.userId == ProfileSingleton().profile?.userId)
-                SectionQuestionDetailview(post: post),
+              if (post.userId != userId) SizedBox(height: 50),
+              if (post.userId == userId) SectionQuestionDetailview(post: post),
             ],
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:designhub/features/posts/controller/post_controller.dart';
 import 'package:designhub/features/posts/view/post_detail_view.dart';
+import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,10 @@ import 'package:flutter/material.dart';
 class CardWithProfileName extends StatelessWidget {
   final String postId;
   final Function callback;
-  final controller = PostController();
-  late final post = controller.getPostById(postId);
+  final postController = PostController();
+  final profileController = ProfileController();
+  late final post = postController.getPostById(postId);
+  late final profile = profileController.getProfile(post.userId);
   CardWithProfileName({
     super.key,
     required this.postId,
@@ -69,7 +72,7 @@ class CardWithProfileName extends StatelessWidget {
                           shape: BoxShape.circle,
                         ),
                         child: Image.network(
-                          post.creatorImage,
+                          profile.avatarImagePath,
                           width: 40,
                           height: 40,
                           fit: BoxFit.cover,
@@ -77,7 +80,7 @@ class CardWithProfileName extends StatelessWidget {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        post.creatorName,
+                        profile.name,
                         style: TextTheme.of(context).bodyLarge,
                         textAlign: TextAlign.center,
                       ),

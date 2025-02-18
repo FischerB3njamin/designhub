@@ -1,8 +1,7 @@
 import 'package:designhub/features/chat/models/chat.dart';
 import 'package:designhub/features/chat/view/chat_detail_screen.dart';
-import 'package:designhub/features/profile/data/profile_mock_db.dart';
+import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/models/profile.dart';
-import 'package:designhub/features/profile/models/profile_singleton.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:designhub/shared/widgets/avatar_circle.dart';
 import 'package:designhub/theme/designhub_colors.dart';
@@ -10,17 +9,17 @@ import 'package:flutter/material.dart';
 
 class ChatItemView extends StatelessWidget {
   final Chat chat;
+  final ProfileController profileController = ProfileController();
 
-  const ChatItemView({
+  ChatItemView({
     super.key,
     required this.chat,
   });
 
   Profile getProfileFromParticipants() {
-    ProfileMockDB db = ProfileMockDB();
     for (final userId in chat.participants) {
-      if (ProfileSingleton().profile!.userId != userId) {
-        return db.getProfile(userId);
+      if (profileController.getCurrentProfile().userId != userId) {
+        return profileController.getProfile(userId);
       }
     }
     throw Exception('No participants found');

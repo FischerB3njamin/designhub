@@ -1,7 +1,7 @@
-import 'package:designhub/features/posts/models/closed_question.dart';
-import 'package:designhub/features/posts/models/question.dart';
-import 'package:designhub/features/posts/models/question_type.dart';
-import 'package:designhub/features/posts/models/roll_out_type.dart';
+import 'package:designhub/features/question/models/closed_question.dart';
+import 'package:designhub/features/question/models/question.dart';
+import 'package:designhub/features/question/models/question_type.dart';
+import 'package:designhub/features/question/models/roll_out_type.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';

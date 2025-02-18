@@ -7,4 +7,6 @@ class PostController {
 
   Post getPostById(String postId) => repo.getPostById(postId);
   List<Post> getPosts(String userId) => repo.getPosts(userId);
+  void createPost(Post post) => repo.createPost(post);
+  String createPostId() => repo.createPostId();
 }

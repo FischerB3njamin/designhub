@@ -1,4 +1,4 @@
-import 'package:designhub/features/posts/models/question.dart';
+import 'package:designhub/features/question/models/question.dart';
 import 'package:designhub/features/posts/widgets/section_question_overview.dart';
 import 'package:designhub/features/posts/view/question_view.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
@@ -6,9 +6,8 @@ import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class SectionQuestion extends StatefulWidget {
-  const SectionQuestion({
-    super.key,
-  });
+  final Function callback;
+  const SectionQuestion({super.key, required this.callback});
 
   @override
   State<SectionQuestion> createState() => _SectionQuestionState();
@@ -47,6 +46,7 @@ class _SectionQuestionState extends State<SectionQuestion> {
                   setState(() {
                     questions.add(question);
                   });
+                  widget.callback(questions);
                 }
               },
               icon: Icon(
@@ -59,16 +59,6 @@ class _SectionQuestionState extends State<SectionQuestion> {
         SizedBox(height: 12),
         ...questions.map((e) => SectionQuestionOverview(question: e)),
         SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: () {},
-          child: SizedBox(
-            width: double.infinity,
-            child: Text(
-              "create Post",
-              textAlign: TextAlign.center,
-            ),
-          ),
-        )
       ],
     );
   }

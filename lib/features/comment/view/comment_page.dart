@@ -2,7 +2,7 @@ import 'package:designhub/features/chat/widgets/section_chat_input.dart';
 import 'package:designhub/features/comment/controller/comment_controller.dart';
 import 'package:designhub/features/comment/models/comment_item.dart';
 import 'package:designhub/features/comment/widgets/comment_detail.dart';
-import 'package:designhub/features/profile/models/profile_singleton.dart';
+import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:flutter/material.dart';
 
 class CommentPage extends StatefulWidget {
@@ -13,7 +13,8 @@ class CommentPage extends StatefulWidget {
 }
 
 class _CommentPageState extends State<CommentPage> {
-  CommentController controller = CommentController();
+  CommentController commentController = CommentController();
+  ProfileController profileController = ProfileController();
   TextEditingController newMessageController = TextEditingController();
   List<CommentItem>? comments;
 
@@ -26,19 +27,19 @@ class _CommentPageState extends State<CommentPage> {
   void saveComment() {
     CommentItem newComment = createComment();
     newMessageController.clear();
-    controller.addComment(widget.postId, newComment);
+    commentController.addComment(widget.postId, newComment);
     setState(() {});
   }
 
   CommentItem createComment() {
     return CommentItem(
-        profilId: ProfileSingleton().profile!.userId,
+        profilId: profileController.getCurrentProfile().userId,
         text: newMessageController.text);
   }
 
   @override
   void initState() {
-    comments = controller.getComments(widget.postId);
+    comments = commentController.getComments(widget.postId);
     super.initState();
   }
 

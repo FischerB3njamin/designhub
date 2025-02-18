@@ -5,10 +5,13 @@ import 'package:designhub/features/profile/models/profile.dart';
 class ProfileMockDB extends ProfileRepo {
   static final ProfileMockDB _ = ProfileMockDB._internal();
   ProfileMockDB._internal();
-
   factory ProfileMockDB() => _;
 
   List<Profile> data = profiles;
+
+  @override
+  void setCurrentProfile(String id) => currentProfile = getProfile(id);
+
   @override
   Profile getProfile(String userId) {
     for (var item in data) {
@@ -36,4 +39,14 @@ class ProfileMockDB extends ProfileRepo {
   @override
   void savePost(Profile profile, String postId) =>
       data[data.indexOf(profile)].savedPosts.add(postId);
+
+  @override
+  void addPost(String postId) {
+    currentProfile!.posts.add(postId);
+  }
+
+  @override
+  void logout() {
+    currentProfile = null;
+  }
 }

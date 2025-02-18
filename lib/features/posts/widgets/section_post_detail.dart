@@ -11,24 +11,27 @@ class SectionPostDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          post.title,
-          style: TextTheme.of(context).headlineMedium,
-        ),
-        SizedBox(height: 12),
-        Text(
-          post.description,
-          style: TextTheme.of(context).bodyMedium,
-        ),
-        SizedBox(height: 12),
-        Text(
-          post.hashtags,
-          style: TextTheme.of(context).bodyMedium,
-        )
-      ],
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            post.title,
+            style: TextTheme.of(context).headlineMedium,
+          ),
+          SizedBox(height: 12),
+          Text(
+            post.description,
+            style: TextTheme.of(context).bodyMedium,
+          ),
+          SizedBox(height: 12),
+          Text(
+            post.hashtags,
+            style: TextTheme.of(context).bodyMedium,
+          )
+        ],
+      ),
     );
   }
 }

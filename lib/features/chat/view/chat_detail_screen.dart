@@ -4,8 +4,8 @@ import 'package:designhub/features/chat/models/chat_item.dart';
 import 'package:designhub/features/chat/widgets/section_chat_header.dart';
 import 'package:designhub/features/chat/widgets/section_chat_item.dart';
 import 'package:designhub/features/chat/widgets/section_chat_input.dart';
+import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/models/profile.dart';
-import 'package:designhub/features/profile/models/profile_singleton.dart';
 import 'package:flutter/material.dart';
 
 class ChatDetailScreen extends StatefulWidget {
@@ -21,10 +21,11 @@ class ChatDetailScreen extends StatefulWidget {
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
   TextEditingController messageController = TextEditingController();
-  final controller = ChatController();
+  final chatController = ChatController();
+  final profileController = ProfileController();
 
   void handleNewMessage() {
-    controller.addNewMessage(widget.chat, createChatItem());
+    chatController.addNewMessage(widget.chat, createChatItem());
     setState(() {});
     messageController.clear();
   }
@@ -39,7 +40,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   ChatItem createChatItem() => ChatItem(
         text: messageController.text,
         date: createMessageDate(),
-        userId: ProfileSingleton().profile!.userId,
+        userId: profileController.getCurrentProfile().userId,
       );
 
   @override

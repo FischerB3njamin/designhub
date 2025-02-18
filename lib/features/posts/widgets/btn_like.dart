@@ -1,5 +1,5 @@
 import 'package:designhub/features/profile/controller/profile_controller.dart';
-import 'package:designhub/features/profile/models/profile_singleton.dart';
+import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +17,17 @@ class BtnLike extends StatefulWidget {
 }
 
 class _BtnLikeState extends State<BtnLike> {
-  late bool liked = ProfileSingleton().profile!.liked!.contains(widget.postId);
   ProfileController profileController = ProfileController();
+  late Profile profile;
+  late bool liked;
+
+  @override
+  void initState() {
+    super.initState();
+    profile = profileController.getCurrentProfile();
+    liked = profile.liked!.contains(widget.postId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
@@ -33,10 +42,8 @@ class _BtnLikeState extends State<BtnLike> {
               liked = !liked;
             });
             liked
-                ? profileController.saveLike(
-                    ProfileSingleton().profile!, widget.postId)
-                : profileController.removeLike(
-                    ProfileSingleton().profile!, widget.postId);
+                ? profileController.saveLike(profile, widget.postId)
+                : profileController.removeLike(profile, widget.postId);
           },
           icon: liked
               ? Assets.icons.like

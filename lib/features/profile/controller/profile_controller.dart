@@ -4,8 +4,12 @@ import 'package:designhub/features/profile/models/profile.dart';
 
 class ProfileController {
   ProfileRepo repo = ProfileMockDB();
-
+  void logout() => repo.logout();
   Profile getProfile(String userId) => repo.getProfile(userId);
+
+  void setCurrentProfile(String id) => repo.setCurrentProfile(id);
+
+  Profile getCurrentProfile() => repo.currentProfile!;
 
   void createProfile(String name, String userId) =>
       repo.createProfile(name, userId);
@@ -21,4 +25,5 @@ class ProfileController {
 
   void savePost(Profile profile, String postId) =>
       repo.savePost(profile, postId);
+  void addPost(String postId) => repo.addPost(postId);
 }

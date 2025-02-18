@@ -1,5 +1,6 @@
 import 'package:designhub/features/posts/models/post.dart';
-import 'package:designhub/features/posts/models/roll_out_type.dart';
+import 'package:designhub/features/question/controller/question_controller.dart';
+import 'package:designhub/features/question/models/roll_out_type.dart';
 import 'package:designhub/features/rating/widgets/section_rating_overview.dart';
 import 'package:designhub/features/rating/widgets/section_rating.dart';
 import 'package:designhub/features/rating/widgets/section_rating_footer.dart';
@@ -22,19 +23,27 @@ class RatingPage extends StatefulWidget {
 class _RatingPageState extends State<RatingPage> {
   int activeQuestion = 0;
   List<String> answers = [];
+  final controller = QuestionController();
+  late final questionKatalog =
+      controller.getQuestionCatalog(widget.post.postId);
 
   void addAnswer(int index, answer) => setState(() {
-        answers.add(answer);
+        if (answer.length < index - 1) {
+          answers[index - 1] = answer;
+        } else {
+          answers.add(answer);
+        }
         activeQuestion = index;
       });
 
   @override
   Widget build(BuildContext context) {
-    widget.post.questions = widget.post.questions
+    questionKatalog.catalog = questionKatalog.catalog
         .where((e) =>
             e.rollOut == widget.rolloutType || e.rollOut == RollOutType.both)
         .toList();
-    int numberOfQuestions = widget.post.questions.length;
+
+    int numberOfQuestions = questionKatalog.catalog.length;
 
     return SizedBox(
       child: ListView(
@@ -48,7 +57,7 @@ class _RatingPageState extends State<RatingPage> {
             ),
           if (activeQuestion == numberOfQuestions)
             SectionRatingOverview(
-              questions: widget.post.questions,
+              questions: questionKatalog.catalog,
               answers: answers,
               post: widget.post,
             ),

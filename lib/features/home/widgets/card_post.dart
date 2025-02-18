@@ -1,5 +1,6 @@
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/posts/widgets/btn_like.dart';
+import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/shared/widgets/avatar_circle.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +8,12 @@ import 'package:flutter/material.dart';
 class CardPost extends StatelessWidget {
   final Post post;
 
-  const CardPost({
+  CardPost({
     super.key,
     required this.post,
   });
-
+  final profileController = ProfileController();
+  late final profile = profileController.getProfile(post.userId);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,14 +22,13 @@ class CardPost extends StatelessWidget {
       child: Card(
         clipBehavior: Clip.hardEdge,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(0),
-          topRight: Radius.circular(0),
-          bottomLeft: Radius.circular(30),
-          bottomRight: Radius.circular(030),
-        )
-            // borderRadius: BorderRadius.circular(30.0),
-            ),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(0),
+            topRight: Radius.circular(0),
+            bottomLeft: Radius.circular(30),
+            bottomRight: Radius.circular(030),
+          ),
+        ),
         elevation: 10,
         child: Stack(
           children: [
@@ -56,7 +57,7 @@ class CardPost extends StatelessWidget {
                     AvatarCircle(profilId: post.userId, height: 60, width: 60),
                     SizedBox(width: 8),
                     Text(
-                      post.creatorName,
+                      profile.name,
                       style: TextTheme.of(context).headlineSmall!.copyWith(
                             fontWeight: FontWeight.w600,
                           ),
