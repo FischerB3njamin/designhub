@@ -10,22 +10,35 @@ class PostMockDB extends PostRepo {
   final List<Post> data = samplePosts;
 
   @override
-  Post getPostById(String postId) {
-    return data.firstWhere((e) => e.postId == postId);
+  Future<Post> getPostById(String postId) {
+    return Future.delayed(Duration(seconds: 1), () {
+      return data.firstWhere((e) => e.postId == postId);
+    });
   }
 
   @override
-  List<Post> getPosts(String userId) {
-    return data.where((e) => e.userId != userId).toList();
+  Future<List<Post>> getPosts(String userId) {
+    return Future.delayed(Duration(seconds: 1), () {
+      return data.where((e) => e.userId != userId).toList();
+    });
   }
 
   @override
-  void createPost(Post post) {
-    data.add(post);
+  Future<void> createPost(Post post) async {
+    data.insert(0, post);
   }
 
   @override
-  String createPostId() {
-    return "p-${data.length}";
+  Future<String> createPostId() {
+    return Future.delayed(Duration(seconds: 1), () {
+      return "p-${data.length}";
+    });
+  }
+
+  @override
+  Future<List<Post>> getPostsById(Set<String> postIds) {
+    return Future.delayed(Duration(seconds: 2), () {
+      return data.where((e) => postIds.contains(e.postId)).toList();
+    });
   }
 }

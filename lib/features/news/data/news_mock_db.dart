@@ -10,17 +10,19 @@ class NewsMockDB extends NewsRepo {
   List<News> data = newsData;
 
   @override
-  List<News> getNews() {
-    return data;
+  Future<List<News>> getNews() async {
+    return Future.delayed(Duration(seconds: 1), () {
+      return data;
+    });
   }
 
   @override
-  void markNewsAsReaded(news) {
+  Future<void> markNewsAsReaded(news) async {
     data[data.indexOf(news)].read = true;
   }
 
   @override
-  void addNews(news) {
+  Future<void> addNews(news) async {
     data.add(news);
   }
 }

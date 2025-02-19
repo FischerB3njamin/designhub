@@ -16,7 +16,7 @@ class CommentMockDb implements CommentsRepo {
   ];
 
   @override
-  void addComment(String postId, CommentItem comment) {
+  Future<void> addComment(String postId, CommentItem comment) async {
     final result = data.where((e) => postId == e.postId);
     if (result.isNotEmpty) {
       result.first.comments.insert(0, comment);
@@ -26,12 +26,14 @@ class CommentMockDb implements CommentsRepo {
   }
 
   @override
-  List<CommentItem> getComments(String postId) {
-    final obj = data.where((e) => e.postId == postId).toList();
-    if (obj.isNotEmpty) {
-      return obj.first.comments;
-    }
+  Future<List<CommentItem>> getComments(String postId) async {
+    return Future.delayed(Duration(seconds: 1), () {
+      final obj = data.where((e) => e.postId == postId).toList();
+      if (obj.isNotEmpty) {
+        return obj.first.comments;
+      }
 
-    return [];
+      return [];
+    });
   }
 }

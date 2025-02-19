@@ -5,7 +5,7 @@ import 'package:designhub/features/news/models/news.dart';
 class NewsController {
   NewsRepo repo = NewsMockDB();
 
-  List<News> getNews() => repo.getNews();
-  void markNewsAsReaded(news) => repo.markNewsAsReaded(news);
-  void addNews(news) => repo.addNews(news);
+  Future<List<News>> getNews() => repo.getNews();
+  Future<void> markNewsAsReaded(news) async => repo.markNewsAsReaded(news);
+  Future<void> addNews(news) async => repo.addNews(news);
 }

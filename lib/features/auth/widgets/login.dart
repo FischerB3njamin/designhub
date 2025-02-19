@@ -2,6 +2,7 @@ import 'package:designhub/features/auth/controller/auth_controller.dart';
 import 'package:designhub/features/auth/view/registration_page.dart';
 import 'package:designhub/features/navigation/view/navigation_page.dart';
 import 'package:designhub/features/profile/controller/profile_controller.dart';
+import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool isError = false;
+  bool logginIsRunning = false;
   AuthController authController = AuthController();
   ProfileController profileController = ProfileController();
   TextEditingController emailController = TextEditingController();
@@ -24,6 +26,28 @@ class _LoginState extends State<Login> {
     emailController.dispose();
     pwdController.dispose();
     super.dispose();
+  }
+
+  void navigation() async {
+    setState(() => logginIsRunning = true);
+    String userId = await authController.checkLogin(
+        emailController.text, pwdController.text);
+    if (userId.isNotEmpty) {
+      Profile profile = await profileController.getProfile(userId);
+      profileController.setCurrentProfile(profile);
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NavigationPage(),
+          ),
+        );
+      }
+    } else {
+      setState(() {
+        isError = true;
+      });
+    }
   }
 
   @override
@@ -62,39 +86,26 @@ class _LoginState extends State<Login> {
                     .copyWith(color: DesignhubColors.red),
               ),
             ),
-          TextButton(
-            style: ButtonStyle(
-              backgroundColor:
-                  WidgetStateProperty.all<Color>(DesignhubColors.primary),
-            ),
-            onPressed: () {
-              String userId = authController.checkLogin(
-                  emailController.text, pwdController.text);
-              if (userId.isNotEmpty) {
-                profileController.setCurrentProfile(userId);
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => NavigationPage(),
+          logginIsRunning
+              ? CircularProgressIndicator()
+              : TextButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        WidgetStateProperty.all<Color>(DesignhubColors.primary),
                   ),
-                );
-              } else {
-                setState(() {
-                  isError = true;
-                });
-              }
-            },
-            child: SizedBox(
-              width: double.infinity,
-              child: Text(
-                'Login',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: DesignhubColors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 24),
-              ),
-            ),
-          ),
+                  onPressed: navigation,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      'Login',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: DesignhubColors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 24),
+                    ),
+                  ),
+                ),
           SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -5,8 +5,10 @@ import 'package:designhub/features/posts/models/post.dart';
 class PostController {
   PostRepo repo = PostMockDB();
 
-  Post getPostById(String postId) => repo.getPostById(postId);
-  List<Post> getPosts(String userId) => repo.getPosts(userId);
+  Future<Post> getPostById(String postId) => repo.getPostById(postId);
+  Future<List<Post>> getPosts(String userId) => repo.getPosts(userId);
   void createPost(Post post) => repo.createPost(post);
-  String createPostId() => repo.createPostId();
+  Future<String> createPostId() => repo.createPostId();
+  Future<List<Post>> getPostsById(Set<String> postIds) =>
+      repo.getPostsById(postIds);
 }

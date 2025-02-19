@@ -11,12 +11,14 @@ class ChatMockDB extends ChatRepo {
   List<Chat> data = mockChats;
 
   @override
-  void addNewMessage(Chat chat, ChatItem chatItem) {
+  Future<void> addNewMessage(Chat chat, ChatItem chatItem) async {
     data[data.indexOf(chat)].chatItems.add(chatItem);
   }
 
   @override
-  List<Chat> getChats() {
-    return data;
+  Future<List<Chat>> getChats() {
+    return Future.delayed(Duration(seconds: 1), () {
+      return data;
+    });
   }
 }

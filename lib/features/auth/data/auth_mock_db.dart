@@ -10,22 +10,27 @@ class AuthMockDB extends AuthRepo {
   List<LoginData> data = loginData;
 
   @override
-  bool mailNotInDb(String mail) {
-    return data.where((e) => e.mail == mail).isEmpty;
+  Future<bool> mailNotInDb(String mail) async {
+    return Future.delayed(
+        Duration(seconds: 1), () => data.where((e) => e.mail == mail).isEmpty);
   }
 
   @override
-  String addUser(String name, String email, String pwd) {
-    String userId = "uid-00${data.length + 1}";
-    data.add(LoginData(email, pwd, userId));
-    return userId;
+  Future<String> addUser(String name, String email, String pwd) async {
+    return Future.delayed(Duration(seconds: 1), () {
+      String userId = "uid-00${data.length + 1}";
+      data.add(LoginData(email, pwd, userId));
+      return userId;
+    });
   }
 
   @override
-  String checkLogin(String mail, String pwd) {
-    for (var item in data) {
-      if (item.mail == mail && item.password == pwd) return item.id;
-    }
-    return "";
+  Future<String> checkLogin(String mail, String pwd) {
+    return Future.delayed(Duration(seconds: 1), () {
+      for (var item in data) {
+        if (item.mail == mail && item.password == pwd) return item.id;
+      }
+      return "";
+    });
   }
 }

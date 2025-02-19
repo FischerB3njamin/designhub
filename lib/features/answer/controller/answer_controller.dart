@@ -9,6 +9,6 @@ class AnswerController {
           QuestionType type) =>
       answerMockDb.addAnswerItem(postId, question, text, userId, type);
 
-  Answer? getAnswer(String postId, String question) =>
+  Future<Answer?> getAnswer(String postId, String question) =>
       answerMockDb.getAnswer(postId, question);
 }

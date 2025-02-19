@@ -1,18 +1,23 @@
 import 'package:designhub/features/posts/models/post.dart';
-import 'package:designhub/features/profile/controller/profile_controller.dart';
+import 'package:designhub/features/profile/models/profile.dart';
 
 import 'package:designhub/shared/widgets/avatar_circle.dart';
 import 'package:flutter/material.dart';
 
-class SectionAvatar extends StatelessWidget {
+class SectionAvatar extends StatefulWidget {
   final Post post;
-  final controller = ProfileController();
-  late final profile = controller.getProfile(post.userId);
-  SectionAvatar({
+  final Profile profile;
+  const SectionAvatar({
     super.key,
     required this.post,
+    required this.profile,
   });
 
+  @override
+  State<SectionAvatar> createState() => _SectionAvatarState();
+}
+
+class _SectionAvatarState extends State<SectionAvatar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,11 +27,11 @@ class SectionAvatar extends StatelessWidget {
           AvatarCircle(
             height: 60,
             width: 60,
-            profilId: post.userId,
+            profile: widget.profile,
           ),
           SizedBox(width: 6),
           Text(
-            profile.name,
+            widget.profile.name,
             style: TextTheme.of(context)
                 .headlineLarge!
                 .copyWith(fontWeight: FontWeight.w500),

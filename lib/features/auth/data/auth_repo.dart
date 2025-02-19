@@ -1,5 +1,5 @@
 abstract class AuthRepo {
-  String addUser(String name, String email, String pwd);
-  String checkLogin(String mail, String pwd);
-  bool mailNotInDb(String mail);
+  Future<String> addUser(String name, String email, String pwd);
+  Future<String> checkLogin(String mail, String pwd);
+  Future<bool> mailNotInDb(String mail);
 }

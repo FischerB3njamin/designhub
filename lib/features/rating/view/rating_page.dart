@@ -1,5 +1,6 @@
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/question/controller/question_controller.dart';
+import 'package:designhub/features/question/models/question_katalog.dart';
 import 'package:designhub/features/question/models/roll_out_type.dart';
 import 'package:designhub/features/rating/widgets/section_rating_overview.dart';
 import 'package:designhub/features/rating/widgets/section_rating.dart';
@@ -24,12 +25,33 @@ class _RatingPageState extends State<RatingPage> {
   int activeQuestion = 0;
   List<String> answers = [];
   final controller = QuestionController();
-  late final questionKatalog =
-      controller.getQuestionCatalog(widget.post.postId);
+  QuestionCatalog? questionKatalog;
+  bool isLoading = true;
+  String? errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    try {
+      questionKatalog = await controller.getQuestionCatalog(widget.post.postId);
+      setState(() {
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+        errorMessage = 'Fehler beim Laden des Fragenkatalogs';
+      });
+    }
+  }
 
   void addAnswer(int index, answer) => setState(() {
-        if (answer.length < index - 1) {
-          answers[index - 1] = answer;
+        if (answers.length > index) {
+          answers[index] = answer;
         } else {
           answers.add(answer);
         }
@@ -38,12 +60,24 @@ class _RatingPageState extends State<RatingPage> {
 
   @override
   Widget build(BuildContext context) {
-    questionKatalog.catalog = questionKatalog.catalog
+    if (isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+
+    if (errorMessage != null) {
+      return Center(child: Text(errorMessage!));
+    }
+
+    if (questionKatalog == null) {
+      return Center(child: Text('Fragenkatalog nicht gefunden'));
+    }
+
+    questionKatalog!.catalog = questionKatalog!.catalog
         .where((e) =>
             e.rollOut == widget.rolloutType || e.rollOut == RollOutType.both)
         .toList();
 
-    int numberOfQuestions = questionKatalog.catalog.length;
+    int numberOfQuestions = questionKatalog!.catalog.length;
 
     return SizedBox(
       child: ListView(
@@ -57,7 +91,7 @@ class _RatingPageState extends State<RatingPage> {
             ),
           if (activeQuestion == numberOfQuestions)
             SectionRatingOverview(
-              questions: questionKatalog.catalog,
+              questions: questionKatalog!.catalog,
               answers: answers,
               post: widget.post,
             ),

@@ -1,6 +1,7 @@
 import 'package:designhub/features/auth/controller/auth_controller.dart';
 import 'package:designhub/features/navigation/view/navigation_page.dart';
 import 'package:designhub/features/profile/controller/profile_controller.dart';
+import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,9 @@ class Registration extends StatefulWidget {
 }
 
 class _RegistrationState extends State<Registration> {
+  String errorMessage = "";
   bool termsAndConditions = false;
+  bool registrationIsRunning = false;
   AuthController authController = AuthController();
   ProfileController profileController = ProfileController();
   TextEditingController nameController = TextEditingController();
@@ -29,24 +32,34 @@ class _RegistrationState extends State<Registration> {
     super.dispose();
   }
 
-  void handleSignup() {
+  void handleSignup() async {
+    setState(() => registrationIsRunning = true);
     final String name = nameController.text;
     final String mail = mailController.text;
     final String pwd = pwdController.text;
     final String repeatedPwd = repeatPwdController.text;
 
-    if (!authController.mailNotInDb(mail)) return;
-    if (pwd != repeatedPwd) return;
+    if (!await authController.mailNotInDb(mail)) {
+      errorMessage = "Mail already exist";
+    }
+    if (pwd != repeatedPwd) errorMessage = "Password not identical";
 
-    String userId = authController.addUser(name, mail, pwd);
-    profileController.createProfile(name, userId);
-    profileController.setCurrentProfile(userId);
+    if (errorMessage.isNotEmpty) {
+      registrationIsRunning = false;
+      setState(() {});
+      return;
+    }
 
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => NavigationPage(),
-      ),
-    );
+    String userId = await authController.addUser(name, mail, pwd);
+    Profile newProfile = await profileController.createProfile(name, userId);
+    profileController.setCurrentProfile(newProfile);
+    if (mounted) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => NavigationPage(),
+        ),
+      );
+    }
   }
 
   @override
@@ -94,24 +107,32 @@ class _RegistrationState extends State<Registration> {
               Text("I agree the terms and conditions")
             ],
           ),
-          TextButton(
-            style: ButtonStyle(
-              backgroundColor:
-                  WidgetStateProperty.all<Color>(DesignhubColors.primary),
+          if (errorMessage.isNotEmpty)
+            Text(
+              errorMessage,
+              style: TextTheme.of(context).bodyLarge!.copyWith(
+                  color: DesignhubColors.red, fontWeight: FontWeight.bold),
             ),
-            onPressed: () => handleSignup(),
-            child: SizedBox(
-              width: double.infinity,
-              child: Text(
-                'Signup',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: DesignhubColors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18),
-              ),
-            ),
-          ),
+          registrationIsRunning
+              ? CircularProgressIndicator()
+              : TextButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        WidgetStateProperty.all<Color>(DesignhubColors.primary),
+                  ),
+                  onPressed: () => handleSignup(),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      'Signup',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: DesignhubColors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                    ),
+                  ),
+                ),
           SizedBox(height: 4)
         ],
       ),

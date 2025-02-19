@@ -1,19 +1,19 @@
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/posts/widgets/btn_like.dart';
-import 'package:designhub/features/profile/controller/profile_controller.dart';
+import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/shared/widgets/avatar_circle.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class CardPost extends StatelessWidget {
   final Post post;
+  final Profile profile;
 
-  CardPost({
+  const CardPost({
     super.key,
     required this.post,
+    required this.profile,
   });
-  final profileController = ProfileController();
-  late final profile = profileController.getProfile(post.userId);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -54,7 +54,7 @@ class CardPost extends StatelessWidget {
                     borderRadius: BorderRadius.circular(36)),
                 child: Row(
                   children: [
-                    AvatarCircle(profilId: post.userId, height: 60, width: 60),
+                    AvatarCircle(profile: profile, height: 60, width: 60),
                     SizedBox(width: 8),
                     Text(
                       profile.name,

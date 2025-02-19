@@ -4,15 +4,18 @@ import 'package:designhub/features/posts/widgets/section_question_detailview.dar
 import 'package:designhub/features/posts/widgets/section_icon.dart';
 import 'package:designhub/features/posts/widgets/section_post_detail.dart';
 import 'package:designhub/features/profile/controller/profile_controller.dart';
+import 'package:designhub/features/profile/models/profile.dart';
 import 'package:flutter/material.dart';
 
 class PostDetailView extends StatelessWidget {
   final Post post;
   final ProfileController profileController = ProfileController();
+  final Profile profile;
 
   PostDetailView({
     super.key,
     required this.post,
+    required this.profile,
   });
 
   @override
@@ -32,10 +35,11 @@ class PostDetailView extends StatelessWidget {
                 ),
               ),
               SectionIcon(post: post),
-              SectionAvatar(post: post),
+              SectionAvatar(post: post, profile: profile),
               SectionPostDetail(post: post),
               if (post.userId != userId) SizedBox(height: 50),
-              if (post.userId == userId) SectionQuestionDetailview(post: post),
+              if (post.userId == userId)
+                SectionQuestionDetailview(post: post, profile: profile),
             ],
           ),
         ),

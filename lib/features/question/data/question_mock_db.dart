@@ -12,10 +12,13 @@ class QuestionMockDb implements QuestionRepo {
   late List<QuestionCatalog> data = questionKatalog;
 
   @override
-  QuestionCatalog getQuestionCatalog(postId) =>
-      data.where((e) => e.postId == postId).first;
+  Future<QuestionCatalog> getQuestionCatalog(postId) async =>
+      Future.delayed(Duration(seconds: 1), () {
+        return data.where((e) => e.postId == postId).first;
+      });
 
   @override
-  void addQuestionCatalog(String postId, List<Question> catalog) =>
+  Future<void> addQuestionCatalog(
+          String postId, List<Question> catalog) async =>
       data.add(QuestionCatalog(postId: postId, catalog: catalog));
 }

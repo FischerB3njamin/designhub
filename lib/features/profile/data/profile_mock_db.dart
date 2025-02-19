@@ -10,43 +10,58 @@ class ProfileMockDB extends ProfileRepo {
   List<Profile> data = profiles;
 
   @override
-  void setCurrentProfile(String id) => currentProfile = getProfile(id);
-
-  @override
-  Profile getProfile(String userId) {
-    for (var item in data) {
-      if (item.userId == userId) return item;
-    }
-    throw Exception('Profile not found');
+  Future<void> setCurrentProfile(Profile profile) async {
+    currentProfile = profile;
   }
 
   @override
-  void createProfile(String name, String userId) =>
-      data.add(Profile(name: name, userId: userId));
+  Future<Profile> getProfile(String userId) async {
+    return Future.delayed(Duration(seconds: 1), () {
+      for (var item in data) {
+        if (item.userId == userId) return item;
+      }
+      throw Exception('Profile not found');
+    });
+  }
 
   @override
-  void saveLike(Profile profile, String postId) =>
+  Future<Profile> createProfile(String name, String userId) async =>
+      Future.delayed(Duration(seconds: 3), () {
+        Profile newProfile = Profile(name: name, userId: userId);
+        data.add(newProfile);
+        return newProfile;
+      });
+
+  @override
+  Future<void> saveLike(Profile profile, String postId) async =>
       data[data.indexOf(profile)].liked!.add(postId);
 
   @override
-  void removeLike(Profile profile, String postId) =>
+  Future<void> removeLike(Profile profile, String postId) async =>
       data[data.indexOf(profile)].liked!.remove(postId);
 
   @override
-  void removeSavePost(Profile profile, String postId) =>
+  Future<void> removeSavePost(Profile profile, String postId) async =>
       data[data.indexOf(profile)].savedPosts.remove(postId);
 
   @override
-  void savePost(Profile profile, String postId) =>
+  Future<void> savePost(Profile profile, String postId) async =>
       data[data.indexOf(profile)].savedPosts.add(postId);
 
   @override
-  void addPost(String postId) {
+  Future<void> addPost(String postId) async {
     currentProfile!.posts.add(postId);
   }
 
   @override
-  void logout() {
+  Future<void> logout() async {
     currentProfile = null;
+  }
+
+  @override
+  Future<List<Profile>> getProfilesById(Set<String> profileIds) async {
+    return Future.delayed(Duration(seconds: 2), () {
+      return data.where((e) => profileIds.contains(e.userId)).toList();
+    });
   }
 }

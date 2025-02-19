@@ -6,16 +6,15 @@ import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class AvatarCircle extends StatelessWidget {
-  final String profilId;
+  final Profile profile;
   final double width;
   final double height;
   final bool allowNavigation;
-  final ProfileController profileController = ProfileController();
-  late final Profile profile = profileController.getProfile(profilId);
+  final profileController = ProfileController();
 
   AvatarCircle({
     super.key,
-    required this.profilId,
+    required this.profile,
     required this.height,
     required this.width,
     this.allowNavigation = true,

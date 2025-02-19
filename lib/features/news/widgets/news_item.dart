@@ -2,23 +2,23 @@ import 'package:designhub/features/news/models/news.dart';
 import 'package:designhub/features/news/models/news_type.dart';
 import 'package:designhub/features/posts/controller/post_controller.dart';
 import 'package:designhub/features/posts/view/post_detail_view.dart';
-import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/features/profile/view/profile_page.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
+import 'package:designhub/shared/widgets/avatar_circle.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class NewsItem extends StatelessWidget {
   final News news;
   final Function callback;
-  final controller = ProfileController();
-  late final Profile profile = controller.getProfile(news.profilId);
+  final Profile profile;
   final postController = PostController();
   NewsItem({
     super.key,
     required this.news,
     required this.callback,
+    required this.profile,
   });
 
   String buildItemText(Profile profile) {
@@ -39,15 +39,17 @@ class NewsItem extends StatelessWidget {
     handleNavigation(context, profile);
   }
 
-  void handleNavigation(BuildContext context, Profile profile) =>
-      CustomBottomSheet.show(
-          context,
-          NewsType.follow == news.type
-              ? ProfilePage(profile: profile)
-              : PostDetailView(
-                  post: postController.getPostById(news.postId!),
-                ),
-          0.9);
+  void handleNavigation(BuildContext context, Profile profile) async {
+    CustomBottomSheet.show(
+        context,
+        NewsType.follow == news.type
+            ? ProfilePage(profile: profile)
+            : PostDetailView(
+                post: await postController.getPostById(news.postId!),
+                profile: profile,
+              ),
+        0.9);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,14 +66,7 @@ class NewsItem extends StatelessWidget {
                   : DesignhubColors.primary.withAlpha(50)),
           child: Row(
             children: [
-              Container(
-                height: 30,
-                width: 30,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(shape: BoxShape.circle),
-                child:
-                    Image.network(profile.avatarImagePath, fit: BoxFit.cover),
-              ),
+              AvatarCircle(profile: profile, height: 30, width: 30),
               SizedBox(width: 8),
               Text(
                 buildItemText(profile),

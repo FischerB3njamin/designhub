@@ -51,7 +51,7 @@ class ChatDetailItemReciever extends StatelessWidget {
           AvatarCircle(
             width: 50,
             height: 50,
-            profilId: profileController.getCurrentProfile().userId,
+            profile: profileController.getCurrentProfile(),
           ),
         ],
       ),

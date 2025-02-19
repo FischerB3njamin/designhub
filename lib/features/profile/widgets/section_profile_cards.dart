@@ -1,27 +1,33 @@
+import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/posts/widgets/card_with_profile_name.dart';
 import 'package:designhub/features/posts/widgets/card_with_title.dart';
-import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 import 'package:flutter/material.dart';
 
 class SectionProfilCard extends StatefulWidget {
   final Profile profile;
   final String type;
-  const SectionProfilCard(
-      {super.key, required this.profile, required this.type});
+  final List<Post> posts;
+  final List<Profile> profiles;
+
+  const SectionProfilCard({
+    super.key,
+    required this.profile,
+    required this.type,
+    required this.posts,
+    required this.profiles,
+  });
 
   @override
   State<SectionProfilCard> createState() => _SectionProfilCardState();
 }
 
 class _SectionProfilCardState extends State<SectionProfilCard> {
-  ProfileController profileController = ProfileController();
-
   @override
   Widget build(BuildContext context) {
     List<String> postIds = widget.type == 'title'
-        ? profileController.getProfile(widget.profile.userId).posts
-        : profileController.getProfile(widget.profile.userId).savedPosts;
+        ? widget.profile.posts
+        : widget.profile.savedPosts;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -33,12 +39,28 @@ class _SectionProfilCardState extends State<SectionProfilCard> {
           crossAxisSpacing: 8,
           children: [
             ...postIds.map(
-              (e) => widget.type == 'title'
-                  ? CardWithTitle(postId: e)
+              (postId) => widget.type == 'title'
+                  ? CardWithTitle(
+                      post: widget.posts
+                          .firstWhere((post) => post.postId == postId),
+                      profile: widget.profiles.firstWhere((e) =>
+                          e.userId ==
+                          widget.posts
+                              .firstWhere((post) => post.postId == postId)
+                              .userId),
+                    )
                   : CardWithProfileName(
-                      postId: e, callback: () => setState(() {})),
+                      post: widget.posts
+                          .firstWhere((post) => post.postId == postId),
+                      callback: () => setState(() {}),
+                      profile: widget.profiles.firstWhere((e) =>
+                          e.userId ==
+                          widget.posts
+                              .firstWhere((post) => post.postId == postId)
+                              .userId),
+                    ),
             ),
-            SizedBox(height: 10)
+            SizedBox(height: 10),
           ],
         ),
       ),

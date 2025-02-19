@@ -2,17 +2,14 @@ import 'package:designhub/features/profile/models/profile.dart';
 
 abstract class ProfileRepo {
   late Profile? currentProfile;
-
-  void setCurrentProfile(String id);
-
-  Profile getProfile(String userId);
-  void createProfile(String name, String userId);
-
-  void saveLike(Profile profile, String postId);
-  void removeLike(Profile profile, String postId);
-
-  void savePost(Profile profile, String postId);
-  void removeSavePost(Profile profile, String postId);
-  void addPost(String postId);
-  void logout();
+  Future<void> setCurrentProfile(Profile profile);
+  Future<Profile> getProfile(String userId);
+  Future<Profile> createProfile(String name, String userId);
+  Future<void> saveLike(Profile profile, String postId);
+  Future<void> removeLike(Profile profile, String postId);
+  Future<void> savePost(Profile profile, String postId);
+  Future<void> removeSavePost(Profile profile, String postId);
+  Future<void> addPost(String postId);
+  Future<void> logout();
+  Future<List<Profile>> getProfilesById(Set<String> profileIds);
 }

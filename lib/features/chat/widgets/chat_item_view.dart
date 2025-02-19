@@ -10,24 +10,15 @@ import 'package:flutter/material.dart';
 class ChatItemView extends StatelessWidget {
   final Chat chat;
   final ProfileController profileController = ProfileController();
-
+  final Profile senderProfile;
   ChatItemView({
     super.key,
     required this.chat,
+    required this.senderProfile,
   });
-
-  Profile getProfileFromParticipants() {
-    for (final userId in chat.participants) {
-      if (profileController.getCurrentProfile().userId != userId) {
-        return profileController.getProfile(userId);
-      }
-    }
-    throw Exception('No participants found');
-  }
 
   @override
   Widget build(BuildContext context) {
-    Profile senderProfile = getProfileFromParticipants();
     return GestureDetector(
       onTap: () => CustomBottomSheet.show(
         context,
@@ -49,8 +40,7 @@ class ChatItemView extends StatelessWidget {
           ),
           child: Row(
             children: [
-              AvatarCircle(
-                  profilId: senderProfile.userId, height: 50, width: 50),
+              AvatarCircle(profile: senderProfile, height: 50, width: 50),
               SizedBox(width: 8),
               Expanded(
                 child: Column(

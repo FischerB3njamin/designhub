@@ -28,7 +28,7 @@ class SectionChatHeader extends StatelessWidget {
               AvatarCircle(
                 width: 50,
                 height: 50,
-                profilId: senderProfile.userId,
+                profile: senderProfile,
               ),
               SizedBox(width: 8),
               Text(

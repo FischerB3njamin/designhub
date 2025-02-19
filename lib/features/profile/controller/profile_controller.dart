@@ -5,25 +5,29 @@ import 'package:designhub/features/profile/models/profile.dart';
 class ProfileController {
   ProfileRepo repo = ProfileMockDB();
   void logout() => repo.logout();
-  Profile getProfile(String userId) => repo.getProfile(userId);
+  Future<Profile> getProfile(String userId) => repo.getProfile(userId);
 
-  void setCurrentProfile(String id) => repo.setCurrentProfile(id);
+  Future<void> setCurrentProfile(Profile profile) =>
+      repo.setCurrentProfile(profile);
 
   Profile getCurrentProfile() => repo.currentProfile!;
 
-  void createProfile(String name, String userId) =>
+  Future<Profile> createProfile(String name, String userId) =>
       repo.createProfile(name, userId);
 
-  void saveLike(Profile profile, String postId) =>
+  Future<void> saveLike(Profile profile, String postId) =>
       repo.saveLike(profile, postId);
 
-  void removeLike(Profile profile, String postId) =>
+  Future<void> removeLike(Profile profile, String postId) =>
       repo.removeLike(profile, postId);
 
-  void removeSavePost(Profile profile, String postId) =>
+  Future<void> removeSavePost(Profile profile, String postId) =>
       repo.removeSavePost(profile, postId);
 
-  void savePost(Profile profile, String postId) =>
+  Future<void> savePost(Profile profile, String postId) =>
       repo.savePost(profile, postId);
-  void addPost(String postId) => repo.addPost(postId);
+  Future<void> addPost(String postId) => repo.addPost(postId);
+
+  Future<List<Profile>> getProfilesById(Set<String> profileIds) =>
+      repo.getProfilesById(profileIds);
 }

@@ -1,38 +1,43 @@
-import 'package:designhub/features/posts/controller/post_controller.dart';
 import 'package:designhub/features/posts/view/post_detail_view.dart';
-import 'package:designhub/features/profile/controller/profile_controller.dart';
+import 'package:designhub/features/posts/models/post.dart';
+import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
+import 'package:designhub/shared/widgets/avatar_circle.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
-class CardWithProfileName extends StatelessWidget {
-  final String postId;
+class CardWithProfileName extends StatefulWidget {
+  final Post post;
   final Function callback;
-  final postController = PostController();
-  final profileController = ProfileController();
-  late final post = postController.getPostById(postId);
-  late final profile = profileController.getProfile(post.userId);
-  CardWithProfileName({
+  final Profile profile;
+  const CardWithProfileName({
     super.key,
-    required this.postId,
+    required this.post,
     required this.callback,
+    required this.profile,
   });
+
+  @override
+  State<CardWithProfileName> createState() => _CardWithProfileNameState();
+}
+
+class _CardWithProfileNameState extends State<CardWithProfileName> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
         await CustomBottomSheet.showAsync(
-            context, PostDetailView(post: post), 0.9);
-        callback();
+            context,
+            PostDetailView(
+              post: widget.post,
+              profile: widget.profile,
+            ),
+            0.9);
+        widget.callback();
       },
       child: SizedBox.expand(
         child: Card(
-          shape: RoundedRectangleBorder(
-            side: BorderSide(color: DesignhubColors.black12),
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(16)),
-          ),
+          // ... (der Rest des Widget-Codes)
           child: Stack(
             children: [
               Positioned(
@@ -44,7 +49,7 @@ class CardWithProfileName extends StatelessWidget {
                         bottomRight: Radius.circular(24)),
                   ),
                   child: Image.network(
-                    post.images.first,
+                    widget.post.images.first,
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: double.infinity,
@@ -66,21 +71,11 @@ class CardWithProfileName extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Container(
-                        clipBehavior: Clip.hardEdge,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: Image.network(
-                          profile.avatarImagePath,
-                          width: 40,
-                          height: 40,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                      AvatarCircle(
+                          profile: widget.profile, height: 40, width: 40),
                       SizedBox(width: 8),
                       Text(
-                        profile.name,
+                        widget.profile.name,
                         style: TextTheme.of(context).bodyLarge,
                         textAlign: TextAlign.center,
                       ),

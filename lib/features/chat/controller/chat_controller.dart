@@ -6,7 +6,7 @@ import 'package:designhub/features/chat/models/chat_item.dart';
 class ChatController {
   ChatRepo repo = ChatMockDB();
 
-  List<Chat> getChats() => repo.getChats();
-  void addNewMessage(Chat chat, ChatItem chatItem) =>
+  Future<List<Chat>> getChats() => repo.getChats();
+  Future<void> addNewMessage(Chat chat, ChatItem chatItem) async =>
       repo.addNewMessage(chat, chatItem);
 }

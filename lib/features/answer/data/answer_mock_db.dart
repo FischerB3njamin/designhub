@@ -12,9 +12,9 @@ class AnswerMockDb extends AnswerRepo {
   List<Answer> data = [];
 
   @override
-  void addAnswerItem(String postId, String question, String text, String userId,
-      QuestionType type) {
-    Answer? answer = getAnswer(postId, question);
+  Future<void> addAnswerItem(String postId, String question, String text,
+      String userId, QuestionType type) async {
+    Answer? answer = await getAnswer(postId, question);
 
     if (answer == null) {
       data.add(Answer(
@@ -28,11 +28,12 @@ class AnswerMockDb extends AnswerRepo {
   }
 
   @override
-  Answer? getAnswer(String postId, String question) {
+  Future<Answer?> getAnswer(String postId, String question) {
     final result = data
         .where((e) => e.postId == postId && e.question == question)
         .toList();
 
-    return result.isNotEmpty ? result.first : null;
+    return Future.delayed(
+        Duration(seconds: 1), () => result.isNotEmpty ? result.first : null);
   }
 }

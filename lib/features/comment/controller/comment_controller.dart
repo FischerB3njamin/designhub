@@ -5,8 +5,9 @@ import 'package:designhub/features/comment/models/comment_item.dart';
 class CommentController {
   CommentsRepo repo = CommentMockDb();
 
-  void addComment(String postId, CommentItem comment) =>
+  Future<void> addComment(String postId, CommentItem comment) =>
       repo.addComment(postId, comment);
 
-  List<CommentItem> getComments(String postId) => repo.getComments(postId);
+  Future<List<CommentItem>> getComments(String postId) =>
+      repo.getComments(postId);
 }

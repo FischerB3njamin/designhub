@@ -2,6 +2,9 @@ import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 ThemeData getCustomTheme() => ThemeData(
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: DesignhubColors.primary, // Or your DesignhubColors.primary
+      ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: Color.fromRGBO(0, 0, 0, .06),

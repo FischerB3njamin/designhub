@@ -17,7 +17,6 @@ class SectionChatInput extends StatelessWidget {
       children: [
         Expanded(
           child: SizedBox(
-            height: 44,
             child: TextField(
               controller: messageController,
               maxLines: null,
