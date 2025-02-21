@@ -1,9 +1,10 @@
 import 'package:designhub/features/answer/controller/answer_controller.dart';
 import 'package:designhub/features/answer/models/answer.dart';
 import 'package:designhub/features/answer/models/answer_item.dart';
+import 'package:designhub/features/answer/widgets/section_closed_answer.dart';
+import 'package:designhub/features/answer/widgets/section_open_answer.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/features/question/models/question_type.dart';
-import 'package:designhub/shared/widgets/avatar_circle.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -90,89 +91,5 @@ class _AnswerPageState extends State<AnswerPage> {
             child: CircularProgressIndicator(),
           );
         });
-  }
-}
-
-class SectionClosedAnswer extends StatelessWidget {
-  final List<AnswerItem> items;
-  final Answer answer;
-  late Map<String, int> answerWithCounter = {};
-  final Profile profile;
-
-  SectionClosedAnswer({
-    super.key,
-    required this.items,
-    required this.answer,
-    required this.profile,
-  });
-
-  Map<String, int> calculateAnswers() {
-    Map<String, int> answerWithCounter = {};
-
-    for (final item in items) {
-      answerWithCounter[item.text] = (answerWithCounter[item.text] ?? 0) + 1;
-    }
-
-    return answerWithCounter;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    answerWithCounter =
-        answerWithCounter.isEmpty ? calculateAnswers() : answerWithCounter;
-    return Column(
-      children: [
-        for (final key in answerWithCounter.keys)
-          Container(
-            padding: EdgeInsets.all(8),
-            child: Row(
-              children: [
-                Container(
-                  height: 25,
-                  width: 25,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 4),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                SizedBox(
-                  width: 6,
-                ),
-                Text(
-                  key,
-                  style: TextTheme.of(context).bodyLarge,
-                ),
-                Spacer(),
-                Text(
-                  answerWithCounter[key].toString(),
-                  style: TextTheme.of(context)
-                      .bodyLarge!
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          )
-      ],
-    );
-  }
-}
-
-class SectionOpenAnswer extends StatelessWidget {
-  final AnswerItem item;
-  final Profile profile;
-
-  const SectionOpenAnswer({
-    super.key,
-    required this.item,
-    required this.profile,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(children: [
-      AvatarCircle(profile: profile, height: 30, width: 30),
-      SizedBox(width: 6),
-      Text(item.text)
-    ]);
   }
 }
