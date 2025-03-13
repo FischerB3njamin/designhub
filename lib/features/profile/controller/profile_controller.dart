@@ -30,4 +30,7 @@ class ProfileController {
 
   Future<List<Profile>> getProfilesById(Set<String> profileIds) =>
       repo.getProfilesById(profileIds);
+
+  Future<void> updateProfile(Profile oldProfile, Profile newProfile) =>
+      repo.updateProfile(oldProfile, newProfile);
 }

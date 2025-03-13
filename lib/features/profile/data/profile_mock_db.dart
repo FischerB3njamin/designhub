@@ -64,4 +64,12 @@ class ProfileMockDB extends ProfileRepo {
       return data.where((e) => profileIds.contains(e.userId)).toList();
     });
   }
+
+  @override
+  Future<void> updateProfile(Profile oldProfile, Profile newProfile) async {
+    return Future.delayed(Duration(seconds: 1), () {
+      data[data.indexOf(oldProfile)] = newProfile;
+      setCurrentProfile(newProfile);
+    });
+  }
 }

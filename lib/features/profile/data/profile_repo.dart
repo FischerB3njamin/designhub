@@ -12,4 +12,5 @@ abstract class ProfileRepo {
   Future<void> addPost(String postId);
   Future<void> logout();
   Future<List<Profile>> getProfilesById(Set<String> profileIds);
+  Future<void> updateProfile(Profile oldProfile, Profile newProfile);
 }

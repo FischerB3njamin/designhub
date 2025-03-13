@@ -24,6 +24,5 @@ class NewsMockDB extends NewsRepo {
   @override
   Future<void> addNews(news) async {
     data.add(news);
-    print(news);
   }
 }
