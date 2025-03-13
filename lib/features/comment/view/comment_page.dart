@@ -36,17 +36,19 @@ class _CommentPageState extends State<CommentPage> {
     super.dispose();
   }
 
-  void saveComment() {
+  void saveComment() async {
     CommentItem newComment = createComment();
     newMessageController.clear();
-    commentController.addComment(widget.postId, newComment);
+    await commentController.addComment(widget.postId, newComment);
     newsController.addNews(News(
         profilId: widget.creatorId,
         date:
             "${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year}",
         type: NewsType.comment,
         read: false));
-    setState(() {});
+
+    setState(() => loading = true);
+    _loading();
   }
 
   CommentItem createComment() {

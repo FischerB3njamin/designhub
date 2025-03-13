@@ -6,10 +6,9 @@ import 'package:flutter/material.dart';
 class SectionClosedAnswer extends StatelessWidget {
   final List<AnswerItem> items;
   final Answer answer;
-  late Map<String, int> answerWithCounter = {};
   final Profile profile;
 
-  SectionClosedAnswer({
+  const SectionClosedAnswer({
     super.key,
     required this.items,
     required this.answer,
@@ -28,8 +27,8 @@ class SectionClosedAnswer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    answerWithCounter =
-        answerWithCounter.isEmpty ? calculateAnswers() : answerWithCounter;
+    final Map<String, int> answerWithCounter = calculateAnswers();
+
     return Column(
       children: [
         for (final key in answerWithCounter.keys)
