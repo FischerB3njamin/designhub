@@ -80,6 +80,7 @@ class SectionRatingOverview extends StatelessWidget {
                           profileController.getCurrentProfile().userId,
                           questions[answers.indexOf(item)].type);
                     }
+
                     CustomBottomSheet.show(context, RatingDone(post: post), 1);
                   },
                   child: Padding(

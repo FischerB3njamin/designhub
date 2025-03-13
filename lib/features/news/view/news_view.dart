@@ -32,8 +32,11 @@ class _NewsViewState extends State<NewsView> {
 
   @override
   Widget build(BuildContext context) {
-    List<News> news =
-        widget.smallView ? widget.news.sublist(0, 5) : widget.news;
+    List<News> news = widget.news;
+    if (widget.news.length > 5) {
+      news = widget.smallView ? widget.news.sublist(0, 5) : widget.news;
+    }
+
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 16.0,

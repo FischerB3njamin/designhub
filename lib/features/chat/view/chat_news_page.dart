@@ -23,7 +23,7 @@ class _ChatNewsPageState extends State<ChatNewsPage> {
   List<News>? news;
   List<Chat>? chats;
   List<Profile>? profiles;
-  Profile? currentUser;
+  late Profile currentUser;
   @override
   void initState() {
     super.initState();
@@ -33,17 +33,13 @@ class _ChatNewsPageState extends State<ChatNewsPage> {
   }
 
   _loadNews() async {
-    newsController.getNews().then((e) {
-      news = e;
-      _loadProfiles();
-    });
+    news = await newsController.getNews(currentUser.userId);
+    _loadProfiles();
   }
 
   _loadChats() async {
-    chatController.getChats().then((e) {
-      chats = e;
-      _loadProfiles();
-    });
+    chats = await chatController.getChats();
+    _loadProfiles();
   }
 
   _loadProfiles() async {
@@ -51,7 +47,7 @@ class _ChatNewsPageState extends State<ChatNewsPage> {
       Set<String> profileIds = {};
       profileIds.addAll(news!.map((a) => a.profilId).toSet());
       profileIds.addAll(chats!
-          .map((a) => convertParticipants(a.participants, currentUser!))
+          .map((a) => convertParticipants(a.participants, currentUser))
           .toSet());
       profileController.getProfilesById(profileIds).then((value) {
         profiles = value;
@@ -86,7 +82,7 @@ class _ChatNewsPageState extends State<ChatNewsPage> {
                 isSmallView: true,
                 chats: chats!,
                 profiles: profiles!,
-                currentUser: currentUser!),
+                currentUser: currentUser),
           )
         ],
       ),

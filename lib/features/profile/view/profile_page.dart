@@ -1,3 +1,6 @@
+import 'package:designhub/features/news/controller/news_controller.dart';
+import 'package:designhub/features/news/models/news.dart';
+import 'package:designhub/features/news/models/news_type.dart';
 import 'package:designhub/features/posts/controller/post_controller.dart';
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/profile/controller/profile_controller.dart';
@@ -24,17 +27,48 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final profileController = ProfileController();
   final postController = PostController();
+  final newsController = NewsController();
   Set<String> tabBar = {"Work", "Info", "Saved"};
   String selectedTab = "Info";
   List<Post>? posts;
   List<Profile>? profiles;
   bool isLoading = true;
   String? errorMessage;
+  late Map pages;
+  List<News> news = [];
 
   @override
   void initState() {
     super.initState();
     _loadData();
+    loadNews();
+  }
+
+  void initPages() {
+    pages = {
+      'Work': SectionProfilCard(
+          profile: widget.profile,
+          type: "title",
+          posts: posts!,
+          profiles: profiles!,
+          news: news),
+      'Info': ProfileInfo(
+        profile: widget.profile,
+      ),
+      'Saved': SectionProfilCard(
+        profile: widget.profile,
+        type: "name",
+        posts: posts!,
+        profiles: profiles!,
+        news: news,
+      )
+    };
+    setState(() {});
+  }
+
+  void loadNews() async {
+    news = await newsController.getNews(widget.profile.userId);
+    news = news.where((e) => e.type == NewsType.feedback && !e.read).toList();
   }
 
   Future<void> _loadData() async {
@@ -47,16 +81,20 @@ class _ProfilePageState extends State<ProfilePage> {
       Set<String> profileIds = posts!.map((e) {
         return e.userId;
       }).toSet();
+
       profiles = await profileController.getProfilesById(profileIds);
 
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted) {
+        initPages();
+        setState(() => isLoading = false);
+      }
     } catch (e) {
-      setState(() {
-        isLoading = false;
-        errorMessage = 'Fehler beim Laden der Daten';
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+          errorMessage = 'Fehler beim Laden der Daten';
+        });
+      }
     }
   }
 
@@ -67,23 +105,6 @@ class _ProfilePageState extends State<ProfilePage> {
         child: CircularProgressIndicator(),
       );
     }
-    Map pages = {
-      'Work': SectionProfilCard(
-        profile: widget.profile,
-        type: "title",
-        posts: posts!,
-        profiles: profiles!,
-      ),
-      'Info': ProfileInfo(
-        profile: widget.profile,
-      ),
-      'Saved': SectionProfilCard(
-        profile: widget.profile,
-        type: "name",
-        posts: posts!,
-        profiles: profiles!,
-      )
-    };
 
     return ListView(
       children: [

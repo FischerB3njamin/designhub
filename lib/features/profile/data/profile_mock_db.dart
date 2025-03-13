@@ -26,7 +26,7 @@ class ProfileMockDB extends ProfileRepo {
 
   @override
   Future<Profile> createProfile(String name, String userId) async =>
-      Future.delayed(Duration(seconds: 3), () {
+      Future.delayed(Duration(seconds: 1), () {
         Profile newProfile = Profile(name: name, userId: userId);
         data.add(newProfile);
         return newProfile;
@@ -60,7 +60,7 @@ class ProfileMockDB extends ProfileRepo {
 
   @override
   Future<List<Profile>> getProfilesById(Set<String> profileIds) async {
-    return Future.delayed(Duration(seconds: 2), () {
+    return Future.delayed(Duration(seconds: 1), () {
       return data.where((e) => profileIds.contains(e.userId)).toList();
     });
   }

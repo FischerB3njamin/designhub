@@ -1,6 +1,9 @@
 import 'package:designhub/features/chat/view/chat_news_page.dart';
+import 'package:designhub/features/news/controller/news_controller.dart';
+import 'package:designhub/features/news/models/news.dart';
 import 'package:designhub/features/posts/view/new_post_page.dart';
 import 'package:designhub/features/profile/controller/profile_controller.dart';
+import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/features/home/view/home_page.dart';
 import 'package:designhub/features/navigation/data/navigation_data.dart';
@@ -21,17 +24,31 @@ class NavigationPage extends StatefulWidget {
 class _NavigationPageState extends State<NavigationPage> {
   late int activeIndex = widget.index;
   final ProfileController profileController = ProfileController();
-
+  final NewsController newsController = NewsController();
+  late bool hasNews = false;
+  late bool isLoading = true;
   late List<Widget> pages;
+  late Profile currentProfile;
+
+  void fetchNews() async {
+    List<News> news = await newsController.getNews(currentProfile.userId);
+
+    if (news.where((element) => !element.read).isNotEmpty) {
+      setState(() => hasNews = true);
+    }
+    setState(() => isLoading = false);
+  }
 
   @override
   void initState() {
+    currentProfile = profileController.getCurrentProfile();
     super.initState();
+    fetchNews();
     pages = [
       HomePage(),
       ChatNewsPage(),
       RatingOverviewPage(),
-      ProfilePage(profile: profileController.getCurrentProfile())
+      ProfilePage(profile: currentProfile)
     ];
   }
 
@@ -43,7 +60,11 @@ class _NavigationPageState extends State<NavigationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: DesignhubColors.white,
-      body: pages[activeIndex],
+      body: isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : pages[activeIndex],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Transform.translate(
         offset: Offset(0, 5),
@@ -77,8 +98,11 @@ class _NavigationPageState extends State<NavigationPage> {
                       if (entry.key == 2) {
                         returnList.add(SizedBox(width: 80));
                       }
+
                       returnList.add(NavigationItem(
-                        icon: entry.value.icon,
+                        icon: entry.value.label == 'News' && hasNews
+                            ? Assets.icons.newsNew
+                            : entry.value.icon,
                         isSelected: activeIndex == entry.key,
                         callback: handleIconTap,
                         index: entry.key,

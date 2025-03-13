@@ -3,11 +3,11 @@ import 'package:designhub/features/news/models/news_type.dart';
 
 final List<News> newsData = [
   News(
-    read: false,
-    profilId: 'uid-0004',
-    date: '30.11',
-    type: NewsType.follow,
-  ),
+      read: false,
+      profilId: 'uid-0001',
+      date: '30.11',
+      type: NewsType.feedback,
+      postId: "po-007"),
   News(
     read: false,
     profilId: 'uid-0007',

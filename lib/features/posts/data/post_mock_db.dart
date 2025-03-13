@@ -37,7 +37,7 @@ class PostMockDB extends PostRepo {
 
   @override
   Future<List<Post>> getPostsById(Set<String> postIds) {
-    return Future.delayed(Duration(seconds: 2), () {
+    return Future.delayed(Duration(seconds: 1), () {
       return data.where((e) => postIds.contains(e.postId)).toList();
     });
   }

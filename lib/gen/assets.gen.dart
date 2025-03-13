@@ -51,6 +51,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/logout.svg
   SvgGenImage get logout => const SvgGenImage('assets/icons/logout.svg');
 
+  /// File path: assets/icons/news_new.svg
+  SvgGenImage get newsNew => const SvgGenImage('assets/icons/news_new.svg');
+
   /// File path: assets/icons/open.png
   AssetGenImage get open => const AssetGenImage('assets/icons/open.png');
 
@@ -83,6 +86,7 @@ class $AssetsIconsGen {
         home,
         like,
         logout,
+        newsNew,
         open,
         profile,
         rating,

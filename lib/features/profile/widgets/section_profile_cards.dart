@@ -1,3 +1,4 @@
+import 'package:designhub/features/news/models/news.dart';
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/posts/widgets/card_with_profile_name.dart';
 import 'package:designhub/features/posts/widgets/card_with_title.dart';
@@ -9,6 +10,7 @@ class SectionProfilCard extends StatefulWidget {
   final String type;
   final List<Post> posts;
   final List<Profile> profiles;
+  final List<News> news;
 
   const SectionProfilCard({
     super.key,
@@ -16,6 +18,7 @@ class SectionProfilCard extends StatefulWidget {
     required this.type,
     required this.posts,
     required this.profiles,
+    required this.news,
   });
 
   @override
@@ -23,12 +26,21 @@ class SectionProfilCard extends StatefulWidget {
 }
 
 class _SectionProfilCardState extends State<SectionProfilCard> {
+  Profile getProfile(String postId) => widget.profiles.firstWhere((e) =>
+      e.userId ==
+      widget.posts
+          .firstWhere(
+            (post) => post.postId == postId,
+          )
+          .userId);
+
+  Post getPost(String postId) =>
+      widget.posts.firstWhere((post) => post.postId == postId);
   @override
   Widget build(BuildContext context) {
     List<String> postIds = widget.type == 'title'
         ? widget.profile.posts
         : widget.profile.savedPosts;
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: SizedBox(
@@ -48,7 +60,9 @@ class _SectionProfilCardState extends State<SectionProfilCard> {
                           widget.posts
                               .firstWhere((post) => post.postId == postId)
                               .userId),
-                    )
+                      newRating: widget.news
+                          .where((e) => postId == e.postId)
+                          .isNotEmpty)
                   : CardWithProfileName(
                       post: widget.posts
                           .firstWhere((post) => post.postId == postId),

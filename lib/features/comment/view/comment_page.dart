@@ -2,13 +2,21 @@ import 'package:designhub/features/chat/widgets/section_chat_input.dart';
 import 'package:designhub/features/comment/controller/comment_controller.dart';
 import 'package:designhub/features/comment/models/comment_item.dart';
 import 'package:designhub/features/comment/widgets/comment_detail.dart';
+import 'package:designhub/features/news/controller/news_controller.dart';
+import 'package:designhub/features/news/models/news.dart';
+import 'package:designhub/features/news/models/news_type.dart';
 import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 import 'package:flutter/material.dart';
 
 class CommentPage extends StatefulWidget {
-  const CommentPage({super.key, required this.postId});
+  const CommentPage({
+    super.key,
+    required this.postId,
+    required this.creatorId,
+  });
   final String postId;
+  final String creatorId;
   @override
   State<CommentPage> createState() => _CommentPageState();
 }
@@ -17,8 +25,10 @@ class _CommentPageState extends State<CommentPage> {
   CommentController commentController = CommentController();
   ProfileController profileController = ProfileController();
   TextEditingController newMessageController = TextEditingController();
-  List<CommentItem>? comments;
-  List<Profile>? profiles;
+  NewsController newsController = NewsController();
+  List<CommentItem> comments = [];
+  List<Profile> profiles = [];
+  bool loading = true;
 
   @override
   void dispose() {
@@ -30,11 +40,17 @@ class _CommentPageState extends State<CommentPage> {
     CommentItem newComment = createComment();
     newMessageController.clear();
     commentController.addComment(widget.postId, newComment);
+    newsController.addNews(News(
+        profilId: widget.creatorId,
+        date:
+            "${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year}",
+        type: NewsType.comment,
+        read: false));
     setState(() {});
   }
 
   CommentItem createComment() {
-    profiles!.add(profileController.getCurrentProfile());
+    profiles.add(profileController.getCurrentProfile());
     return CommentItem(
         profilId: profileController.getCurrentProfile().userId,
         text: newMessageController.text);
@@ -42,28 +58,30 @@ class _CommentPageState extends State<CommentPage> {
 
   @override
   void initState() {
-    commentController.getComments(widget.postId).then((result) {
-      comments = result;
+    _loading();
+    super.initState();
+  }
 
-      Set<String> profileIds = result.map((e) => e.profilId).toSet();
+  void _loading() async {
+    comments = await commentController.getComments(widget.postId);
+    if (comments.isNotEmpty) {
+      Set<String> profileIds = comments.map((e) => e.profilId).toSet();
 
       if (profileIds.isNotEmpty) {
-        profileController.getProfilesById(profileIds).then((value) {
-          profiles = value;
-          setState(() {});
-          return;
-        });
+        profiles = await profileController.getProfilesById(profileIds);
+        loading = false;
+        setState(() {});
+        return;
       }
+    }
 
-      profiles = [];
-      setState(() {});
-    });
-    super.initState();
+    loading = false;
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return comments == null || profiles == null
+    return loading
         ? Center(
             child: CircularProgressIndicator(),
           )
@@ -88,11 +106,11 @@ class _CommentPageState extends State<CommentPage> {
                 Expanded(
                   child: ListView(
                     shrinkWrap: true,
-                    children: comments!
+                    children: comments
                         .map(
                           (e) => CommentDetail(
                             comment: e,
-                            profile: profiles!.firstWhere(
+                            profile: profiles.firstWhere(
                                 (profile) => profile.userId == e.profilId),
                           ),
                         )

@@ -8,11 +8,13 @@ import 'package:flutter/material.dart';
 class CardWithTitle extends StatefulWidget {
   final Post post;
   final Profile profile;
+  final bool newRating;
 
   const CardWithTitle({
     super.key,
     required this.post,
     required this.profile,
+    required this.newRating,
   });
 
   @override
@@ -32,6 +34,14 @@ class _CardWithTitleState extends State<CardWithTitle> {
         0.9,
       ),
       child: Card(
+        clipBehavior: Clip.hardEdge,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: BorderSide(
+                color: widget.newRating
+                    ? DesignhubColors.primary
+                    : DesignhubColors.transparent,
+                width: 3)),
         child: Stack(
           children: [
             Positioned(

@@ -10,9 +10,9 @@ class NewsMockDB extends NewsRepo {
   List<News> data = newsData;
 
   @override
-  Future<List<News>> getNews() async {
+  Future<List<News>> getNews(String profileId) async {
     return Future.delayed(Duration(seconds: 1), () {
-      return data;
+      return data.where((element) => element.profilId == profileId).toList();
     });
   }
 
@@ -24,5 +24,6 @@ class NewsMockDB extends NewsRepo {
   @override
   Future<void> addNews(news) async {
     data.add(news);
+    print(news);
   }
 }

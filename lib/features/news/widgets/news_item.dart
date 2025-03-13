@@ -48,9 +48,11 @@ class _NewsItemState extends State<NewsItem> {
   }
 
   void handleNavigation(BuildContext context, Profile profile) async {
-    Post post = await postController.getPostById(widget.news.postId!);
-    if (mounted) {
-      navigation(profile, post);
+    if (widget.news.postId != null) {
+      Post post = await postController.getPostById(widget.news.postId!);
+      if (mounted) {
+        navigation(profile, post);
+      }
     }
   }
 

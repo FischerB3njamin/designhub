@@ -29,9 +29,12 @@ class NavigationItem extends StatelessWidget {
           spacing: 0,
           children: [
             icon.svg(
+              width: 25,
+              height: 25,
+              fit: BoxFit.cover,
               colorFilter: isSelected
                   ? ColorFilter.mode(DesignhubColors.primary, BlendMode.srcIn)
-                  : ColorFilter.mode(DesignhubColors.black, BlendMode.srcIn),
+                  : null,
             ),
             if (isSelected)
               Text(

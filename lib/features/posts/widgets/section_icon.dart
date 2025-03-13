@@ -38,7 +38,12 @@ class _SectionIconState extends State<SectionIcon> {
           BtnLike(postId: widget.post.postId),
           IconButton(
               onPressed: () => CustomBottomSheet.show(
-                  context, CommentPage(postId: widget.post.postId), 0.5),
+                  context,
+                  CommentPage(
+                    postId: widget.post.postId,
+                    creatorId: widget.post.userId,
+                  ),
+                  0.5),
               icon: Assets.icons.open.image(height: 30, width: 30)),
           IconButton(
               onPressed: () {},

@@ -46,6 +46,7 @@ class _LoginState extends State<Login> {
     } else {
       setState(() {
         isError = true;
+        logginIsRunning = false;
       });
     }
   }

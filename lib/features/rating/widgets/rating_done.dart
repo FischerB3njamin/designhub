@@ -1,4 +1,7 @@
 import 'package:designhub/features/navigation/view/navigation_page.dart';
+import 'package:designhub/features/news/controller/news_controller.dart';
+import 'package:designhub/features/news/models/news.dart';
+import 'package:designhub/features/news/models/news_type.dart';
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/models/profile.dart';
@@ -9,7 +12,7 @@ import 'package:flutter/material.dart';
 class RatingDone extends StatelessWidget {
   final Post post;
   final controller = ProfileController();
-
+  final newsController = NewsController();
   RatingDone({
     super.key,
     required this.post,
@@ -26,6 +29,12 @@ class RatingDone extends StatelessWidget {
           return Center(child: Text('Fehler beim Laden des Profils'));
         } else if (snapshot.hasData) {
           final creator = snapshot.data!;
+          newsController.addNews(News(
+              profilId: creator.userId,
+              date:
+                  "${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year}",
+              type: NewsType.feedback,
+              read: false));
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
