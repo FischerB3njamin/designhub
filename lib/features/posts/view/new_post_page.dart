@@ -8,6 +8,7 @@ import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/question/controller/question_controller.dart';
 import 'package:designhub/features/question/models/question.dart';
 import 'package:designhub/features/posts/widgets/section_question.dart';
+import 'package:designhub/features/question/models/roll_out_type.dart';
 import 'package:flutter/material.dart';
 
 class NewPostPage extends StatefulWidget {
@@ -18,10 +19,11 @@ class NewPostPage extends StatefulWidget {
 }
 
 class _NewPostPageState extends State<NewPostPage> {
+  final _formKey = GlobalKey<FormState>();
   final postController = PostController();
   final questionController = QuestionController();
   final profileController = ProfileController();
-
+  bool questionError = false;
   String title = '';
   String description = '';
   String hashtag = '';
@@ -30,24 +32,44 @@ class _NewPostPageState extends State<NewPostPage> {
   List<Question> questions = [];
 
   void createPost() async {
-    Post post = Post(
-        postId: await postController.createPostId(),
-        title: title,
-        description: description,
-        hashtags: hashtag,
-        images: uploadedImage,
-        userId: profileController.getCurrentProfile().userId);
+    if (!_formKey.currentState!.validate() || uploadedImage.isEmpty) return;
 
+    if (!areQuestionsValid()) {
+      setState(() => questionError = true);
+      return;
+    }
+
+    Post post = await _createNewPost();
     postController.createPost(post);
-    // add question
     questionController.addQuestionCatalog(post.postId, questions);
-
-    // add it to the profile
     profileController.addPost(post.postId);
+
     if (mounted) {
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (c) => NavigationPage()));
     }
+  }
+
+  bool areQuestionsValid() {
+    bool hasBoth =
+        questions.any((question) => question.rollOut == RollOutType.both);
+    bool hasLike =
+        questions.any((question) => question.rollOut == RollOutType.like);
+    bool hasDislike =
+        questions.any((question) => question.rollOut == RollOutType.dislike);
+
+    return questions.isNotEmpty && (hasBoth || (hasLike && hasDislike));
+  }
+
+  Future<Post> _createNewPost() async {
+    return Post(
+      postId: await postController.createPostId(),
+      title: title,
+      description: description,
+      hashtags: hashtag,
+      images: uploadedImage,
+      userId: profileController.getCurrentProfile().userId,
+    );
   }
 
   @override
@@ -56,34 +78,38 @@ class _NewPostPageState extends State<NewPostPage> {
         body: SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            SectionHeader(),
-            SizedBox(height: 16),
-            SectionInputfields(
-              titleCallback: (e) => setState(() => title = e),
-              hashtagCallback: (e) => setState(() => hashtag = e),
-              descriptionCallback: (e) => setState(() => description = e),
-            ),
-            SizedBox(height: 24),
-            SectionImage(
-              callback: (e) => setState(() => uploadedImage = e),
-              uploadedImage: uploadedImage,
-            ),
-            SizedBox(height: 16),
-            if (uploadedImage.isNotEmpty)
-              SectionQuestion(callback: (e) => setState(() => questions = e)),
-            ElevatedButton(
-              onPressed: createPost,
-              child: SizedBox(
-                width: double.infinity,
-                child: Text(
-                  "create Post",
-                  textAlign: TextAlign.center,
-                ),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: [
+              SectionHeader(),
+              SizedBox(height: 16),
+              SectionInputfields(
+                  titleCallback: (e) => setState(() => title = e),
+                  hashtagCallback: (e) => setState(() => hashtag = e),
+                  descriptionCallback: (e) => setState(() => description = e),
+                  formKey: _formKey),
+              SizedBox(height: 24),
+              SectionImage(
+                callback: (e) => setState(() => uploadedImage = e),
+                uploadedImage: uploadedImage,
               ),
-            )
-          ],
+              SizedBox(height: 16),
+              if (uploadedImage.isNotEmpty)
+                SectionQuestion(callback: (e) => setState(() => questions = e)),
+              if (questionError) Text("Add a question for each type!"),
+              ElevatedButton(
+                onPressed: questions.isEmpty ? null : createPost,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    "Create Post",
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     ));

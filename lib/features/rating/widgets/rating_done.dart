@@ -18,6 +18,11 @@ class RatingDone extends StatelessWidget {
     required this.post,
   });
 
+  void _navigation(BuildContext context, Widget page) {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => page));
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Profile>(
@@ -26,7 +31,7 @@ class RatingDone extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return Center(child: Text('Fehler beim Laden des Profils'));
+          return Center(child: Text('Error on loading the Profil'));
         } else if (snapshot.hasData) {
           final creator = snapshot.data!;
           newsController.addNews(News(
@@ -38,39 +43,32 @@ class RatingDone extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 8,
             children: [
               AvatarCircle(
                 width: 250,
                 height: 250,
                 profile: creator,
               ),
-              SizedBox(height: 8),
               Text(
                 creator.name,
                 style: TextTheme.of(context)
                     .headlineLarge!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 24),
               Text(
                 'Thank you for your Feedback!',
                 style: TextTheme.of(context).headlineSmall!.copyWith(
                     fontWeight: FontWeight.w600,
                     color: DesignhubColors.black.withAlpha(150)),
               ),
-              SizedBox(height: 24),
               Padding(
                 padding: EdgeInsets.all(16),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     OutlinedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NavigationPage()),
-                        );
-                      },
+                      onPressed: () => _navigation(context, NavigationPage()),
                       child: Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 32, vertical: 12),
@@ -82,14 +80,9 @@ class RatingDone extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Spacer(),
                     ElevatedButton(
-                      onPressed: () => Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NavigationPage(
-                                    index: 2,
-                                  ))),
+                      onPressed: () =>
+                          _navigation(context, NavigationPage(index: 2)),
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 32),
                         child: Text("New Rating"),

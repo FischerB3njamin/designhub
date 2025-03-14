@@ -1,3 +1,4 @@
+import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/features/navigation/view/navigation_page.dart';
 import 'package:designhub/shared/widgets/social_button.dart';
@@ -5,32 +6,42 @@ import 'package:flutter/material.dart';
 
 class SocialLogin extends StatelessWidget {
   final String label;
+
   const SocialLogin({super.key, required this.label});
 
-  void navigatToHomepage(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => NavigationPage()));
+  Future<void> navigateToHome(String userId, BuildContext context) async {
+    final profileController = ProfileController();
+    final profile = await profileController.getProfile(userId);
+    profileController.setCurrentProfile(profile);
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => NavigationPage()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 105,
-              child: Divider(),
-            ),
-            SizedBox(width: 16),
-            Text(label),
-            SizedBox(width: 16),
-            SizedBox(
-              width: 105,
-              child: Divider(),
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                flex: 1,
+                child: Divider(),
+              ),
+              SizedBox(width: 16),
+              Text(label),
+              SizedBox(width: 16),
+              Expanded(
+                flex: 1,
+                child: Divider(),
+              ),
+            ],
+          ),
         ),
         SizedBox(
           height: 24,
@@ -41,7 +52,8 @@ class SocialLogin extends StatelessWidget {
             SocialButton(
               icon: Assets.icons.googleLogo,
               label: "Google",
-              onPressed: () => navigatToHomepage(context),
+              //direct login as Dante Moor only for testing
+              onPressed: () => navigateToHome("uid-0001", context),
             ),
             SizedBox(
               width: 16,
@@ -49,7 +61,8 @@ class SocialLogin extends StatelessWidget {
             SocialButton(
               icon: Assets.icons.appleLogo,
               label: "Apple",
-              onPressed: () => navigatToHomepage(context),
+              // direct login as Paul only for testing
+              onPressed: () => navigateToHome("uid-0002", context),
             ),
           ],
         )

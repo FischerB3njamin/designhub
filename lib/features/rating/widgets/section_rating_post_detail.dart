@@ -20,14 +20,16 @@ class RatingPostDetailSection extends StatelessWidget {
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: post.images
-                .map((e) => Card(
-                      clipBehavior: Clip.hardEdge,
-                      child: Image.network(
-                        e,
-                        fit: BoxFit.fill,
-                        width: MediaQuery.of(context).size.width - 32,
-                      ),
-                    ))
+                .map(
+                  (e) => Card(
+                    clipBehavior: Clip.hardEdge,
+                    child: Image.network(
+                      e,
+                      fit: BoxFit.fill,
+                      width: MediaQuery.of(context).size.width - 32,
+                    ),
+                  ),
+                )
                 .toList(),
           ),
         ),

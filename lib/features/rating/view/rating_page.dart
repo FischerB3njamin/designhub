@@ -40,6 +40,7 @@ class _RatingPageState extends State<RatingPage> {
       questionKatalog = await controller.getQuestionCatalog(widget.post.postId);
       setState(() {
         isLoading = false;
+        answers = List.generate(questionKatalog!.catalog.length, (index) => '');
       });
     } catch (e) {
       setState(() {
@@ -50,11 +51,7 @@ class _RatingPageState extends State<RatingPage> {
   }
 
   void addAnswer(int index, answer) => setState(() {
-        if (answers.length > index) {
-          answers[index] = answer;
-        } else {
-          answers.add(answer);
-        }
+        answers[index - 1] = answer;
         activeQuestion = index;
       });
 
@@ -94,10 +91,10 @@ class _RatingPageState extends State<RatingPage> {
               questions: questionKatalog!.catalog,
               answers: answers,
               post: widget.post,
+              callback: (index) => setState(() => activeQuestion = index),
             ),
           SectionRatingFooter(
             activeQuestion: activeQuestion,
-            callback: (int index) => setState(() => activeQuestion = index),
             numberOfQuestions: numberOfQuestions + 1,
           ),
         ],

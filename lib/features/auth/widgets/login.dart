@@ -2,7 +2,7 @@ import 'package:designhub/features/auth/controller/auth_controller.dart';
 import 'package:designhub/features/auth/view/registration_page.dart';
 import 'package:designhub/features/navigation/view/navigation_page.dart';
 import 'package:designhub/features/profile/controller/profile_controller.dart';
-import 'package:designhub/features/profile/models/profile.dart';
+import 'package:designhub/shared/controller/validation_controller.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +16,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   bool isError = false;
   bool logginIsRunning = false;
+  final _formKey = GlobalKey<FormState>();
   AuthController authController = AuthController();
   ProfileController profileController = ProfileController();
   TextEditingController emailController = TextEditingController();
@@ -29,26 +30,39 @@ class _LoginState extends State<Login> {
   }
 
   void navigation() async {
+    if (!_formKey.currentState!.validate()) return;
+
     setState(() => logginIsRunning = true);
-    String userId = await authController.checkLogin(
-        emailController.text, pwdController.text);
+
+    final userId = await authController.checkLogin(
+      emailController.text,
+      pwdController.text,
+    );
+
     if (userId.isNotEmpty) {
-      Profile profile = await profileController.getProfile(userId);
-      profileController.setCurrentProfile(profile);
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => NavigationPage(),
-          ),
-        );
-      }
+      await _navigateToHome(userId);
     } else {
-      setState(() {
-        isError = true;
-        logginIsRunning = false;
-      });
+      _showLoginError();
     }
+  }
+
+  Future<void> _navigateToHome(String userId) async {
+    final profile = await profileController.getProfile(userId);
+    profileController.setCurrentProfile(profile);
+
+    if (mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => NavigationPage()),
+      );
+    }
+  }
+
+  void _showLoginError() {
+    setState(() {
+      isError = true;
+      logginIsRunning = false;
+    });
   }
 
   @override
@@ -56,26 +70,32 @@ class _LoginState extends State<Login> {
     return Padding(
       padding: EdgeInsets.all(35),
       child: Column(
+        spacing: 0,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          TextField(
-            controller: emailController,
-            decoration: InputDecoration(
-              labelText: 'Email',
+        children: [
+          Form(
+            key: _formKey,
+            child: Column(
+              spacing: 16,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                TextFormField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                  ),
+                  validator: ValidationController.validateEmail,
+                ),
+                TextFormField(
+                  obscureText: true,
+                  controller: pwdController,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                  ),
+                  validator: ValidationController.validatePassword,
+                ),
+              ],
             ),
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          TextField(
-            obscureText: true,
-            controller: pwdController,
-            decoration: InputDecoration(
-              labelText: 'Password',
-            ),
-          ),
-          SizedBox(
-            height: 16,
           ),
           if (isError)
             Padding(
@@ -87,13 +107,12 @@ class _LoginState extends State<Login> {
                     .copyWith(color: DesignhubColors.red),
               ),
             ),
+          SizedBox(height: 16),
           logginIsRunning
               ? CircularProgressIndicator()
-              : TextButton(
+              : ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor:
-                        WidgetStateProperty.all<Color>(DesignhubColors.primary),
-                  ),
+                      padding: WidgetStateProperty.all(EdgeInsets.all(8))),
                   onPressed: navigation,
                   child: SizedBox(
                     width: double.infinity,
@@ -107,11 +126,10 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-          SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("New to the app? ",
+              Text("New to the app?",
                   style: TextStyle(fontWeight: FontWeight.w700)),
               TextButton(
                 onPressed: () => Navigator.of(context).pushReplacement(

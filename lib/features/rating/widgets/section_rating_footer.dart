@@ -5,11 +5,9 @@ import 'package:flutter/material.dart';
 class SectionRatingFooter extends StatelessWidget {
   final int activeQuestion;
   final int numberOfQuestions;
-  final Function callback;
 
   const SectionRatingFooter({
     required this.activeQuestion,
-    required this.callback,
     required this.numberOfQuestions,
     super.key,
   });
@@ -28,22 +26,19 @@ class SectionRatingFooter extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ...List.generate(numberOfQuestions, (int index) => index).map(
-            (e) => InkWell(
-              onTap: () => callback(e),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Container(
-                  width: 10,
-                  height: 10,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: e == activeQuestion
-                          ? DesignhubColors.black
-                          : DesignhubColors.grey),
-                ),
+            (e) => Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                width: 10,
+                height: 10,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: e == activeQuestion
+                        ? DesignhubColors.black
+                        : DesignhubColors.grey),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

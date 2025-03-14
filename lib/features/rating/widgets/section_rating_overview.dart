@@ -13,12 +13,13 @@ class SectionRatingOverview extends StatelessWidget {
   final List<String> answers;
   final AnswerController answerController = AnswerController();
   final ProfileController profileController = ProfileController();
-
+  final Function callback;
   SectionRatingOverview({
     super.key,
     required this.questions,
     required this.answers,
     required this.post,
+    required this.callback,
   });
 
   @override
@@ -43,26 +44,29 @@ class SectionRatingOverview extends StatelessWidget {
           SizedBox(height: 24),
           ...questions.asMap().entries.expand((e) {
             return [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Question ${e.key + 1}",
-                      style: TextTheme.of(context)
-                          .headlineSmall!
-                          .copyWith(fontWeight: FontWeight.bold)),
-                  Text(e.value.question),
-                  SizedBox(height: 12),
-                  Container(
-                    padding: EdgeInsets.all(12),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: DesignhubColors.grey300),
-                    child: Text(answers[e.key],
-                        style: TextTheme.of(context).bodyMedium),
-                  ),
-                  SizedBox(height: 36),
-                ],
+              GestureDetector(
+                onTap: () => callback(e.key),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Question ${e.key + 1}",
+                        style: TextTheme.of(context)
+                            .headlineSmall!
+                            .copyWith(fontWeight: FontWeight.bold)),
+                    Text(e.value.question),
+                    SizedBox(height: 12),
+                    Container(
+                      padding: EdgeInsets.all(12),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: DesignhubColors.grey300),
+                      child: Text(answers[e.key],
+                          style: TextTheme.of(context).bodyMedium),
+                    ),
+                    SizedBox(height: 36),
+                  ],
+                ),
               )
             ];
           }),
@@ -71,22 +75,23 @@ class SectionRatingOverview extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               ElevatedButton(
-                  onPressed: () {
-                    for (final item in answers) {
-                      answerController.addAnswerItem(
-                          post.postId,
-                          questions[answers.indexOf(item)].question,
-                          item,
-                          profileController.getCurrentProfile().userId,
-                          questions[answers.indexOf(item)].type);
-                    }
+                onPressed: () {
+                  for (final item in answers) {
+                    answerController.addAnswerItem(
+                        post.postId,
+                        questions[answers.indexOf(item)].question,
+                        item,
+                        profileController.getCurrentProfile().userId,
+                        questions[answers.indexOf(item)].type);
+                  }
 
-                    CustomBottomSheet.show(context, RatingDone(post: post), 1);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 60.0),
-                    child: Text('Done'),
-                  )),
+                  CustomBottomSheet.show(context, RatingDone(post: post), 1);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                  child: Text('Done'),
+                ),
+              ),
             ],
           )
         ],

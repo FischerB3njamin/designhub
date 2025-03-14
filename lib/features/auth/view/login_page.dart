@@ -26,20 +26,21 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(height: 65),
-                  Hero(
-                    tag: "app_icon",
-                    child:
-                        Assets.images.logoText.image(width: 200, height: 200),
-                  ),
-                  SizedBox(height: 60),
-                  Login(),
-                  SizedBox(height: 12),
-                  SocialLogin(label: "Or login with"),
-                ],
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 65),
+                    Hero(
+                      tag: "app_icon",
+                      child:
+                          Assets.images.logoText.image(width: 200, height: 200),
+                    ),
+                    SizedBox(height: 40),
+                    Login(),
+                    SocialLogin(label: "Or login with"),
+                  ],
+                ),
               ),
             ],
           ),

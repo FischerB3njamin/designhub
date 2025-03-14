@@ -29,6 +29,7 @@ class _SectionRatingQuestionState extends State<SectionRatingQuestion> {
   QuestionCatalog? questionKatalog;
   bool isLoading = true;
   String? errorMessage;
+  String? loadingError;
 
   @override
   void initState() {
@@ -45,8 +46,19 @@ class _SectionRatingQuestionState extends State<SectionRatingQuestion> {
     } catch (e) {
       setState(() {
         isLoading = false;
-        errorMessage = 'Fehler beim Laden des Fragenkatalogs';
+        loadingError = 'Fehler beim Laden des Fragenkatalogs';
       });
+    }
+  }
+
+  void _handleNext(Question question) {
+    String returnedAnswer =
+        question.type == QuestionType.open ? answer.text : activeState;
+    if (returnedAnswer.isEmpty) {
+      setState(() => errorMessage = 'Please enter a value');
+    } else {
+      setState(() => errorMessage = '');
+      widget.callback(widget.activeQuestion + 1, returnedAnswer);
     }
   }
 
@@ -71,13 +83,17 @@ class _SectionRatingQuestionState extends State<SectionRatingQuestion> {
       return Center(child: CircularProgressIndicator());
     }
 
-    if (errorMessage != null) {
-      return Center(child: Text(errorMessage!));
-    }
-
-    if (questionKatalog == null ||
-        questionKatalog!.catalog.length <= widget.activeQuestion) {
-      return Center(child: Text('Frage nicht gefunden'));
+    if (loadingError != null ||
+        (questionKatalog == null ||
+            questionKatalog!.catalog.length <= widget.activeQuestion)) {
+      return Center(
+          child: Column(
+        children: [
+          Text(loadingError!),
+          ElevatedButton(
+              onPressed: () => Navigator.pop(context), child: Text("return"))
+        ],
+      ));
     }
 
     Question question = questionKatalog!.catalog[widget.activeQuestion];
@@ -127,17 +143,19 @@ class _SectionRatingQuestionState extends State<SectionRatingQuestion> {
               ),
             ),
           ),
+        if (errorMessage != null)
+          Text(
+            errorMessage!,
+            style: TextTheme.of(context)
+                .bodyLarge!
+                .copyWith(color: DesignhubColors.red),
+          ),
         SizedBox(height: 24),
         Container(
           width: double.infinity,
           alignment: Alignment.centerRight,
           child: ElevatedButton(
-            onPressed: () {
-              String returnedAnswer = question.type == QuestionType.open
-                  ? answer.text
-                  : activeState;
-              widget.callback(widget.activeQuestion + 1, returnedAnswer);
-            },
+            onPressed: () => _handleNext(question),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 60.0),
               child: Text("Next"),

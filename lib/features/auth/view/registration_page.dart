@@ -17,15 +17,6 @@ class RegistrationPage extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               Positioned(
-                top: 60,
-                right: 16,
-                child: IconButton(
-                  onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => LoginPage())),
-                  icon: Icon(Icons.close),
-                ),
-              ),
-              Positioned(
                 child: Container(
                   alignment: Alignment.bottomCenter,
                   width: double.infinity,
@@ -37,16 +28,32 @@ class RegistrationPage extends StatelessWidget {
                 ),
               ),
               Center(
-                child: Column(children: [
-                  SizedBox(height: 80),
-                  Hero(
-                      tag: "app_icon",
-                      child: Assets.images.logoText
-                          .image(width: 200, height: 200)),
-                  SizedBox(height: 60),
-                  Registration(),
-                  SocialLogin(label: "Or register with")
-                ]),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 60),
+                      Hero(
+                          tag: "app_icon",
+                          child: Assets.images.logoText
+                              .image(width: 200, height: 200)),
+                      SizedBox(height: 60),
+                      Registration(),
+                      SocialLogin(label: "Or register with")
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 60,
+                right: 16,
+                child: IconButton(
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                    ),
+                  ),
+                  icon: Icon(Icons.close),
+                ),
               ),
             ],
           ),
