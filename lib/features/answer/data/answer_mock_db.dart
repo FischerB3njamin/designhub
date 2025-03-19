@@ -36,4 +36,10 @@ class AnswerMockDb extends AnswerRepo {
     return Future.delayed(
         Duration(seconds: 1), () => result.isNotEmpty ? result.first : null);
   }
+
+  @override
+  Future<void> deleteAnswer(postId) {
+    return Future.delayed(Duration(seconds: 1),
+        () => data.removeWhere((e) => e.postId == postId));
+  }
 }

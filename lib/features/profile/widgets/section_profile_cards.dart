@@ -11,6 +11,7 @@ class SectionProfilCard extends StatefulWidget {
   final List<Post> posts;
   final List<Profile> profiles;
   final List<News> news;
+  final Function callback;
 
   const SectionProfilCard({
     super.key,
@@ -19,6 +20,7 @@ class SectionProfilCard extends StatefulWidget {
     required this.posts,
     required this.profiles,
     required this.news,
+    required this.callback,
   });
 
   @override
@@ -26,13 +28,18 @@ class SectionProfilCard extends StatefulWidget {
 }
 
 class _SectionProfilCardState extends State<SectionProfilCard> {
-  Profile getProfile(String postId) => widget.profiles.firstWhere((e) =>
-      e.userId ==
-      widget.posts
-          .firstWhere(
-            (post) => post.postId == postId,
-          )
-          .userId);
+  Profile? getProfile(String postId) {
+    final post =
+        widget.posts.where((post) => post.postId == postId).firstOrNull;
+
+    if (post == null) {
+      return null;
+    }
+
+    return widget.profiles
+        .where((profile) => profile.userId == post.userId)
+        .firstOrNull;
+  }
 
   Post getPost(String postId) =>
       widget.posts.firstWhere((post) => post.postId == postId);
@@ -51,28 +58,23 @@ class _SectionProfilCardState extends State<SectionProfilCard> {
           crossAxisSpacing: 8,
           children: [
             ...postIds.map(
-              (postId) => widget.type == 'title'
-                  ? CardWithTitle(
-                      post: widget.posts
-                          .firstWhere((post) => post.postId == postId),
-                      profile: widget.profiles.firstWhere((e) =>
-                          e.userId ==
-                          widget.posts
-                              .firstWhere((post) => post.postId == postId)
-                              .userId),
-                      newRating: widget.news
-                          .where((e) => postId == e.postId)
-                          .isNotEmpty)
-                  : CardWithProfileName(
-                      post: widget.posts
-                          .firstWhere((post) => post.postId == postId),
-                      callback: () => setState(() {}),
-                      profile: widget.profiles.firstWhere((e) =>
-                          e.userId ==
-                          widget.posts
-                              .firstWhere((post) => post.postId == postId)
-                              .userId),
-                    ),
+              (postId) {
+                final post = getPost(postId);
+                final profile = getProfile(postId);
+                return widget.type == 'title'
+                    ? CardWithTitle(
+                        post: post,
+                        profile: profile!,
+                        callback: widget.callback,
+                        newRating: widget.news
+                            .where(((e) => postId == e.postId))
+                            .firstOrNull)
+                    : CardWithProfileName(
+                        post: post,
+                        callback: () => setState(() {}),
+                        profile: profile!,
+                      );
+              },
             ),
             SizedBox(height: 10),
           ],

@@ -33,4 +33,9 @@ class ProfileController {
 
   Future<void> updateProfile(Profile oldProfile, Profile newProfile) =>
       repo.updateProfile(oldProfile, newProfile);
+
+  Future<void> deleteSavedPosts(String postId) async {
+    await repo.deleteSavedPosts(postId);
+    await setCurrentProfile(await getProfile(getCurrentProfile().userId));
+  }
 }

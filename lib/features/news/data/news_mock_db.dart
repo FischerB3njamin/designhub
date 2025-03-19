@@ -1,4 +1,3 @@
-import 'package:designhub/features/news/data/news.mock.dart';
 import 'package:designhub/features/news/data/news_repo.dart';
 import 'package:designhub/features/news/models/news.dart';
 
@@ -7,7 +6,7 @@ class NewsMockDB extends NewsRepo {
   NewsMockDB._internal();
 
   factory NewsMockDB() => _;
-  List<News> data = newsData;
+  List<News> data = [];
 
   @override
   Future<List<News>> getNews(String profileId) async {

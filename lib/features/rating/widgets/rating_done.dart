@@ -23,6 +23,18 @@ class RatingDone extends StatelessWidget {
         context, MaterialPageRoute(builder: (context) => page));
   }
 
+  void createNews(String profilId) => newsController.addNews(
+        News(
+          creatorId: controller.getCurrentProfile().userId,
+          profilId: profilId,
+          date:
+              "${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year}",
+          type: NewsType.feedback,
+          postId: post.postId,
+          read: false,
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Profile>(
@@ -34,12 +46,7 @@ class RatingDone extends StatelessWidget {
           return Center(child: Text('Error on loading the Profil'));
         } else if (snapshot.hasData) {
           final creator = snapshot.data!;
-          newsController.addNews(News(
-              profilId: creator.userId,
-              date:
-                  "${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year}",
-              type: NewsType.feedback,
-              read: false));
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -68,7 +75,10 @@ class RatingDone extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     OutlinedButton(
-                      onPressed: () => _navigation(context, NavigationPage()),
+                      onPressed: () {
+                        _navigation(context, NavigationPage());
+                        createNews(creator.userId);
+                      },
                       child: Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 32, vertical: 12),
@@ -81,8 +91,10 @@ class RatingDone extends StatelessWidget {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () =>
-                          _navigation(context, NavigationPage(index: 2)),
+                      onPressed: () {
+                        createNews(creator.userId);
+                        _navigation(context, NavigationPage(index: 2));
+                      },
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 32),
                         child: Text("New Rating"),

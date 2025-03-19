@@ -33,10 +33,10 @@ class _NavigationPageState extends State<NavigationPage> {
   void fetchNews() async {
     List<News> news = await newsController.getNews(currentProfile.userId);
 
-    if (news.where((element) => !element.read).isNotEmpty) {
-      setState(() => hasNews = true);
-    }
-    setState(() => isLoading = false);
+    setState(() {
+      hasNews = news.where((element) => !element.read).isNotEmpty;
+      isLoading = false;
+    });
   }
 
   @override
@@ -46,7 +46,9 @@ class _NavigationPageState extends State<NavigationPage> {
     fetchNews();
     pages = [
       HomePage(),
-      ChatNewsPage(),
+      ChatNewsPage(
+        callback: fetchNews,
+      ),
       RatingOverviewPage(),
       ProfilePage(profile: currentProfile)
     ];

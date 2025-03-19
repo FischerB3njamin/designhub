@@ -13,37 +13,34 @@ class SectionChatHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: 1,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4.0),
-        child: Container(
-          padding: EdgeInsets.only(right: 2),
-          decoration: BoxDecoration(
-            border: Border.all(width: 1, color: DesignhubColors.grey300),
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-          ),
-          child: Row(
-            children: [
-              AvatarCircle(
-                width: 50,
-                height: 50,
-                profile: senderProfile,
-              ),
-              SizedBox(width: 8),
-              Text(
-                senderProfile.name,
-                style: TextTheme.of(context)
-                    .headlineSmall!
-                    .copyWith(fontWeight: FontWeight.w600),
-              ),
-              Spacer(),
-              IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: Icon(Icons.close),
-              ),
-            ],
-          ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Container(
+        padding: EdgeInsets.only(right: 2),
+        decoration: BoxDecoration(
+          border: Border.all(width: 1, color: DesignhubColors.grey300),
+          borderRadius: BorderRadius.all(Radius.circular(30)),
+        ),
+        child: Row(
+          children: [
+            AvatarCircle(
+              width: 50,
+              height: 50,
+              profile: senderProfile,
+            ),
+            SizedBox(width: 8),
+            Text(
+              senderProfile.name,
+              style: TextTheme.of(context)
+                  .headlineSmall!
+                  .copyWith(fontWeight: FontWeight.w600),
+            ),
+            Spacer(),
+            IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: Icon(Icons.close),
+            ),
+          ],
         ),
       ),
     );

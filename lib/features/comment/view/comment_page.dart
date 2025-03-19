@@ -41,10 +41,12 @@ class _CommentPageState extends State<CommentPage> {
     newMessageController.clear();
     await commentController.addComment(widget.postId, newComment);
     newsController.addNews(News(
+        creatorId: ProfileController().getCurrentProfile().userId,
         profilId: widget.creatorId,
         date:
             "${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year}",
         type: NewsType.comment,
+        postId: widget.postId,
         read: false));
 
     setState(() => loading = true);

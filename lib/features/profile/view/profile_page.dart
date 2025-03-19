@@ -45,7 +45,6 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
     innerProfile = widget.profile;
     _loadData();
-    loadNews();
   }
 
   void initPages() {
@@ -55,17 +54,18 @@ class _ProfilePageState extends State<ProfilePage> {
           type: "title",
           posts: posts!,
           profiles: profiles!,
-          news: news),
+          news: news,
+          callback: () => _loadData()),
       'Info': ProfileInfo(
         profile: innerProfile,
       ),
       'Saved': SectionProfilCard(
-        profile: innerProfile,
-        type: "name",
-        posts: posts!,
-        profiles: profiles!,
-        news: news,
-      )
+          profile: innerProfile,
+          type: "name",
+          posts: posts!,
+          profiles: profiles!,
+          news: news,
+          callback: () {})
     };
     setState(() {});
   }
@@ -76,6 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _loadData() async {
+    loadNews();
     try {
       Set<String> allPosts = {};
       allPosts.addAll(innerProfile.savedPosts);
@@ -138,23 +139,22 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               Positioned(
-                  right: 8,
-                  top: 8,
-                  child: IconButton(
-                      onPressed: () async {
-                        final result = await CustomBottomSheet.showAsync(
-                            context,
-                            ProfileEditPage(profile: innerProfile),
-                            0.9);
-                        if (result) {
-                          initPages();
-                          setState(() {
-                            innerProfile =
-                                profileController.getCurrentProfile();
-                          });
-                        }
-                      },
-                      icon: Icon(Icons.edit)))
+                right: 8,
+                top: 8,
+                child: IconButton(
+                  onPressed: () async {
+                    final result = await CustomBottomSheet.showAsync(
+                        context, ProfileEditPage(profile: innerProfile), 0.9);
+                    if (result) {
+                      initPages();
+                      setState(() {
+                        innerProfile = profileController.getCurrentProfile();
+                      });
+                    }
+                  },
+                  icon: Icon(Icons.edit),
+                ),
+              ),
             ],
           ),
         ),

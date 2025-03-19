@@ -6,4 +6,5 @@ abstract class PostRepo {
   Future<void> createPost(Post post);
   Future<String> createPostId();
   Future<List<Post>> getPostsById(Set<String> postIds);
+  Future<void> deletePost(postId);
 }

@@ -25,7 +25,8 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   final profileController = ProfileController();
 
   void handleNewMessage() {
-    chatController.addNewMessage(widget.chat, createChatItem());
+    widget.chat.chatItems.add(createChatItem());
+    chatController.addNewMessage(widget.chat);
     setState(() {});
     messageController.clear();
   }

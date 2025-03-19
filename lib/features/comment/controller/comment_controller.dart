@@ -10,4 +10,6 @@ class CommentController {
 
   Future<List<CommentItem>> getComments(String postId) =>
       repo.getComments(postId);
+
+  Future<void> deleteComment(String postId) => repo.deleteComment(postId);
 }

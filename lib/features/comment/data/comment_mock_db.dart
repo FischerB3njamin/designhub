@@ -36,4 +36,11 @@ class CommentMockDb implements CommentsRepo {
       return [];
     });
   }
+
+  @override
+  Future<void> deleteComment(String postId) {
+    return Future.delayed(Duration(seconds: 1), () {
+      data.removeWhere((e) => e.postId == postId);
+    });
+  }
 }

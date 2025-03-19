@@ -33,20 +33,24 @@ class ProfileMockDB extends ProfileRepo {
       });
 
   @override
-  Future<void> saveLike(Profile profile, String postId) async =>
-      data[data.indexOf(profile)].liked!.add(postId);
+  Future<void> saveLike(Profile profile, String postId) async => Future.delayed(
+      Duration(seconds: 1),
+      () => data[data.indexOf(profile)].liked!.add(postId));
 
   @override
   Future<void> removeLike(Profile profile, String postId) async =>
-      data[data.indexOf(profile)].liked!.remove(postId);
+      Future.delayed(Duration(seconds: 1),
+          () => data[data.indexOf(profile)].liked!.remove(postId));
 
   @override
   Future<void> removeSavePost(Profile profile, String postId) async =>
-      data[data.indexOf(profile)].savedPosts.remove(postId);
+      Future.delayed(Duration(seconds: 1),
+          () => data[data.indexOf(profile)].savedPosts.remove(postId));
 
   @override
-  Future<void> savePost(Profile profile, String postId) async =>
-      data[data.indexOf(profile)].savedPosts.add(postId);
+  Future<void> savePost(Profile profile, String postId) async => Future.delayed(
+      Duration(seconds: 1),
+      () => data[data.indexOf(profile)].savedPosts.add(postId));
 
   @override
   Future<void> addPost(String postId) async {
@@ -71,5 +75,20 @@ class ProfileMockDB extends ProfileRepo {
       data[data.indexOf(oldProfile)] = newProfile;
       setCurrentProfile(newProfile);
     });
+  }
+
+  @override
+  Future<void> deleteSavedPosts(String postId) async {
+    Future.delayed(
+      Duration(seconds: 1),
+      () {
+        for (var e in data) {
+          e.savedPosts.removeWhere((saved) => saved == postId);
+          e.liked!.removeWhere((liked) => liked == postId);
+          e.posts.removeWhere((post) => post == postId);
+        }
+        return;
+      },
+    );
   }
 }

@@ -73,7 +73,11 @@ class _ChatViewState extends State<ChatView> {
           ),
           SizedBox(height: 8),
           ...widget.chats.map(
-            (e) => ChatItemView(chat: e, senderProfile: getSenderProfile(e)),
+            (e) => ChatItemView(
+              chat: e,
+              senderProfile: getSenderProfile(e),
+              callback: () => setState(() {}),
+            ),
           ),
         ],
       ),

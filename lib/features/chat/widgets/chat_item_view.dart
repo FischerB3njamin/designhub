@@ -1,3 +1,4 @@
+import 'package:designhub/features/chat/controller/chat_controller.dart';
 import 'package:designhub/features/chat/models/chat.dart';
 import 'package:designhub/features/chat/view/chat_detail_screen.dart';
 import 'package:designhub/features/profile/controller/profile_controller.dart';
@@ -11,27 +12,37 @@ class ChatItemView extends StatelessWidget {
   final Chat chat;
   final ProfileController profileController = ProfileController();
   final Profile senderProfile;
+  final Function callback;
   ChatItemView({
     super.key,
     required this.chat,
     required this.senderProfile,
+    required this.callback,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => CustomBottomSheet.show(
-        context,
-        ChatDetailScreen(chat: chat, senderProfile: senderProfile),
-        1,
-      ),
+      onTap: () async {
+        await ChatController().markAsRead(chat);
+        callback();
+        CustomBottomSheet.show(
+          context,
+          ChatDetailScreen(chat: chat, senderProfile: senderProfile),
+          1,
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: Container(
           padding: EdgeInsets.only(right: 8),
           decoration: BoxDecoration(
-            border: Border.all(width: 1, color: DesignhubColors.grey300),
-            borderRadius: BorderRadius.only(
+            border: Border.all(
+                width: 1,
+                color: chat.newMessage
+                    ? DesignhubColors.primary
+                    : DesignhubColors.grey300),
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(30),
               bottomLeft: Radius.circular(30),
               topRight: Radius.circular(6),
@@ -41,7 +52,7 @@ class ChatItemView extends StatelessWidget {
           child: Row(
             children: [
               AvatarCircle(profile: senderProfile, height: 50, width: 50),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +66,7 @@ class ChatItemView extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(width: 4),
+              const SizedBox(width: 4),
               Text(
                 chat.chatItems.reversed.first.date,
                 style: TextTheme.of(context).bodySmall,

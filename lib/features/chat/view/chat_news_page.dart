@@ -9,7 +9,11 @@ import 'package:designhub/features/profile/models/profile.dart';
 import 'package:flutter/material.dart';
 
 class ChatNewsPage extends StatefulWidget {
-  const ChatNewsPage({super.key});
+  final Function callback;
+  const ChatNewsPage({
+    super.key,
+    required this.callback,
+  });
 
   @override
   State<ChatNewsPage> createState() => _ChatNewsPageState();
@@ -45,7 +49,7 @@ class _ChatNewsPageState extends State<ChatNewsPage> {
   _loadProfiles() async {
     if (chats != null && news != null) {
       Set<String> profileIds = {};
-      profileIds.addAll(news!.map((a) => a.profilId).toSet());
+      profileIds.addAll(news!.map((a) => a.creatorId).toSet());
       profileIds.addAll(chats!
           .map((a) => convertParticipants(a.participants, currentUser))
           .toSet());
@@ -74,7 +78,12 @@ class _ChatNewsPageState extends State<ChatNewsPage> {
         children: [
           Expanded(
             flex: 2,
-            child: NewsView(smallView: true, news: news!, profiles: profiles!),
+            child: NewsView(
+              smallView: true,
+              news: news!,
+              profiles: profiles!,
+              callback: widget.callback,
+            ),
           ),
           Expanded(
             flex: 3,

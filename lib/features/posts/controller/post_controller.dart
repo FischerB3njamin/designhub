@@ -11,4 +11,5 @@ class PostController {
   Future<String> createPostId() => repo.createPostId();
   Future<List<Post>> getPostsById(Set<String> postIds) =>
       repo.getPostsById(postIds);
+  Future<void> deletePost(String postId) => repo.deletePost(postId);
 }

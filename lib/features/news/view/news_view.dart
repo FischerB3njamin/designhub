@@ -11,12 +11,14 @@ class NewsView extends StatefulWidget {
   final bool smallView;
   final List<News> news;
   final List<Profile> profiles;
+  final Function callback;
 
   const NewsView({
     super.key,
     required this.smallView,
     required this.news,
     required this.profiles,
+    required this.callback,
   });
 
   @override
@@ -28,6 +30,7 @@ class _NewsViewState extends State<NewsView> {
   void callBack(News news) {
     controller.markNewsAsReaded(news);
     setState(() {});
+    widget.callback();
   }
 
   @override
@@ -59,6 +62,7 @@ class _NewsViewState extends State<NewsView> {
                             smallView: false,
                             news: widget.news,
                             profiles: widget.profiles,
+                            callback: widget.callback,
                           ),
                           1);
                       setState(() {});
@@ -81,8 +85,9 @@ class _NewsViewState extends State<NewsView> {
           (e) => NewsItem(
             news: e,
             callback: callBack,
-            profile:
-                profiles.firstWhere((profile) => profile.userId == e.profilId),
+            profile: profiles.firstWhere((profile) {
+              return profile.userId == e.creatorId;
+            }),
           ),
         ),
       ]),

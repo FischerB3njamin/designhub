@@ -41,4 +41,11 @@ class PostMockDB extends PostRepo {
       return data.where((e) => postIds.contains(e.postId)).toList();
     });
   }
+
+  @override
+  Future<void> deletePost(postId) {
+    return Future.delayed(Duration(seconds: 1), () {
+      data.removeWhere((e) => postId == e.postId);
+    });
+  }
 }

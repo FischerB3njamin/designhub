@@ -26,70 +26,77 @@ class AnswerPage extends StatefulWidget {
 
 class _AnswerPageState extends State<AnswerPage> {
   final AnswerController controller = AnswerController();
-
-  late final Answer? answer;
+  bool isLoading = true;
+  Answer? answer;
 
   late final List<AnswerItem> items = answer != null ? answer!.answers : [];
 
   @override
+  void initState() {
+    _loading();
+    super.initState();
+  }
+
+  void _loading() async {
+    final result = await controller.getAnswer(widget.postId, widget.question);
+    if (result != null) answer = result;
+
+    setState(() => isLoading = false);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: controller.getAnswer(widget.postId, widget.question),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            answer = snapshot.data!;
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ListView(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Question",
-                        style: TextTheme.of(context).headlineLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: DesignhubColors.black),
-                      ),
-                      Spacer(),
-                      IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: Icon(Icons.close),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    widget.question,
-                    style: TextTheme.of(context)
-                        .headlineSmall!
-                        .copyWith(fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(height: 16),
-                  SizedBox(
-                    height: 250,
-                    width: double.infinity,
-                    child: ListView(
-                      children: [
-                        if (answer != null && answer!.type == QuestionType.open)
-                          ...items.map((e) => SectionOpenAnswer(
-                              item: e, profile: widget.profile)),
-                        if (answer != null &&
-                            answer!.type == QuestionType.close)
-                          SectionClosedAnswer(
-                            items: items,
-                            answer: answer!,
-                            profile: widget.profile,
-                          )
-                      ],
-                    ),
-                  ),
-                ],
+    if (isLoading) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: ListView(
+        children: [
+          Row(
+            children: [
+              Text(
+                "Question",
+                style: TextTheme.of(context).headlineLarge!.copyWith(
+                    fontWeight: FontWeight.bold, color: DesignhubColors.black),
               ),
-            );
-          }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        });
+              Spacer(),
+              IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: Icon(Icons.close),
+              ),
+            ],
+          ),
+          SizedBox(height: 16),
+          Text(
+            widget.question,
+            style: TextTheme.of(context)
+                .headlineSmall!
+                .copyWith(fontWeight: FontWeight.w600),
+          ),
+          SizedBox(height: 16),
+          SizedBox(
+            height: 250,
+            width: double.infinity,
+            child: ListView(
+              children: [
+                if (answer != null && answer!.type == QuestionType.open)
+                  ...items.map((e) =>
+                      SectionOpenAnswer(item: e, profile: widget.profile)),
+                if (answer != null && answer!.type == QuestionType.close)
+                  SectionClosedAnswer(
+                    items: items,
+                    answer: answer!,
+                    profile: widget.profile,
+                  )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
