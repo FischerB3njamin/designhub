@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                         .firstWhere((profile) => profile.userId == e.userId),
                   ),
                 ),
-              if (posts!.isEmpty)
+              if (posts != null && posts!.isEmpty)
                 Padding(
                   padding: const EdgeInsets.all(32.0),
                   child: Center(
