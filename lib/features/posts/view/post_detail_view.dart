@@ -34,7 +34,7 @@ class PostDetailView extends StatelessWidget {
                       width: double.infinity, fit: BoxFit.fitWidth),
                 ),
               ),
-              SectionIcon(post: post),
+              SectionIcon(post: post, profile: profile),
               SectionAvatar(post: post, profile: profile),
               SectionPostDetail(post: post),
               if (post.userId != userId) SizedBox(height: 50),

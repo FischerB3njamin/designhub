@@ -1,4 +1,6 @@
+import 'package:designhub/features/follow/widgets/btn_follow.dart';
 import 'package:designhub/features/posts/models/post.dart';
+import 'package:designhub/features/posts/widgets/btn_like.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 
 import 'package:designhub/shared/widgets/avatar_circle.dart';
@@ -30,12 +32,25 @@ class _SectionAvatarState extends State<SectionAvatar> {
             profile: widget.profile,
           ),
           SizedBox(width: 6),
-          Text(
-            widget.profile.name,
-            style: TextTheme.of(context)
-                .headlineLarge!
-                .copyWith(fontWeight: FontWeight.w500),
-          )
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 0,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 6.0),
+                child: Text(
+                  widget.profile.name,
+                  style: TextTheme.of(context)
+                      .titleLarge!
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
+              ),
+              BtnFollow(profilId: widget.post.userId)
+            ],
+          ),
+          Spacer(),
+          BtnLike(postId: widget.post.postId)
         ],
       ),
     );

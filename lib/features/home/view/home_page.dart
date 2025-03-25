@@ -1,5 +1,7 @@
+import 'package:designhub/features/follow/controller/follow_controller.dart';
 import 'package:designhub/features/home/widgets/card_switcher.dart';
 import 'package:designhub/features/home/widgets/section_header.dart';
+import 'package:designhub/features/home/widgets/section_switcher.dart';
 import 'package:designhub/features/posts/controller/post_controller.dart';
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/profile/controller/profile_controller.dart';
@@ -15,24 +17,29 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final ProfileController profileController = ProfileController();
-
+  final followerController = FollowController();
   final PostController postController = PostController();
   List<Post>? posts;
   List<Profile>? profiles;
   bool isLoading = true;
   String? errorMessage;
+  int activeTab = 1;
+  bool? hasFollower;
 
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _loadData(true);
   }
 
-  Future<void> _loadData() async {
+  Future<void> _loadData(bool all) async {
+    final profile = profileController.getCurrentProfile();
+
     try {
-      final profile = profileController.getCurrentProfile();
-      posts = await postController.getPosts(profile.userId);
-      // getall profiles for this posts
+      posts = all
+          ? await postController.getPosts(profile.userId)
+          : await postController.getPostsByUsers(
+              await followerController.getFollow(profile.userId));
 
       Set<String> profileIds = posts!.map((e) {
         return e.userId;
@@ -53,12 +60,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-
     if (errorMessage != null && errorMessage!.isNotEmpty) {
       return Center(
         child: Text(errorMessage!),
@@ -70,19 +71,53 @@ class _HomePageState extends State<HomePage> {
       mainAxisSize: MainAxisSize.max,
       children: [
         SectionHeader(),
+        SizedBox(height: 8),
+        SectionSwitcher(
+          active: activeTab,
+          hasFollower: hasFollower ?? false,
+          callback: (int index) {
+            if (index != activeTab) {
+              setState(() {
+                activeTab = index;
+                isLoading = true;
+              });
+              _loadData(index == 1);
+            }
+          },
+        ),
+        SizedBox(height: 8),
         SizedBox(
-          height: 580,
+          height: 560,
           child: ListWheelScrollView(
-            itemExtent: 550,
+            itemExtent: 560,
             diameterRatio: 10,
+            useMagnifier: true,
             physics: FixedExtentScrollPhysics(),
             controller: FixedExtentScrollController(),
-            children: posts!
-                .map((e) => CardSwitcher(
+            children: [
+              if (isLoading)
+                Center(
+                  child: CircularProgressIndicator(),
+                ),
+              if (!isLoading)
+                ...posts!.map(
+                  (e) => CardSwitcher(
                     post: e,
                     profile: profiles!
-                        .firstWhere((profile) => profile.userId == e.userId)))
-                .toList(),
+                        .firstWhere((profile) => profile.userId == e.userId),
+                  ),
+                ),
+              if (posts!.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Center(
+                      child: Text(
+                    "You’re not following anyone yet.\n Follow some creators to see their posts here!",
+                    style: TextTheme.of(context).headlineSmall,
+                    textAlign: TextAlign.center,
+                  )),
+                )
+            ],
           ),
         ),
       ],

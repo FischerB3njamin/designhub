@@ -24,7 +24,10 @@ class ChatItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        await ChatController().markAsRead(chat);
+        if (chat.chatItems.last.userId !=
+            profileController.getCurrentProfile().userId) {
+          await ChatController().markAsRead(chat);
+        }
         callback();
         CustomBottomSheet.show(
           context,
@@ -39,7 +42,9 @@ class ChatItemView extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(
                 width: 1,
-                color: chat.newMessage
+                color: chat.newMessage &&
+                        chat.chatItems.last.userId !=
+                            profileController.getCurrentProfile().userId
                     ? DesignhubColors.primary
                     : DesignhubColors.grey300),
             borderRadius: const BorderRadius.only(

@@ -1,3 +1,7 @@
+import 'package:designhub/features/chat/controller/chat_controller.dart';
+import 'package:designhub/features/chat/models/chat.dart';
+import 'package:designhub/features/chat/view/chat_detail_screen.dart';
+import 'package:designhub/features/follow/widgets/btn_follow.dart';
 import 'package:designhub/features/news/controller/news_controller.dart';
 import 'package:designhub/features/news/models/news.dart';
 import 'package:designhub/features/news/models/news_type.dart';
@@ -12,6 +16,7 @@ import 'package:designhub/features/profile/widgets/section_profile_cards.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:designhub/shared/widgets/avatar_circle.dart';
+import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -138,23 +143,24 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              Positioned(
-                right: 8,
-                top: 8,
-                child: IconButton(
-                  onPressed: () async {
-                    final result = await CustomBottomSheet.showAsync(
-                        context, ProfileEditPage(profile: innerProfile), 0.9);
-                    if (result) {
-                      initPages();
-                      setState(() {
-                        innerProfile = profileController.getCurrentProfile();
-                      });
-                    }
-                  },
-                  icon: Icon(Icons.edit),
+              if (profileController.getCurrentProfile() == innerProfile)
+                Positioned(
+                  right: 8,
+                  top: 8,
+                  child: IconButton(
+                    onPressed: () async {
+                      final result = await CustomBottomSheet.showAsync(
+                          context, ProfileEditPage(profile: innerProfile), 0.9);
+                      if (result) {
+                        initPages();
+                        setState(() {
+                          innerProfile = profileController.getCurrentProfile();
+                        });
+                      }
+                    },
+                    icon: Icon(Icons.edit),
+                  ),
                 ),
-              ),
             ],
           ),
         ),
@@ -165,6 +171,54 @@ class _ProfilePageState extends State<ProfilePage> {
               .copyWith(fontWeight: FontWeight.w500),
           textAlign: TextAlign.center,
         ),
+        SizedBox(height: 4),
+        if (profileController.getCurrentProfile() != innerProfile)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16),
+                child: TextButton(
+                  style: ButtonStyle(
+                      minimumSize: WidgetStateProperty.all(Size(80, 30)),
+                      backgroundColor:
+                          WidgetStateProperty.all(DesignhubColors.white)),
+                  onPressed: () async {
+                    Chat? chat = await ChatController().getChatByParticipants(
+                      ProfileController().getCurrentProfile().userId,
+                      widget.profile.userId,
+                    );
+                    chat ??= Chat(
+                      chatItems: [],
+                      participants: [
+                        ProfileController().getCurrentProfile().userId,
+                        widget.profile.userId,
+                      ],
+                    );
+                    CustomBottomSheet.show(
+                        context,
+                        ChatDetailScreen(
+                          chat: chat,
+                          senderProfile: widget.profile,
+                        ),
+                        1);
+                  },
+                  child: Text(
+                    'Message',
+                    style: TextStyle(
+                      color: DesignhubColors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              BtnFollow(
+                profilId: innerProfile.userId,
+              ),
+            ],
+          ),
         SizedBox(height: 16),
         BtnSgProfileSections(
           callback: (value) => setState(() {

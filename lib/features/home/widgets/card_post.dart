@@ -48,19 +48,25 @@ class CardPost extends StatelessWidget {
               left: 0,
               right: 0,
               child: Container(
-                height: 60,
+                // height: 50,
                 decoration: BoxDecoration(
                     color: DesignhubColors.white,
                     borderRadius: BorderRadius.circular(36)),
                 child: Row(
                   children: [
-                    AvatarCircle(profile: profile, height: 60, width: 60),
+                    AvatarCircle(profile: profile, height: 50, width: 50),
                     SizedBox(width: 8),
-                    Text(
-                      profile.name,
-                      style: TextTheme.of(context).headlineSmall!.copyWith(
-                            fontWeight: FontWeight.w600,
-                          ),
+                    Column(
+                      spacing: 0,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          profile.name,
+                          style: TextTheme.of(context).headlineSmall!.copyWith(
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                      ],
                     ),
                     Spacer(),
                     Padding(

@@ -6,6 +6,8 @@ class ChatController {
   ChatRepo repo = ChatMockDB();
 
   Future<List<Chat>> getChats() => repo.getChats();
+  Future<Chat?> getChatByParticipants(String sender, String reciever) =>
+      repo.getChatByParticipants(sender, reciever);
   Future<void> addNewMessage(Chat chat) async => repo.addNewMessage(chat);
   Future<void> markAsRead(Chat chat) => repo.markChatAsRead(chat);
 }

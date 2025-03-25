@@ -1,4 +1,3 @@
-import 'package:designhub/features/chat/data/chat.mock.dart';
 import 'package:designhub/features/chat/data/chat_repo.dart';
 import 'package:designhub/features/chat/models/chat.dart';
 
@@ -7,7 +6,7 @@ class ChatMockDB extends ChatRepo {
   ChatMockDB._internal();
 
   factory ChatMockDB() => _;
-  List<Chat> data = mockChats;
+  List<Chat> data = [];
 
   @override
   Future<void> addNewMessage(Chat chat) async {
@@ -22,6 +21,22 @@ class ChatMockDB extends ChatRepo {
   Future<List<Chat>> getChats() {
     return Future.delayed(Duration(seconds: 1), () {
       return data;
+    });
+  }
+
+  @override
+  Future<Chat?> getChatByParticipants(String sender, String reciever) {
+    return Future.delayed(Duration(seconds: 1), () {
+      if (data.isEmpty) return null;
+      return data.firstWhere(
+        (e) =>
+            e.participants.contains(sender) &&
+            e.participants.contains(reciever),
+        orElse: () => Chat(
+          chatItems: [],
+          participants: [sender, reciever],
+        ),
+      );
     });
   }
 

@@ -1,4 +1,5 @@
 import 'package:designhub/features/profile/models/profile.dart';
+import 'package:designhub/features/profile/widgets/section_follow.dart';
 import 'package:flutter/material.dart';
 
 class ProfileInfo extends StatelessWidget {
@@ -16,6 +17,7 @@ class ProfileInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SectionFollow(profile: profile),
           Text(
             "About me",
             style: TextTheme.of(context)
