@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "932954488084",
+    "project_id": "designhub-9d077",
+    "storage_bucket": "designhub-9d077.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932954488084:android:b32400e064cbe4b8885601",
+        "android_client_info": {
+          "package_name": "com.example.designhub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeaZ3cCwDtzHYP6V01JmO8Pgx94LUx5i0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
