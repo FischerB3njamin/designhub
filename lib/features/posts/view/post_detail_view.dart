@@ -22,26 +22,24 @@ class PostDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     String userId = profileController.getCurrentProfile().userId;
     return SingleChildScrollView(
-      child: SizedBox(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
-          child: Column(
-            children: [
-              ...post.images.map(
-                (e) => Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: Image.network(e,
-                      width: double.infinity, fit: BoxFit.fitWidth),
-                ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
+        child: Column(
+          children: [
+            ...post.images.map(
+              (e) => Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Image.network(e,
+                    width: double.infinity, fit: BoxFit.fitWidth),
               ),
-              SectionIcon(post: post, profile: profile),
-              SectionAvatar(post: post, profile: profile),
-              SectionPostDetail(post: post),
-              if (post.userId != userId) SizedBox(height: 50),
-              if (post.userId == userId)
-                SectionQuestionDetailview(post: post, profile: profile),
-            ],
-          ),
+            ),
+            SectionIcon(post: post, profile: profile),
+            SectionAvatar(post: post, profile: profile),
+            SectionPostDetail(post: post),
+            if (post.userId != userId) SizedBox(height: 50),
+            if (post.userId == userId)
+              SectionQuestionDetailview(post: post, profile: profile),
+          ],
         ),
       ),
     );

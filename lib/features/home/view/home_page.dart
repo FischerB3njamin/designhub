@@ -1,5 +1,5 @@
 import 'package:designhub/features/follow/controller/follow_controller.dart';
-import 'package:designhub/features/home/widgets/card_switcher.dart';
+import 'package:designhub/features/home/widgets/card_post.dart';
 import 'package:designhub/features/home/widgets/section_header.dart';
 import 'package:designhub/features/home/widgets/section_switcher.dart';
 import 'package:designhub/features/posts/controller/post_controller.dart';
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               if (!isLoading)
                 ...posts!.map(
-                  (e) => CardSwitcher(
+                  (e) => CardPost(
                     post: e,
                     profile: profiles!
                         .firstWhere((profile) => profile.userId == e.userId),
