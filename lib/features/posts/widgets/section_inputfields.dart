@@ -24,21 +24,21 @@ class SectionInputfields extends StatelessWidget {
           decoration: InputDecoration(
             hintText: "Title",
           ),
-          validator: ValidationController.validateNotEmpty,
+          validator: ValidationController.validateTitle,
         ),
         TextFormField(
           onChanged: (e) => descriptionCallback(e),
           decoration: InputDecoration(
             hintText: "Description",
           ),
-          validator: ValidationController.validateNotEmpty,
+          validator: ValidationController.validateDescription,
         ),
         TextFormField(
           onChanged: (e) => hashtagCallback(e),
           decoration: InputDecoration(
             hintText: "Hashtags",
           ),
-          validator: ValidationController.validateNotEmpty,
+          validator: ValidationController.validateHashtags,
         )
       ],
     );

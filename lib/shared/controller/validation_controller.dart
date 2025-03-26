@@ -48,4 +48,38 @@ class ValidationController {
     }
     return null;
   }
+
+  static String? validateTitle(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter value.';
+    }
+    if (value.length > 50) {
+      return "Maximum 50 chars for the title";
+    }
+    return null;
+  }
+
+  static String? validateDescription(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter value.';
+    }
+    if (value.length > 250) {
+      return "Maximum 250 chars for the description";
+    }
+    return null;
+  }
+
+  static String? validateHashtags(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter value.';
+    }
+
+    for (final item in value.trim().split(' ')) {
+      if (!item.contains('#')) {
+        return "Please for each hashstag a # and split it by a whitespace";
+      }
+    }
+
+    return null;
+  }
 }
