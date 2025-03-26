@@ -1,5 +1,6 @@
 import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/models/profile.dart';
+import 'package:designhub/shared/controller/validation_controller.dart';
 import 'package:flutter/material.dart';
 
 class ProfileEditPage extends StatefulWidget {
@@ -38,26 +39,6 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     avatarImageController.dispose();
   }
 
-  // Function to validate URL format
-  String? validateUrl(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'This field cannot be empty';
-    }
-    final urlRegex =
-        RegExp(r'^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$', caseSensitive: false);
-    if (!urlRegex.hasMatch(value)) {
-      return 'Please enter a valid URL';
-    }
-    return null;
-  }
-
-  String? validateNotEmpty(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'This field cannot be empty';
-    }
-    return null;
-  }
-
   void updateProfile() async {
     final newProfile = widget.profile;
     newProfile.aboutMe = aboutMeController.text;
@@ -90,25 +71,29 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                   TextFormField(
                     controller: headerImageController,
                     decoration: InputDecoration(labelText: 'Header Image:'),
-                    validator: validateUrl, // Validate URL format
+                    validator: (value) => ValidationController.validateUrl(
+                        value), // Validate URL format
                   ),
                   TextFormField(
                     controller: avatarImageController,
                     decoration: InputDecoration(labelText: 'Avatar Image:'),
-                    validator: validateUrl, // Validate URL format
+                    validator: (value) => ValidationController.validateUrl(
+                        value), // Validate URL format
                   ),
                   TextFormField(
                     controller: aboutMeController,
                     maxLines: null,
                     decoration: InputDecoration(labelText: 'About me:'),
-                    validator: validateNotEmpty, // Check if non-empty
+                    validator: (value) => ValidationController.validateNotEmpty(
+                        value), // Check if non-empty
                   ),
                   TextFormField(
                     controller: interestsController,
                     maxLines: null,
                     decoration:
                         InputDecoration(labelText: 'Interests & Inspirations'),
-                    validator: validateNotEmpty, // Check if non-empty
+                    validator: (value) => ValidationController.validateNotEmpty(
+                        value), // Check if non-empty
                   ),
                 ],
               ),

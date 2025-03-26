@@ -36,4 +36,16 @@ class ValidationController {
     }
     return null;
   }
+
+  static String? validateUrl(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'This field cannot be empty';
+    }
+    final urlRegex =
+        RegExp(r'^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$', caseSensitive: false);
+    if (!urlRegex.hasMatch(value)) {
+      return 'Please enter a valid URL';
+    }
+    return null;
+  }
 }
