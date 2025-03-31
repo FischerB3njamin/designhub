@@ -21,10 +21,12 @@ import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
   final Profile profile;
+  final bool initialOpenEdit;
 
   const ProfilePage({
     super.key,
     required this.profile,
+    this.initialOpenEdit = false,
   });
 
   @override
@@ -35,6 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
   late Map pages;
   late Profile innerProfile;
   List<Post>? posts;
+  late bool openEdit;
   String? errorMessage;
   List<News> news = [];
   bool isLoading = true;
@@ -49,6 +52,8 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     innerProfile = widget.profile;
+
+    openEdit = widget.initialOpenEdit;
     _loadData();
   }
 
@@ -108,12 +113,31 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  void showEdit() async {
+    final result = await CustomBottomSheet.showAsync(
+        context, ProfileEditPage(profile: innerProfile), 0.9);
+    if (result) {
+      initPages();
+      innerProfile = profileController.getCurrentProfile();
+      openEdit = false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
       return Center(
         child: CircularProgressIndicator(),
       );
+    }
+    // Use WidgetsBinding to schedule `showEdit()` to run after the build phase
+    if (openEdit) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          openEdit = false;
+        });
+        showEdit();
+      });
     }
 
     return ListView(
@@ -196,13 +220,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         widget.profile.userId,
                       ],
                     );
-                    CustomBottomSheet.show(
-                        context,
-                        ChatDetailScreen(
-                          chat: chat,
-                          senderProfile: widget.profile,
-                        ),
-                        1);
+                    if (mounted) {
+                      CustomBottomSheet.show(
+                          context,
+                          ChatDetailScreen(
+                            chat: chat,
+                            senderProfile: widget.profile,
+                          ),
+                          1);
+                    }
                   },
                   child: Text(
                     'Message',

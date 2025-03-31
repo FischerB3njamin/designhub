@@ -1,4 +1,4 @@
-import 'package:designhub/features/auth/view/login_page.dart';
+import 'package:designhub/features/auth/controller/auth_controller.dart';
 import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/theme/designhub_colors.dart';
@@ -21,11 +21,7 @@ class SectionHeader extends StatelessWidget {
           IconButton(
             onPressed: () {
               profileController.logout();
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => LoginPage(),
-                ),
-              );
+              AuthController().logout();
             },
             icon: Assets.icons.logout.svg(),
           )

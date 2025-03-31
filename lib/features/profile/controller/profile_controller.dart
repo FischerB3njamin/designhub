@@ -7,8 +7,8 @@ class ProfileController {
   void logout() => repo.logout();
   Future<Profile> getProfile(String userId) => repo.getProfile(userId);
 
-  Future<void> setCurrentProfile(Profile profile) =>
-      repo.setCurrentProfile(profile);
+  Future<bool> setCurrentProfile(String userId) =>
+      repo.setCurrentProfile(userId);
 
   Profile getCurrentProfile() => repo.currentProfile!;
 
@@ -36,6 +36,7 @@ class ProfileController {
 
   Future<void> deleteSavedPosts(String postId) async {
     await repo.deleteSavedPosts(postId);
-    await setCurrentProfile(await getProfile(getCurrentProfile().userId));
+    await setCurrentProfile(
+        (await getProfile(getCurrentProfile().userId)).userId);
   }
 }

@@ -1,18 +1,23 @@
+import 'package:designhub/features/auth/controller/auth_controller.dart';
 import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/features/navigation/view/navigation_page.dart';
-import 'package:designhub/shared/widgets/social_button.dart';
 import 'package:flutter/material.dart';
 
 class SocialLogin extends StatelessWidget {
+  final AuthController authController;
   final String label;
 
-  const SocialLogin({super.key, required this.label});
+  const SocialLogin({
+    super.key,
+    required this.label,
+    required this.authController,
+  });
 
   Future<void> navigateToHome(String userId, BuildContext context) async {
     final profileController = ProfileController();
     final profile = await profileController.getProfile(userId);
-    profileController.setCurrentProfile(profile);
+    profileController.setCurrentProfile(profile.userId);
 
     Navigator.pushReplacement(
       context,
@@ -49,20 +54,9 @@ class SocialLogin extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SocialButton(
-              icon: Assets.icons.googleLogo,
-              label: "Google",
-              //direct login as Dante Moor only for testing
-              onPressed: () => navigateToHome("uid-0001", context),
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            SocialButton(
-              icon: Assets.icons.appleLogo,
-              label: "Apple",
-              // direct login as Paul only for testing
-              onPressed: () => navigateToHome("uid-0002", context),
+            IconButton(
+              icon: Assets.icons.googleLogo.image(height: 30, width: 30),
+              onPressed: () => authController.signInWithGoogle(),
             ),
           ],
         )

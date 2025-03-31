@@ -10,8 +10,16 @@ class ProfileMockDB extends ProfileRepo {
   List<Profile> data = profiles;
 
   @override
-  Future<void> setCurrentProfile(Profile profile) async {
-    currentProfile = profile;
+  Future<bool> setCurrentProfile(String userId) async {
+    Profile foundUser = data.firstWhere(
+      (profile) => profile.userId == userId,
+      orElse: () => Profile(name: "", userId: userId),
+    );
+    if (foundUser.name.isEmpty) {
+      data.add(foundUser);
+    }
+    currentProfile = foundUser;
+    return foundUser.name.isEmpty;
   }
 
   @override
@@ -73,7 +81,7 @@ class ProfileMockDB extends ProfileRepo {
   Future<void> updateProfile(Profile oldProfile, Profile newProfile) async {
     return Future.delayed(Duration(seconds: 1), () {
       data[data.indexOf(oldProfile)] = newProfile;
-      setCurrentProfile(newProfile);
+      setCurrentProfile(newProfile.userId);
     });
   }
 

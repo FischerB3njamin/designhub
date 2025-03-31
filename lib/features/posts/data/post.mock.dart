@@ -55,7 +55,7 @@ List<Post> samplePosts = [
       "https://i.pinimg.com/736x/f1/87/c9/f187c94e7bdd4b9d4c4c29fa1de5fb0a.jpg",
       "https://i.pinimg.com/736x/6d/75/ae/6d75ae3ab4f045c1e5ea9666a3b1d7af.jpg"
     ],
-    userId: "uid-0001",
+    userId: "GfNOmQeqC9STwZm5eQsPHxXMXMr1",
   ),
   Post(
     postId: "po-006",
@@ -66,7 +66,7 @@ List<Post> samplePosts = [
       "https://i.pinimg.com/736x/4f/20/e6/4f20e6adc6566a5826b803dafecc3b61.jpg",
       "https://i.pinimg.com/736x/0a/b1/ba/0ab1baaaff037eb6336b549f18316a15.jpg"
     ],
-    userId: "uid-0001",
+    userId: "GfNOmQeqC9STwZm5eQsPHxXMXMr1",
   ),
   Post(
     postId: "po-007",
@@ -77,7 +77,7 @@ List<Post> samplePosts = [
       "https://i.pinimg.com/736x/2f/53/ca/2f53ca3d4b52e2428565f5fc4577b249.jpg",
       "https://i.pinimg.com/736x/24/2f/12/242f127228acf6c328218546c64bbb10.jpg",
     ],
-    userId: "uid-0001",
+    userId: "GfNOmQeqC9STwZm5eQsPHxXMXMr1",
   ),
   Post(
     postId: "po-008",

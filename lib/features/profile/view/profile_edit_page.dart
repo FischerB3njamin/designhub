@@ -19,20 +19,25 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   late TextEditingController interestsController;
   late TextEditingController headerImageController;
   late TextEditingController avatarImageController;
+  late TextEditingController nameController;
   ProfileController profileController = ProfileController();
 
   @override
   void initState() {
     super.initState();
+    nameController = TextEditingController(text: widget.profile.name);
     aboutMeController = TextEditingController(text: widget.profile.aboutMe);
-    interestsController = TextEditingController(text: widget.profile.aboutMe);
-    headerImageController = TextEditingController(text: widget.profile.aboutMe);
-    avatarImageController = TextEditingController(text: widget.profile.aboutMe);
+    interestsController = TextEditingController(text: widget.profile.interests);
+    headerImageController =
+        TextEditingController(text: widget.profile.backgroundImagePath);
+    avatarImageController =
+        TextEditingController(text: widget.profile.avatarImagePath);
   }
 
   @override
   void dispose() {
     super.dispose();
+    nameController.dispose();
     aboutMeController.dispose();
     interestsController.dispose();
     headerImageController.dispose();
@@ -41,6 +46,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
 
   void updateProfile() async {
     final newProfile = widget.profile;
+    newProfile.name = nameController.text;
     newProfile.aboutMe = aboutMeController.text;
     newProfile.interests = interestsController.text;
     newProfile.backgroundImagePath = headerImageController.text;
@@ -68,6 +74,12 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                 spacing: 16,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  TextFormField(
+                    controller: nameController,
+                    decoration: InputDecoration(labelText: 'Name'),
+                    validator: (value) => ValidationController.validateNotEmpty(
+                        value), // Validate URL format
+                  ),
                   TextFormField(
                     controller: headerImageController,
                     decoration: InputDecoration(labelText: 'Header Image:'),

@@ -14,8 +14,12 @@ import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class NavigationPage extends StatefulWidget {
-  const NavigationPage({super.key, this.index = 0});
   final int index;
+
+  const NavigationPage({
+    super.key,
+    this.index = 0,
+  });
 
   @override
   State<NavigationPage> createState() => _NavigationPageState();
@@ -50,7 +54,8 @@ class _NavigationPageState extends State<NavigationPage> {
         callback: fetchNews,
       ),
       RatingOverviewPage(),
-      ProfilePage(profile: currentProfile)
+      ProfilePage(
+          profile: currentProfile, initialOpenEdit: currentProfile.name.isEmpty)
     ];
   }
 

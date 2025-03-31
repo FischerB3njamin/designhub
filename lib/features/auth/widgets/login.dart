@@ -1,23 +1,28 @@
 import 'package:designhub/features/auth/controller/auth_controller.dart';
 import 'package:designhub/features/auth/view/registration_page.dart';
-import 'package:designhub/features/navigation/view/navigation_page.dart';
+import 'package:designhub/features/auth/widgets/forgot_password.dart';
 import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/shared/controller/validation_controller.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key});
+  final AuthController authController;
+
+  const Login({
+    super.key,
+    required this.authController,
+  });
 
   @override
   State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
-  bool isError = false;
+  String? errorText;
   bool logginIsRunning = false;
+  bool hidePasswort = true;
   final _formKey = GlobalKey<FormState>();
-  AuthController authController = AuthController();
   ProfileController profileController = ProfileController();
   TextEditingController emailController = TextEditingController();
   TextEditingController pwdController = TextEditingController();
@@ -34,35 +39,17 @@ class _LoginState extends State<Login> {
 
     setState(() => logginIsRunning = true);
 
-    final userId = await authController.checkLogin(
+    final error = await widget.authController.login(
       emailController.text,
       pwdController.text,
     );
 
-    if (userId.isNotEmpty) {
-      await _navigateToHome(userId);
-    } else {
-      _showLoginError();
+    if (error != null) {
+      setState(() {
+        errorText = error;
+        logginIsRunning = false;
+      });
     }
-  }
-
-  Future<void> _navigateToHome(String userId) async {
-    final profile = await profileController.getProfile(userId);
-    profileController.setCurrentProfile(profile);
-
-    if (mounted) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => NavigationPage()),
-      );
-    }
-  }
-
-  void _showLoginError() {
-    setState(() {
-      isError = true;
-      logginIsRunning = false;
-    });
   }
 
   @override
@@ -87,9 +74,20 @@ class _LoginState extends State<Login> {
                   validator: ValidationController.validateEmail,
                 ),
                 TextFormField(
-                  obscureText: true,
+                  obscureText: hidePasswort,
                   controller: pwdController,
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                        style: ButtonStyle(
+                            backgroundColor: WidgetStateProperty.all(
+                                DesignhubColors.transparent),
+                            shadowColor: WidgetStateProperty.all(
+                                DesignhubColors.transparent)),
+                        onPressed: () =>
+                            setState(() => hidePasswort = !hidePasswort),
+                        icon: Icon(hidePasswort
+                            ? Icons.visibility_off
+                            : Icons.visibility)),
                     labelText: 'Password',
                   ),
                   validator: ValidationController.validatePassword,
@@ -97,11 +95,11 @@ class _LoginState extends State<Login> {
               ],
             ),
           ),
-          if (isError)
+          if (errorText != null)
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Invalid login",
+                errorText!,
                 style: TextTheme.of(context)
                     .bodyLarge!
                     .copyWith(color: DesignhubColors.red),
@@ -132,9 +130,11 @@ class _LoginState extends State<Login> {
               Text("New to the app?",
                   style: TextStyle(fontWeight: FontWeight.w700)),
               TextButton(
-                onPressed: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                        builder: (context) => RegistrationPage())),
+                onPressed: () =>
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => RegistrationPage(
+                              authController: widget.authController,
+                            ))),
                 child: Text(
                   "Sign up now",
                   style: TextStyle(
@@ -145,19 +145,7 @@ class _LoginState extends State<Login> {
               ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Forgot your password? "),
-              Text(
-                "click here ",
-                style: TextStyle(
-                  color: DesignhubColors.primary,
-                ),
-              ),
-              Text("to reset it."),
-            ],
-          )
+          ForgotPassword(authController: widget.authController),
         ],
       ),
     );

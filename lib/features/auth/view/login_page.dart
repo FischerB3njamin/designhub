@@ -1,10 +1,16 @@
+import 'package:designhub/features/auth/controller/auth_controller.dart';
 import 'package:designhub/features/auth/widgets/login.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/shared/widgets/social_login.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  final AuthController authController;
+
+  const LoginPage({
+    super.key,
+    required this.authController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +43,13 @@ class LoginPage extends StatelessWidget {
                           Assets.images.logoText.image(width: 200, height: 200),
                     ),
                     SizedBox(height: 40),
-                    Login(),
-                    SocialLogin(label: "Or login with"),
+                    Login(
+                      authController: authController,
+                    ),
+                    SocialLogin(
+                      label: "Or login with",
+                      authController: authController,
+                    ),
                   ],
                 ),
               ),

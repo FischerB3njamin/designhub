@@ -12,7 +12,12 @@
           "package_name": "com.example.designhub"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "932954488084-ch0065oqdm6ubldmbl5af3gjskh8k04e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDeaZ3cCwDtzHYP6V01JmO8Pgx94LUx5i0"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "932954488084-ch0065oqdm6ubldmbl5af3gjskh8k04e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "932954488084-q8502qmp0f6cn9g606sv0cin4mio35gn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.designhub"
+              }
+            }
+          ]
         }
       }
     }

@@ -1,34 +1,35 @@
 import 'package:designhub/features/auth/controller/auth_controller.dart';
-import 'package:designhub/features/navigation/view/navigation_page.dart';
 import 'package:designhub/features/profile/controller/profile_controller.dart';
-import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/shared/controller/validation_controller.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class Registration extends StatefulWidget {
-  const Registration({super.key});
+  final AuthController authController;
+  const Registration({
+    super.key,
+    required this.authController,
+  });
 
   @override
   State<Registration> createState() => _RegistrationState();
 }
 
 class _RegistrationState extends State<Registration> {
-  String errorMessage = "";
+  String? errorMessage;
+  bool hidePasswort = true;
+  bool hideRepeatPasswort = true;
   bool termsAndConditions = false;
   bool registrationIsRunning = false;
   final _formKey = GlobalKey<FormState>();
 
-  AuthController authController = AuthController();
   ProfileController profileController = ProfileController();
-  TextEditingController nameController = TextEditingController();
   TextEditingController mailController = TextEditingController();
   TextEditingController pwdController = TextEditingController();
   TextEditingController repeatPwdController = TextEditingController();
 
   @override
   void dispose() {
-    nameController.dispose();
     mailController.dispose();
     pwdController.dispose();
     repeatPwdController.dispose();
@@ -40,7 +41,6 @@ class _RegistrationState extends State<Registration> {
 
     setState(() => registrationIsRunning = true);
 
-    final String name = nameController.text;
     final String mail = mailController.text;
     final String pwd = pwdController.text;
     final String repeatedPwd = repeatPwdController.text;
@@ -50,7 +50,8 @@ class _RegistrationState extends State<Registration> {
       return;
     }
 
-    await _registerUser(name, mail, pwd);
+    errorMessage = await widget.authController.register(mail, pwd);
+    setState(() {});
   }
 
   void _setError(String message) {
@@ -58,21 +59,6 @@ class _RegistrationState extends State<Registration> {
       errorMessage = message;
       registrationIsRunning = false;
     });
-  }
-
-  Future<void> _registerUser(String name, String mail, String pwd) async {
-    final String userId = await authController.addUser(name, mail, pwd);
-    final Profile newProfile =
-        await profileController.createProfile(name, userId);
-    profileController.setCurrentProfile(newProfile);
-
-    if (mounted) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => NavigationPage(),
-        ),
-      );
-    }
   }
 
   @override
@@ -85,13 +71,6 @@ class _RegistrationState extends State<Registration> {
           spacing: 8,
           children: [
             TextFormField(
-              controller: nameController,
-              decoration: InputDecoration(
-                labelText: 'Name',
-              ),
-              validator: ValidationController.validateNotEmpty,
-            ),
-            TextFormField(
               controller: mailController,
               decoration: InputDecoration(
                 labelText: 'Email',
@@ -100,16 +79,38 @@ class _RegistrationState extends State<Registration> {
             ),
             TextFormField(
               controller: pwdController,
-              obscureText: true,
+              obscureText: hidePasswort,
               decoration: InputDecoration(
+                suffixIcon: IconButton(
+                    style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(
+                            DesignhubColors.transparent),
+                        shadowColor: WidgetStateProperty.all(
+                            DesignhubColors.transparent)),
+                    onPressed: () =>
+                        setState(() => hidePasswort = !hidePasswort),
+                    icon: Icon(hidePasswort
+                        ? Icons.visibility_off
+                        : Icons.visibility)),
                 labelText: 'Password',
               ),
               validator: ValidationController.validatePassword,
             ),
             TextFormField(
               controller: repeatPwdController,
-              obscureText: true,
+              obscureText: hideRepeatPasswort,
               decoration: InputDecoration(
+                suffixIcon: IconButton(
+                    style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(
+                            DesignhubColors.transparent),
+                        shadowColor: WidgetStateProperty.all(
+                            DesignhubColors.transparent)),
+                    onPressed: () => setState(
+                        () => hideRepeatPasswort = !hideRepeatPasswort),
+                    icon: Icon(hideRepeatPasswort
+                        ? Icons.visibility_off
+                        : Icons.visibility)),
                 labelText: 'Repeat Password',
               ),
               validator: ValidationController.validatePassword,
@@ -126,9 +127,9 @@ class _RegistrationState extends State<Registration> {
                 Text("I agree to the terms and conditions")
               ],
             ),
-            if (errorMessage.isNotEmpty)
+            if (errorMessage != null)
               Text(
-                errorMessage,
+                errorMessage!,
                 style: TextTheme.of(context).bodyLarge!.copyWith(
                     color: DesignhubColors.red, fontWeight: FontWeight.bold),
               ),

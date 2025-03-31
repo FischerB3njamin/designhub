@@ -1,3 +1,4 @@
+import 'package:designhub/features/auth/controller/auth_controller.dart';
 import 'package:designhub/features/auth/view/login_page.dart';
 import 'package:designhub/features/auth/widgets/registration.dart';
 import 'package:designhub/gen/assets.gen.dart';
@@ -5,7 +6,9 @@ import 'package:designhub/shared/widgets/social_login.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationPage extends StatelessWidget {
-  const RegistrationPage({super.key});
+  final AuthController authController;
+
+  const RegistrationPage({super.key, required this.authController});
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +40,13 @@ class RegistrationPage extends StatelessWidget {
                           child: Assets.images.logoText
                               .image(width: 200, height: 200)),
                       SizedBox(height: 60),
-                      Registration(),
-                      SocialLogin(label: "Or register with")
+                      Registration(
+                        authController: authController,
+                      ),
+                      SocialLogin(
+                        label: "Or register with",
+                        authController: authController,
+                      )
                     ],
                   ),
                 ),
@@ -49,7 +57,9 @@ class RegistrationPage extends StatelessWidget {
                 child: IconButton(
                   onPressed: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => LoginPage(),
+                      builder: (context) => LoginPage(
+                        authController: authController,
+                      ),
                     ),
                   ),
                   icon: Icon(Icons.close),

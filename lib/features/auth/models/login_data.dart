@@ -1,7 +1,7 @@
 class LoginData {
   String mail;
   String password;
-  String id;
+  String uid;
 
-  LoginData(this.mail, this.password, this.id);
+  LoginData(this.mail, this.password, this.uid);
 }
