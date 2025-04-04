@@ -4,7 +4,7 @@ import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/features/navigation/view/navigation_page.dart';
 import 'package:flutter/material.dart';
 
-class SocialLogin extends StatelessWidget {
+class SocialLogin extends StatefulWidget {
   final AuthController authController;
   final String label;
 
@@ -14,15 +14,21 @@ class SocialLogin extends StatelessWidget {
     required this.authController,
   });
 
+  @override
+  State<SocialLogin> createState() => _SocialLoginState();
+}
+
+class _SocialLoginState extends State<SocialLogin> {
   Future<void> navigateToHome(String userId, BuildContext context) async {
     final profileController = ProfileController();
     final profile = await profileController.getProfile(userId);
     profileController.setCurrentProfile(profile.userId);
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => NavigationPage()),
-    );
+    if (context.mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => NavigationPage()),
+      );
+    }
   }
 
   @override
@@ -39,7 +45,7 @@ class SocialLogin extends StatelessWidget {
                 child: Divider(),
               ),
               SizedBox(width: 16),
-              Text(label),
+              Text(widget.label),
               SizedBox(width: 16),
               Expanded(
                 flex: 1,
@@ -56,7 +62,7 @@ class SocialLogin extends StatelessWidget {
           children: [
             IconButton(
               icon: Assets.icons.googleLogo.image(height: 30, width: 30),
-              onPressed: () => authController.signInWithGoogle(),
+              onPressed: () => widget.authController.signInWithGoogle(),
             ),
           ],
         )

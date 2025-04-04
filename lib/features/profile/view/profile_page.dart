@@ -220,7 +220,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         widget.profile.userId,
                       ],
                     );
-                    if (mounted) {
+                    if (context.mounted) {
                       CustomBottomSheet.show(
                           context,
                           ChatDetailScreen(

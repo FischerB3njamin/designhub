@@ -29,11 +29,13 @@ class ChatItemView extends StatelessWidget {
           await ChatController().markAsRead(chat);
         }
         callback();
-        CustomBottomSheet.show(
-          context,
-          ChatDetailScreen(chat: chat, senderProfile: senderProfile),
-          1,
-        );
+        if (context.mounted) {
+          CustomBottomSheet.show(
+            context,
+            ChatDetailScreen(chat: chat, senderProfile: senderProfile),
+            1,
+          );
+        }
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0),

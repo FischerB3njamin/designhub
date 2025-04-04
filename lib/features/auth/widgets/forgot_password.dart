@@ -80,15 +80,14 @@ class _ResetPasswordState extends State<ResetPassword> {
                 onPressed: () async {
                   if (mail.isNotEmpty) {
                     await widget.authController.resetPassword(mail);
-                    if (mounted) {
+                    if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
                               'You got an email with the link to reset your password.'),
                         ),
                       );
-
-                      Navigator.of(context).pop();
+                      if (context.mounted) Navigator.of(context).pop();
                     }
                   }
                 },

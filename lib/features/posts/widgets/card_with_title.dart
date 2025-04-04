@@ -38,15 +38,16 @@ class _CardWithTitleState extends State<CardWithTitle> {
           await NewsController().markNewsAsReaded(widget.newRating);
         }
         widget.callback();
-
-        await CustomBottomSheet.showAsync(
-          context,
-          PostDetailView(
-            post: widget.post,
-            profile: widget.profile,
-          ),
-          0.9,
-        );
+        if (context.mounted) {
+          await CustomBottomSheet.showAsync(
+            context,
+            PostDetailView(
+              post: widget.post,
+              profile: widget.profile,
+            ),
+            0.9,
+          );
+        }
       },
       child: Card(
         clipBehavior: Clip.hardEdge,
@@ -116,7 +117,7 @@ class _CardWithTitleState extends State<CardWithTitle> {
                             await AnswerController().deleteAnswer(postId);
                             await ProfileController().deleteSavedPosts(postId);
 
-                            if (mounted) {
+                            if (context.mounted) {
                               Navigator.pop(context);
                             }
                           },
