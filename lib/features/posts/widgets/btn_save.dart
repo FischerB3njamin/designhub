@@ -1,10 +1,10 @@
-import 'package:designhub/features/profile/controller/profile_controller.dart';
-import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/gen/assets.gen.dart';
+import 'package:designhub/features/profile/provider/current_profile_notifier.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class BtnSave extends StatefulWidget {
+class BtnSave extends StatelessWidget {
   final String postId;
 
   const BtnSave({
@@ -13,23 +13,10 @@ class BtnSave extends StatefulWidget {
   });
 
   @override
-  State<BtnSave> createState() => _BtnSaveState();
-}
-
-class _BtnSaveState extends State<BtnSave> {
-  ProfileController profileController = ProfileController();
-  late Profile profile;
-  late bool saved;
-
-  @override
-  void initState() {
-    super.initState();
-    profile = profileController.getCurrentProfile();
-    saved = profile.savedPosts.contains(widget.postId);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final currentProfileNotifier = context.watch<CurrentProfileNotifier>();
+    bool saved = currentProfileNotifier.getSavedPost(postId);
+
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 500),
       transitionBuilder: (Widget child, Animation<double> animation) {
@@ -37,27 +24,15 @@ class _BtnSaveState extends State<BtnSave> {
       },
       child: IconButton(
         key: ValueKey<bool>(saved),
-        onPressed: () {
-          setState(() {
-            saved = !saved;
-          });
-          saved
-              ? profileController.savePost(profile, widget.postId)
-              : profileController.removeSavePost(profile, widget.postId);
-        },
+        onPressed: () => currentProfileNotifier.toggleSavePost(postId),
         icon: saved
             ? Assets.icons.folder.svg(
                 height: 35,
                 width: 35,
-                colorFilter: ColorFilter.mode(
-                  DesignhubColors.primary,
-                  BlendMode.srcIn,
-                ),
+                colorFilter:
+                    ColorFilter.mode(DesignhubColors.primary, BlendMode.srcIn),
               )
-            : Assets.icons.folder.svg(
-                height: 35,
-                width: 35,
-              ),
+            : Assets.icons.folder.svg(height: 35, width: 35),
       ),
     );
   }

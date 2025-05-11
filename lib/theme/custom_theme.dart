@@ -1,9 +1,30 @@
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-ThemeData getCustomTheme() => ThemeData(
+ThemeData getCustomTheme(BuildContext context) => ThemeData(
+      primaryColor: DesignhubColors.white,
+      scaffoldBackgroundColor: DesignhubColors.white,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: DesignhubColors.white,
+        brightness: Brightness.light,
+      ).copyWith(
+        surface: DesignhubColors.white,
+        primary: DesignhubColors.primary,
+      ),
+      useMaterial3: true,
+      textTheme: GoogleFonts.urbanistTextTheme(
+        Theme.of(context).textTheme,
+      ),
+      appBarTheme: AppBarTheme(
+        backgroundColor: DesignhubColors.white,
+        foregroundColor: DesignhubColors.black,
+        elevation: 0,
+        centerTitle: true,
+        surfaceTintColor: DesignhubColors.white,
+      ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: DesignhubColors.primary, // Or your DesignhubColors.primary
+        color: DesignhubColors.primary,
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,

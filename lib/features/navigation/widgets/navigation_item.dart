@@ -34,7 +34,7 @@ class NavigationItem extends StatelessWidget {
               fit: BoxFit.cover,
               colorFilter: isSelected
                   ? ColorFilter.mode(DesignhubColors.primary, BlendMode.srcIn)
-                  : null,
+                  : ColorFilter.mode(DesignhubColors.black, BlendMode.srcIn),
             ),
             if (isSelected)
               Text(

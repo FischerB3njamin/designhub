@@ -1,9 +1,11 @@
-import 'package:designhub/features/news/data/news_mock_db.dart';
 import 'package:designhub/features/news/data/news_repo.dart';
 import 'package:designhub/features/news/models/news.dart';
 
 class NewsController {
-  NewsRepo repo = NewsMockDB();
+  NewsRepo repo;
+  NewsController(this.repo);
+
+  Stream<List<News>> watch(String profilId) => repo.watch(profilId);
 
   Future<List<News>> getNews(String profileId) => repo.getNews(profileId);
   Future<void> markNewsAsReaded(news) async => repo.markNewsAsReaded(news);

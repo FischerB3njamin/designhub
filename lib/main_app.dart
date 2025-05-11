@@ -1,55 +1,61 @@
-import 'package:designhub/features/auth/controller/auth_controller.dart';
-import 'package:designhub/features/auth/models/login_data.dart';
+import 'package:designhub/features/auth/provider/auth_notifier.dart';
 import 'package:designhub/features/auth/view/login_page.dart';
+import 'package:designhub/features/navigation/provider/navigation_notifier.dart';
 import 'package:designhub/features/navigation/view/navigation_page.dart';
-import 'package:designhub/features/profile/controller/profile_controller.dart';
+import 'package:designhub/features/profile/provider/current_profile_notifier.dart';
 import 'package:designhub/theme/custom_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MainApp extends StatelessWidget {
-  final AuthController authController;
-  const MainApp({
-    super.key,
-    required this.authController,
-  });
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // update the spcific type for the stream Authmockdb -> LoginData), Firestore -> User?
-    return StreamBuilder<User?>(
-        stream: authController.onAuthChanged(),
-        builder: (context, snapshot) {
-          final isLoggedIn = snapshot.data != null;
-          final user = snapshot.data;
-          return MaterialApp(
-              theme: getCustomTheme(),
-              debugShowCheckedModeBanner: false,
-              key: isLoggedIn ? Key("logged_in") : Key("not_logged_in"),
-              title: 'Flutter Demo',
-              home: isLoggedIn
-                  ? FutureBuilder(
-                      //for the Firebase auth
-                      future: ProfileController()
-                          .setCurrentProfile((user as User).uid),
-                      // for the authMockDB
-                      // future: ProfileController()
-                      //     .setCurrentProfile((user as LoginData).uid),
-                      builder: (context, profileSnapshot) {
-                        if (profileSnapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else if (profileSnapshot.hasData &&
-                            profileSnapshot.data == true) {
-                          return NavigationPage(
-                            index: 3,
-                          );
-                        } else {
-                          return NavigationPage(index: 0);
-                        }
-                      },
-                    )
-                  : LoginPage(authController: authController));
-        });
+    return MaterialApp(
+      theme: getCustomTheme(context),
+      debugShowCheckedModeBanner: false,
+      title: 'designHub',
+      home: const AuthWrapper(),
+    );
+  }
+}
+
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final authNotifier = Provider.of<AuthNotifier>(context, listen: false);
+
+    return StreamBuilder<dynamic>(
+      stream: authNotifier.onAuthChanged(),
+      builder: (context, authSnapshot) {
+        final user = authSnapshot.data;
+
+        if (user == null) {
+          return const LoginPage();
+        }
+
+        return FutureBuilder<bool>(
+          future:
+              context.read<CurrentProfileNotifier>().init((user as User).uid),
+          builder: (context, profileSnapshot) {
+            if (profileSnapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if (profileSnapshot.hasData && profileSnapshot.data == true) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                context.read<NavigationNotifier>().reinit(context);
+              });
+            }
+
+            return const NavigationPage();
+          },
+        );
+      },
+    );
   }
 }

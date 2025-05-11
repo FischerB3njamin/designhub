@@ -1,6 +1,7 @@
 import 'package:designhub/features/chat/models/chat_item.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/shared/widgets/avatar_circle.dart';
+import 'package:designhub/theme/custom_text_styles.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -39,13 +40,12 @@ class ChatDetailItemSender extends StatelessWidget {
                     border: Border.all(color: DesignhubColors.grey400),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Text(item.text),
+                  child: Text(item.message),
                 ),
                 Text(
-                  item.date,
-                  style: TextTheme.of(context).labelSmall!.copyWith(
-                        color: DesignhubColors.black.withAlpha(200),
-                      ),
+                  item.createdAt.toString(),
+                  style: CustomTextStyles.labelSmallColor(
+                      context, DesignhubColors.black.withAlpha(200)),
                 ),
               ],
             ),

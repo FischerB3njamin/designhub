@@ -1,26 +1,28 @@
-import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/models/profile.dart';
+import 'package:designhub/features/profile/provider/profile_notifier.dart';
+import 'package:designhub/features/profile/widgets/image_picker_field.dart';
 import 'package:designhub/shared/controller/validation_controller.dart';
+import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfileEditPage extends StatefulWidget {
   final Profile profile;
-  const ProfileEditPage({
-    super.key,
-    required this.profile,
-  });
+  const ProfileEditPage({super.key, required this.profile});
+
   @override
   State<ProfileEditPage> createState() => _ProfileEditPageState();
 }
 
 class _ProfileEditPageState extends State<ProfileEditPage> {
   final _formKey = GlobalKey<FormState>();
+
+  late TextEditingController nameController;
   late TextEditingController aboutMeController;
   late TextEditingController interestsController;
-  late TextEditingController headerImageController;
-  late TextEditingController avatarImageController;
-  late TextEditingController nameController;
-  ProfileController profileController = ProfileController();
+
+  late String headerImagePath;
+  late String avatarImagePath;
 
   @override
   void initState() {
@@ -28,116 +30,132 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     nameController = TextEditingController(text: widget.profile.name);
     aboutMeController = TextEditingController(text: widget.profile.aboutMe);
     interestsController = TextEditingController(text: widget.profile.interests);
-    headerImageController =
-        TextEditingController(text: widget.profile.backgroundImagePath);
-    avatarImageController =
-        TextEditingController(text: widget.profile.avatarImagePath);
+    headerImagePath = widget.profile.backgroundImagePath;
+    avatarImagePath = widget.profile.avatarImagePath;
   }
 
   @override
   void dispose() {
-    super.dispose();
     nameController.dispose();
     aboutMeController.dispose();
     interestsController.dispose();
-    headerImageController.dispose();
-    avatarImageController.dispose();
+    super.dispose();
   }
 
-  void updateProfile() async {
-    final newProfile = widget.profile;
-    newProfile.name = nameController.text;
-    newProfile.aboutMe = aboutMeController.text;
-    newProfile.interests = interestsController.text;
-    newProfile.backgroundImagePath = headerImageController.text;
-    newProfile.avatarImagePath = avatarImageController.text;
-    await profileController.updateProfile(widget.profile, newProfile);
-    if (mounted) Navigator.pop(context, newProfile);
+  Future<void> _onUpdateProfilePressed() async {
+    if (!(_formKey.currentState?.validate() ?? false)) return;
+
+    final profileProvider = context.read<ProfileNotifier>();
+    final updatedProfile = await profileProvider.updateProfile(
+      currentProfile: widget.profile,
+      name: nameController.text,
+      aboutMe: aboutMeController.text,
+      interests: interestsController.text,
+    );
+
+    if (mounted) {
+      profileProvider.clearTempImages();
+      Navigator.pop(context, updatedProfile);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.all(16),
-      children: [
-        Column(
-          spacing: 16,
-          crossAxisAlignment: CrossAxisAlignment.start,
+    final profileNotifier = context.watch<ProfileNotifier>();
+
+    return Scaffold(
+      appBar: AppBar(
+          title: Text("Edit Profile"),
+          leading: SizedBox.shrink(),
+          actions: [
+            IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: Icon(Icons.close)),
+          ]),
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 64.0),
+        child: ListView(
+          padding: EdgeInsets.all(16),
           children: [
-            Text(
-              "Edit Profile",
-              style: TextTheme.of(context).headlineLarge,
-            ),
             Form(
-              key: _formKey, // Attach the form key here
+              key: _formKey,
               child: Column(
-                spacing: 16,
                 crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 16,
                 children: [
+                  ImagePickerField(
+                    title: "Header Image:",
+                    imagePath: headerImagePath,
+                    imageFile: profileNotifier.headerImageFile,
+                    onPick: () => profileNotifier.pickImage(true, context),
+                  ),
+                  ImagePickerField(
+                    title: "Avatar Image:",
+                    imagePath: avatarImagePath,
+                    imageFile: profileNotifier.avatarImageFile,
+                    onPick: () => profileNotifier.pickImage(false, context),
+                  ),
                   TextFormField(
                     controller: nameController,
                     decoration: InputDecoration(labelText: 'Name'),
-                    validator: (value) => ValidationController.validateNotEmpty(
-                        value), // Validate URL format
-                  ),
-                  TextFormField(
-                    controller: headerImageController,
-                    decoration: InputDecoration(labelText: 'Header Image:'),
-                    validator: (value) => ValidationController.validateUrl(
-                        value), // Validate URL format
-                  ),
-                  TextFormField(
-                    controller: avatarImageController,
-                    decoration: InputDecoration(labelText: 'Avatar Image:'),
-                    validator: (value) => ValidationController.validateUrl(
-                        value), // Validate URL format
+                    validator: ValidationController.validateNotEmpty,
                   ),
                   TextFormField(
                     controller: aboutMeController,
                     maxLines: null,
-                    decoration: InputDecoration(labelText: 'About me:'),
-                    validator: (value) => ValidationController.validateNotEmpty(
-                        value), // Check if non-empty
+                    decoration: InputDecoration(labelText: 'About me'),
+                    validator: ValidationController.validateNotEmpty,
                   ),
                   TextFormField(
                     controller: interestsController,
                     maxLines: null,
                     decoration:
                         InputDecoration(labelText: 'Interests & Inspirations'),
-                    validator: (value) => ValidationController.validateNotEmpty(
-                        value), // Check if non-empty
+                    validator: ValidationController.validateNotEmpty,
                   ),
                 ],
               ),
             ),
+            SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text("Cancel"),
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(color: DesignhubColors.black),
+                    )),
+                SizedBox(width: 16),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16),
+                  child: TextButton(
+                    style: ButtonStyle(
+                      minimumSize: WidgetStateProperty.all(const Size(120, 35)),
+                      backgroundColor: WidgetStateProperty.all(
+                        DesignhubColors.primary,
+                      ),
+                      padding: WidgetStateProperty.all(
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      ),
+                    ),
+                    onPressed: () => _onUpdateProfilePressed(),
+                    child: Text(
+                      'Save',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: DesignhubColors.white,
+                      ),
+                    ),
+                  ),
                 ),
-                SizedBox(width: 60),
-                SizedBox(
-                  width: 160,
-                  height: 40,
-                  child: ElevatedButton(
-                      style: ButtonStyle(
-                          padding: WidgetStateProperty.all<EdgeInsets>(
-                              EdgeInsets.all(0))),
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          // If the form is valid, proceed with the save
-                          updateProfile();
-                        }
-                      },
-                      child: Text("Save")),
-                )
               ],
-            )
+            ),
           ],
-        )
-      ],
+        ),
+      ),
     );
   }
 }

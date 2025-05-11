@@ -1,12 +1,9 @@
-import 'package:designhub/features/follow/controller/follow_controller.dart';
-import 'package:designhub/features/home/widgets/card_post.dart';
+import 'package:designhub/features/home/provider/home_notifier.dart';
 import 'package:designhub/features/home/widgets/section_header.dart';
 import 'package:designhub/features/home/widgets/section_switcher.dart';
-import 'package:designhub/features/posts/controller/post_controller.dart';
-import 'package:designhub/features/posts/models/post.dart';
-import 'package:designhub/features/profile/controller/profile_controller.dart';
-import 'package:designhub/features/profile/models/profile.dart';
+import 'package:designhub/shared/widgets/empty_posts.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,111 +13,87 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final ProfileController profileController = ProfileController();
-  final followerController = FollowController();
-  final PostController postController = PostController();
-  List<Post>? posts;
-  List<Profile>? profiles;
-  bool isLoading = true;
-  String? errorMessage;
-  int activeTab = 1;
-  bool? hasFollower;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
-    _loadData(true);
+    _scrollController = ScrollController();
+    _scrollController.addListener(_onScroll);
   }
 
-  Future<void> _loadData(bool all) async {
-    final profile = profileController.getCurrentProfile();
+  void _onScroll() {
+    final homeNotifier = context.read<HomeNotifier>();
 
-    try {
-      posts = all
-          ? await postController.getPosts(profile.userId)
-          : await postController.getPostsByUsers(
-              await followerController.getFollow(profile.userId));
+    if (_scrollController.position.atEdge) {
+      // Check if we're at the bottom
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        final currentItem = homeNotifier.posts.length;
 
-      Set<String> profileIds = posts!.map((e) {
-        return e.userId;
-      }).toSet();
-      profiles = await profileController.getProfilesById(profileIds);
-      if (mounted) {
-        setState(() {
-          isLoading = false;
-        });
+        if (currentItem >= (homeNotifier.posts.length) - 3 &&
+            !homeNotifier.isLoadingMore) {
+          homeNotifier.loadMore();
+        }
       }
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-        errorMessage = 'Fehler beim Laden der Daten';
-      });
     }
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _onRefresh() async {
+    final homeNotifier = context.read<HomeNotifier>();
+    await homeNotifier.resetAndLoadData(); // Reset the UI and reload the data
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (errorMessage != null && errorMessage!.isNotEmpty) {
-      return Center(
-        child: Text(errorMessage!),
-      );
+    final homeNotifier = context.watch<HomeNotifier>();
+
+    if (homeNotifier.hasError) {
+      return Center(child: Text(" ${homeNotifier.error ?? 'Unknown error'}"));
     }
 
     return SafeArea(
-        child: Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        SectionHeader(),
-        SizedBox(height: 8),
-        SectionSwitcher(
-          active: activeTab,
-          hasFollower: hasFollower ?? false,
-          callback: (int index) {
-            if (index != activeTab) {
-              setState(() {
-                activeTab = index;
-                isLoading = true;
-              });
-              _loadData(index == 1);
-            }
-          },
-        ),
-        SizedBox(height: 8),
-        SizedBox(
-          height: 560,
-          child: ListWheelScrollView(
-            itemExtent: 560,
-            diameterRatio: 10,
-            useMagnifier: true,
-            physics: FixedExtentScrollPhysics(),
-            controller: FixedExtentScrollController(),
-            children: [
-              if (isLoading)
-                Center(
-                  child: CircularProgressIndicator(),
+      child: Column(
+        children: [
+          const SectionHeader(),
+          const SizedBox(height: 8),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: RefreshIndicator(
+                onRefresh: _onRefresh, // Trigger the refresh logic
+                child: ListView(
+                  controller: _scrollController, // Use a ScrollController
+                  children: [
+                    SectionSwitcher(
+                      activeTab: homeNotifier.activeTab,
+                      onTabChanged: (index) =>
+                          homeNotifier.handleSectionSwitch(index),
+                    ),
+                    const SizedBox(height: 8),
+                    if (homeNotifier.isLoading && homeNotifier.posts.isEmpty)
+                      const Center(child: CircularProgressIndicator()),
+                    ...homeNotifier.getPostWidgets(),
+                    if (homeNotifier.isLoadingMore)
+                      const Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Center(child: CircularProgressIndicator()),
+                      ),
+                    if (homeNotifier.posts.isEmpty && !homeNotifier.isLoading)
+                      EmptyPosts(),
+                  ],
                 ),
-              if (!isLoading)
-                ...posts!.map(
-                  (e) => CardPost(
-                    post: e,
-                    profile: profiles!
-                        .firstWhere((profile) => profile.userId == e.userId),
-                  ),
-                ),
-              if (posts != null && posts!.isEmpty)
-                Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Center(
-                      child: Text(
-                    "You’re not following anyone yet.\n Follow some creators to see their posts here!",
-                    style: TextTheme.of(context).headlineSmall,
-                    textAlign: TextAlign.center,
-                  )),
-                )
-            ],
+              ),
+            ),
           ),
-        ),
-      ],
-    ));
+        ],
+      ),
+    );
   }
 }

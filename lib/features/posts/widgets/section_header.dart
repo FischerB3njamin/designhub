@@ -1,3 +1,4 @@
+import 'package:designhub/theme/custom_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class SectionHeader extends StatelessWidget {
@@ -8,7 +9,7 @@ class SectionHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text("New Post", style: TextTheme.of(context).headlineLarge),
+        Text("New Post", style: CustomTextStyles.headlineLarge(context)),
         IconButton(
             onPressed: () => Navigator.of(context).pop(),
             icon: Icon(Icons.close))

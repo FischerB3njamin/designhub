@@ -6,42 +6,35 @@ import 'package:flutter/material.dart';
 class SectionChatHeader extends StatelessWidget {
   final Profile senderProfile;
 
-  const SectionChatHeader({
-    super.key,
-    required this.senderProfile,
-  });
+  const SectionChatHeader({super.key, required this.senderProfile});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Container(
-        padding: EdgeInsets.only(right: 2),
-        decoration: BoxDecoration(
-          border: Border.all(width: 1, color: DesignhubColors.grey300),
-          borderRadius: BorderRadius.all(Radius.circular(30)),
-        ),
-        child: Row(
-          children: [
-            AvatarCircle(
-              width: 50,
-              height: 50,
-              profile: senderProfile,
-            ),
-            SizedBox(width: 8),
-            Text(
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: DesignhubColors.grey100,
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Row(
+        children: [
+          AvatarCircle(width: 44, height: 44, profile: senderProfile),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
               senderProfile.name,
-              style: TextTheme.of(context)
-                  .headlineSmall!
-                  .copyWith(fontWeight: FontWeight.w600),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
-            Spacer(),
-            IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: Icon(Icons.close),
-            ),
-          ],
-        ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
       ),
     );
   }

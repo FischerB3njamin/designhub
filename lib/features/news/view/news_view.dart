@@ -1,24 +1,21 @@
-import 'package:designhub/features/news/controller/news_controller.dart';
 import 'package:designhub/features/news/models/news.dart';
+import 'package:designhub/features/news/provider/news_notifier.dart';
+import 'package:designhub/features/news/widgets/empty_news.dart';
 import 'package:designhub/features/news/widgets/news_item.dart';
-import 'package:designhub/features/profile/data/profile.mock.dart';
 import 'package:designhub/features/profile/models/profile.dart';
+import 'package:designhub/features/profile/provider/current_profile_notifier.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
+import 'package:designhub/theme/custom_text_styles.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NewsView extends StatefulWidget {
   final bool smallView;
-  final List<News> news;
-  final List<Profile> profiles;
-  final Function callback;
 
   const NewsView({
     super.key,
     required this.smallView,
-    required this.news,
-    required this.profiles,
-    required this.callback,
   });
 
   @override
@@ -26,71 +23,70 @@ class NewsView extends StatefulWidget {
 }
 
 class _NewsViewState extends State<NewsView> {
-  final controller = NewsController();
-  void callBack(News news) {
-    controller.markNewsAsReaded(news);
-    setState(() {});
-    widget.callback();
-  }
-
   @override
   Widget build(BuildContext context) {
-    List<News> news = widget.news;
-    if (widget.news.length > 5) {
-      news = widget.smallView ? widget.news.sublist(0, 5) : widget.news;
-    }
+    final newsProvider = context.watch<NewsNotifier>();
+    final loginNotifier = context.watch<CurrentProfileNotifier>();
 
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 16.0,
-        vertical: widget.smallView ? 0 : 60,
-      ),
-      child: ListView(children: [
-        Row(
+    if (newsProvider.isInit) {
+      return Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: widget.smallView ? 0 : 60,
+        ),
+        child: Column(
           children: [
-            Text(
-              "News",
-              style: TextTheme.of(context).headlineLarge,
+            Row(
+              children: [
+                Text("News", style: CustomTextStyles.headlineLarge(context)),
+                Spacer(),
+                widget.smallView
+                    ? _buildAllNewsButton()
+                    : IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: Icon(Icons.close),
+                      ),
+              ],
             ),
-            Spacer(),
-            widget.smallView
-                ? OutlinedButton(
-                    onPressed: () async {
-                      CustomBottomSheet.show(
-                          context,
-                          NewsView(
-                            smallView: false,
-                            news: widget.news,
-                            profiles: widget.profiles,
-                            callback: widget.callback,
-                          ),
-                          1);
-                      setState(() {});
-                    },
-                    child: Text(
-                      "Read all",
-                      style: TextTheme.of(context).labelLarge!.copyWith(
-                          color: DesignhubColors.primary,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  )
-                : IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(Icons.close),
-                  ),
+            SizedBox(height: 8),
+            if (newsProvider.newsList.isEmpty) EmptyNews(),
+            if (newsProvider.newsList.isNotEmpty)
+              ..._buildNewsItems(
+                  newsProvider.newsList, newsProvider.profilesList),
           ],
         ),
-        SizedBox(height: 8),
-        ...news.map(
+      );
+    } else {
+      newsProvider.init(loginNotifier.getProfileId());
+    }
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget _buildAllNewsButton() => OutlinedButton(
+        onPressed: () async {
+          CustomBottomSheet.show(context, NewsView(smallView: false), 1);
+        },
+        child: Text(
+          "Read all",
+          style: CustomTextStyles.labelLargeColorBold(
+              context, DesignhubColors.primary, FontWeight.w600),
+        ),
+      );
+
+  List<Widget> _buildNewsItems(
+      List<News> newsList, List<Profile> profilesList) {
+    return newsList
+        .where((e) => profilesList.any((p) => p.userId == e.creatorId))
+        .map(
           (e) => NewsItem(
             news: e,
-            callback: callBack,
-            profile: profiles.firstWhere((profile) {
+            profile: profilesList.firstWhere((profile) {
               return profile.userId == e.creatorId;
             }),
           ),
-        ),
-      ]),
-    );
+        )
+        .toList();
   }
 }

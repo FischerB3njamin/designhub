@@ -1,6 +1,8 @@
 import 'package:designhub/features/posts/models/post.dart';
+import 'package:designhub/theme/custom_text_styles.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:link_text/link_text.dart';
 
 class SectionPostDetail extends StatelessWidget {
   final Post post;
@@ -29,7 +31,11 @@ class SectionPostDetail extends StatelessWidget {
         children: [
           Text(
             post.title,
-            style: TextTheme.of(context).headlineMedium,
+            style: CustomTextStyles.headlineMedium(context),
+          ),
+          LinkText(
+            post.description,
+            textStyle: CustomTextStyles.bodyMedium(context),
           ),
           Wrap(
             children: [
@@ -42,14 +48,10 @@ class SectionPostDetail extends StatelessWidget {
                       borderRadius: BorderRadius.circular(24)),
                   child: Text(
                     item,
-                    style: TextTheme.of(context).bodyMedium,
+                    style: CustomTextStyles.bodyMedium(context),
                   ),
                 ),
             ],
-          ),
-          Text(
-            post.description,
-            style: TextTheme.of(context).bodyMedium,
           ),
         ],
       ),

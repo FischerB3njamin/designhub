@@ -1,46 +1,60 @@
+import 'package:designhub/features/posts/provider/post_new_notifier.dart';
 import 'package:designhub/shared/controller/validation_controller.dart';
+import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SectionInputfields extends StatelessWidget {
-  final Function titleCallback;
-  final Function descriptionCallback;
-  final Function hashtagCallback;
-  final GlobalKey<FormState> formKey;
   const SectionInputfields({
     super.key,
-    required this.descriptionCallback,
-    required this.hashtagCallback,
-    required this.titleCallback,
-    required this.formKey,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      spacing: 8,
-      children: [
-        TextFormField(
-          onChanged: (e) => titleCallback(e),
-          decoration: InputDecoration(
-            hintText: "Title",
+    final newPostNotifier = context.watch<NewPostNotifier>();
+
+    return Form(
+      key: newPostNotifier.formKey,
+      child: ListView(
+        children: [
+          const Text('Title'),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: TextFormField(
+              maxLines: null,
+              onChanged: (e) => newPostNotifier.setTitle(e),
+              validator: ValidationController.validateTitle,
+            ),
           ),
-          validator: ValidationController.validateTitle,
-        ),
-        TextFormField(
-          onChanged: (e) => descriptionCallback(e),
-          decoration: InputDecoration(
-            hintText: "Description",
+          const Text('Description'),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: TextFormField(
+              maxLines: null,
+              onChanged: (e) => newPostNotifier.setDescription(e),
+              validator: ValidationController.validateDescription,
+            ),
           ),
-          validator: ValidationController.validateDescription,
-        ),
-        TextFormField(
-          onChanged: (e) => hashtagCallback(e),
-          decoration: InputDecoration(
-            hintText: "Hashtags",
+          const Text('Hashtag'),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: TextFormField(
+              maxLines: null,
+              onChanged: (e) => newPostNotifier.setHashtag(e),
+              validator: ValidationController.validateHashtags,
+            ),
           ),
-          validator: ValidationController.validateHashtags,
-        )
-      ],
+          Row(
+            children: [
+              Checkbox(
+                  activeColor: DesignhubColors.primary,
+                  value: newPostNotifier.sos,
+                  onChanged: (value) => newPostNotifier.setSos(value ?? false)),
+              Text("I need help! SOS !")
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

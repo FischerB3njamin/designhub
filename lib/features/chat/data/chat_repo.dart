@@ -1,8 +1,9 @@
 import 'package:designhub/features/chat/models/chat.dart';
 
 abstract class ChatRepo {
-  Future<List<Chat>> getChats();
-  Future<Chat?> getChatByParticipants(String sender, String reciever);
-  Future<void> addNewMessage(Chat chat);
-  Future<void> markChatAsRead(Chat chat);
+  Stream<List<Chat>> watchChats(String userId);
+  Future<List<Chat>> getChats(String userId);
+  Future<void> createChat(Chat chat);
+  Future<void> removeChat(String chatId);
+  Future<void> updateChat(String chatId, Chat chat);
 }

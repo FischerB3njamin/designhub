@@ -1,13 +1,14 @@
 import 'package:designhub/features/chat/models/chat_item.dart';
-import 'package:designhub/features/profile/controller/profile_controller.dart';
+import 'package:designhub/features/profile/provider/current_profile_notifier.dart';
 import 'package:designhub/shared/widgets/avatar_circle.dart';
+import 'package:designhub/theme/custom_text_styles.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ChatDetailItemReciever extends StatelessWidget {
   final ChatItem item;
-  final ProfileController profileController = ProfileController();
-  ChatDetailItemReciever({
+  const ChatDetailItemReciever({
     super.key,
     required this.item,
   });
@@ -34,14 +35,13 @@ class ChatDetailItemReciever extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      item.text,
+                      item.message,
                     ),
                   ),
                   Text(
-                    item.date,
-                    style: TextTheme.of(context).labelSmall!.copyWith(
-                          color: DesignhubColors.black.withAlpha(200),
-                        ),
+                    item.createdAt.toString(),
+                    style: CustomTextStyles.labelSmallColor(
+                        context, DesignhubColors.black.withAlpha(200)),
                   ),
                 ],
               ),
@@ -51,7 +51,7 @@ class ChatDetailItemReciever extends StatelessWidget {
           AvatarCircle(
             width: 50,
             height: 50,
-            profile: profileController.getCurrentProfile(),
+            profile: context.read<CurrentProfileNotifier>().getProfile(),
           ),
         ],
       ),

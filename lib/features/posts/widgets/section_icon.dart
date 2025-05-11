@@ -1,16 +1,15 @@
-import 'package:designhub/features/chat/models/chat.dart';
-import 'package:designhub/features/chat/view/chat_detail_screen.dart';
+import 'package:designhub/features/chat/provider/chat_notifier.dart';
+import 'package:designhub/features/comment/provider/comment_notifier.dart';
 import 'package:designhub/features/comment/view/comment_page.dart';
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/posts/widgets/btn_save.dart';
-import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/models/profile.dart';
-import 'package:designhub/features/rating/view/rating_overview_page.dart';
 import 'package:designhub/gen/assets.gen.dart';
-import 'package:designhub/shared/view/custom_bottom_sheet.dart';
+import 'package:designhub/features/profile/provider/current_profile_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class SectionIcon extends StatefulWidget {
+class SectionIcon extends StatelessWidget {
   final Post post;
   final Profile profile;
 
@@ -21,48 +20,29 @@ class SectionIcon extends StatefulWidget {
   });
 
   @override
-  State<SectionIcon> createState() => _SectionIconState();
-}
-
-class _SectionIconState extends State<SectionIcon> {
-  @override
   Widget build(BuildContext context) {
+    final chatNotifier = context.read<ChatNotifier>();
+    final loginNotifier = context.read<CurrentProfileNotifier>();
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          BtnSave(postId: post.postId),
           IconButton(
-              onPressed: () => CustomBottomSheet.show(
-                    context,
-                    RatingOverviewPage(posts: [widget.post]),
-                    1,
-                  ),
-              icon: Assets.icons.rating.svg(height: 30, width: 30)),
-          BtnSave(postId: widget.post.postId),
-          // BtnLike(postId: widget.post.postId),
-          IconButton(
-              onPressed: () => CustomBottomSheet.show(
-                  context,
-                  CommentPage(
-                    postId: widget.post.postId,
-                    creatorId: widget.post.userId,
-                  ),
-                  0.5),
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ChangeNotifierProvider(
+                      create: (_) =>
+                          CommentNotifier(post.postId, post.userId, context),
+                      child: CommentPage(),
+                    ),
+                  )),
               icon: Assets.icons.open.image(height: 30, width: 30)),
-          IconButton(
-              onPressed: () {
-                CustomBottomSheet.show(
-                    context,
-                    ChatDetailScreen(
-                        chat: Chat(chatItems: [], participants: [
-                          ProfileController().getCurrentProfile().userId,
-                          widget.profile.userId,
-                        ]),
-                        senderProfile: widget.profile),
-                    1);
-              },
-              icon: Assets.icons.chat.svg(height: 30, width: 30)),
+          if (loginNotifier.getProfileId() != profile.userId)
+            IconButton(
+                onPressed: () => chatNotifier.openChat(context, profile),
+                icon: Assets.icons.chat.svg(height: 30, width: 30)),
         ],
       ),
     );

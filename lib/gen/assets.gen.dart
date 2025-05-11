@@ -73,6 +73,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/share.svg
   SvgGenImage get share => const SvgGenImage('assets/icons/share.svg');
 
+  /// File path: assets/icons/sos.svg
+  SvgGenImage get sos => const SvgGenImage('assets/icons/sos.svg');
+
   /// List of all assets
   List<dynamic> get values => [
         addMessage,
@@ -92,7 +95,8 @@ class $AssetsIconsGen {
         rating,
         search,
         sendMessage,
-        share
+        share,
+        sos
       ];
 }
 

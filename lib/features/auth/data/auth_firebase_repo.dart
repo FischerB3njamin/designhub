@@ -18,10 +18,18 @@ class AuthFirebase implements AuthRepo {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
-        case 'invalid-credentials':
-          return "Wrong logindata";
+        case 'invalid-email':
+          return "The email address is invalid.";
+        case 'user-disabled':
+          return "This user account has been disabled.";
+        case 'user-not-found':
+          return "No user found. Please sign up.";
+        case 'wrong-password':
+          return "Incorrect password. Please try again.";
+        case 'too-many-requests':
+          return "Too many failed login attempts. Please try again later.";
         default:
-          return "An error Occured $e";
+          return "An unknown error occurred: ${e.message}";
       }
     }
     return null;
@@ -40,10 +48,16 @@ class AuthFirebase implements AuthRepo {
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
-        case "email-already-in-use":
-          return 'E-Mail already registered. Please login';
+        case 'email-already-in-use':
+          return "This email address is already in use.";
+        case 'invalid-email':
+          return "The entered email address is invalid.";
+        case 'weak-password':
+          return "The password is too weak. Please choose a stronger password.";
+        case 'operation-not-allowed':
+          return "Registration with email and password is currently not enabled.";
         default:
-          return "An error Occured $e";
+          return "An unknown error occurred: ${e.message}";
       }
     }
     return null;

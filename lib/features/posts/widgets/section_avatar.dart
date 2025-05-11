@@ -4,6 +4,7 @@ import 'package:designhub/features/posts/widgets/btn_like.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 
 import 'package:designhub/shared/widgets/avatar_circle.dart';
+import 'package:designhub/theme/custom_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class SectionAvatar extends StatefulWidget {
@@ -38,12 +39,10 @@ class _SectionAvatarState extends State<SectionAvatar> {
             spacing: 0,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 6.0),
+                padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
                   widget.profile.name,
-                  style: TextTheme.of(context)
-                      .titleLarge!
-                      .copyWith(fontWeight: FontWeight.w500),
+                  style: CustomTextStyles.titleLarge(context),
                 ),
               ),
               BtnFollow(profilId: widget.post.userId)

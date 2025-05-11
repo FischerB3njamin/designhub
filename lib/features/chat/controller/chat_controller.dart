@@ -1,13 +1,15 @@
-import 'package:designhub/features/chat/data/chat_mock_db.dart';
 import 'package:designhub/features/chat/data/chat_repo.dart';
 import 'package:designhub/features/chat/models/chat.dart';
 
 class ChatController {
-  ChatRepo repo = ChatMockDB();
+  final ChatRepo repo;
 
-  Future<List<Chat>> getChats() => repo.getChats();
-  Future<Chat?> getChatByParticipants(String sender, String reciever) =>
-      repo.getChatByParticipants(sender, reciever);
-  Future<void> addNewMessage(Chat chat) async => repo.addNewMessage(chat);
-  Future<void> markAsRead(Chat chat) => repo.markChatAsRead(chat);
+  ChatController(this.repo);
+
+  Stream<List<Chat>> watchChats(String userId) => repo.watchChats(userId);
+  Future<List<Chat>> getChats(String userId) => repo.getChats(userId);
+  Future<void> createChat(Chat chat) => repo.createChat(chat);
+  Future<void> removeChat(String chatId) => repo.removeChat(chatId);
+  Future<void> updateChat(String chatId, Chat chat) =>
+      repo.updateChat(chatId, chat);
 }

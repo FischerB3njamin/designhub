@@ -8,12 +8,12 @@ class NavigationData {
       label: "Home",
     ),
     Navigation(
-      icon: Assets.icons.chat,
-      label: "News",
+      icon: Assets.icons.sos,
+      label: "Rescue",
     ),
     Navigation(
-      icon: Assets.icons.rating,
-      label: "Rating",
+      icon: Assets.icons.chat,
+      label: "News",
     ),
     Navigation(
       icon: Assets.icons.profile,

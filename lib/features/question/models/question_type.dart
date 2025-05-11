@@ -1,1 +1,0 @@
-enum QuestionType { open, close }

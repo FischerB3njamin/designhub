@@ -1,5 +1,5 @@
 import 'package:designhub/features/profile/models/profile.dart';
-import 'package:designhub/features/profile/widgets/section_follow.dart';
+import 'package:designhub/theme/custom_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class ProfileInfo extends StatelessWidget {
@@ -17,7 +17,6 @@ class ProfileInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SectionFollow(profile: profile),
           Text(
             "About me",
             style: TextTheme.of(context)
@@ -27,19 +26,15 @@ class ProfileInfo extends StatelessWidget {
           SizedBox(height: 6),
           Text(
             profile.aboutMe,
-            style: TextTheme.of(context).bodyMedium,
+            style: CustomTextStyles.bodyMedium(context),
           ),
           SizedBox(height: 16),
-          Text(
-            "Interests & inpirations",
-            style: TextTheme.of(context)
-                .titleLarge!
-                .copyWith(fontWeight: FontWeight.bold),
-          ),
+          Text("Interests & inpirations",
+              style: CustomTextStyles.titleLargeBold(context, FontWeight.bold)),
           SizedBox(height: 6),
           Text(
             profile.interests,
-            style: TextTheme.of(context).bodyMedium,
+            style: CustomTextStyles.bodyMedium(context),
           ),
           SizedBox(height: 52)
         ],

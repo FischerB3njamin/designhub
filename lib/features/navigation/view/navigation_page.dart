@@ -1,77 +1,32 @@
-import 'package:designhub/features/chat/view/chat_news_page.dart';
-import 'package:designhub/features/news/controller/news_controller.dart';
-import 'package:designhub/features/news/models/news.dart';
+import 'package:designhub/features/chat/provider/chat_notifier.dart';
+import 'package:designhub/features/navigation/provider/navigation_notifier.dart';
+import 'package:designhub/features/news/provider/news_notifier.dart';
 import 'package:designhub/features/posts/view/new_post_page.dart';
-import 'package:designhub/features/profile/controller/profile_controller.dart';
-import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/gen/assets.gen.dart';
-import 'package:designhub/features/home/view/home_page.dart';
 import 'package:designhub/features/navigation/data/navigation_data.dart';
 import 'package:designhub/features/navigation/widgets/navigation_item.dart';
-import 'package:designhub/features/profile/view/profile_page.dart';
-import 'package:designhub/features/rating/view/rating_overview_page.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class NavigationPage extends StatefulWidget {
-  final int index;
-
+class NavigationPage extends StatelessWidget {
   const NavigationPage({
     super.key,
-    this.index = 0,
   });
 
   @override
-  State<NavigationPage> createState() => _NavigationPageState();
-}
-
-class _NavigationPageState extends State<NavigationPage> {
-  late int activeIndex = widget.index;
-  final ProfileController profileController = ProfileController();
-  final NewsController newsController = NewsController();
-  late bool hasNews = false;
-  late bool isLoading = true;
-  late List<Widget> pages;
-  late Profile currentProfile;
-
-  void fetchNews() async {
-    List<News> news = await newsController.getNews(currentProfile.userId);
-
-    setState(() {
-      hasNews = news.where((element) => !element.read).isNotEmpty;
-      isLoading = false;
-    });
-  }
-
-  @override
-  void initState() {
-    currentProfile = profileController.getCurrentProfile();
-    super.initState();
-    fetchNews();
-    pages = [
-      HomePage(),
-      ChatNewsPage(
-        callback: fetchNews,
-      ),
-      RatingOverviewPage(),
-      ProfilePage(
-          profile: currentProfile, initialOpenEdit: currentProfile.name.isEmpty)
-    ];
-  }
-
-  void handleIconTap(int index) => setState(() {
-        activeIndex = index;
-      });
-
-  @override
   Widget build(BuildContext context) {
+    final navigationNotifier = context.watch<NavigationNotifier>();
+    final newsNotifier = context.watch<NewsNotifier>();
+    final chatNotifier = context.watch<ChatNotifier>();
+
     return Scaffold(
       backgroundColor: DesignhubColors.white,
-      body: isLoading
+      body: navigationNotifier.isLoading
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : pages[activeIndex],
+          : navigationNotifier.activePage,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Transform.translate(
         offset: Offset(0, 5),
@@ -105,13 +60,15 @@ class _NavigationPageState extends State<NavigationPage> {
                       if (entry.key == 2) {
                         returnList.add(SizedBox(width: 80));
                       }
-
                       returnList.add(NavigationItem(
-                        icon: entry.value.label == 'News' && hasNews
+                        icon: entry.value.label == 'News' &&
+                                (newsNotifier.getHasNews() ||
+                                    chatNotifier.hasUnread)
                             ? Assets.icons.newsNew
                             : entry.value.icon,
-                        isSelected: activeIndex == entry.key,
-                        callback: handleIconTap,
+                        isSelected: navigationNotifier.activeIndex == entry.key,
+                        callback: (val) =>
+                            navigationNotifier.handleIconTap(val, context),
                         index: entry.key,
                         label: entry.value.label,
                       ));
