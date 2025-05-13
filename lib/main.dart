@@ -26,6 +26,7 @@ import 'package:designhub/features/profile/provider/current_profile_notifier.dar
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:designhub/features/chat/provider/chat_notifier.dart';
 import 'package:designhub/features/home/provider/home_notifier.dart';
@@ -40,7 +41,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  // Lock orientation
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   runApp(
