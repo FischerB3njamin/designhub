@@ -124,13 +124,4 @@ class PostFirebaseRepo extends PostRepo {
   Future<void> deletePost(String postId) async {
     await postsRef.doc(postId).update({"isActive": false});
   }
-
-  Future<void> update() async {
-    final result = await postsRef.get();
-    final posts =
-        result.docs.map((e) => Post.fromMap(e.data() as Map<String, dynamic>));
-    for (final post in posts) {
-      postsRef.doc(post.postId).update(post.toMap());
-    }
-  }
 }

@@ -1,26 +1,23 @@
 import 'package:designhub/features/design_sos/widgets/sos_post_card.dart';
 import 'package:designhub/features/home/widgets/card_post.dart';
 import 'package:designhub/features/posts/models/post.dart';
-import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/features/search/controller/search_controller.dart';
 import 'package:designhub/features/search/widgets/profile_search_widget.dart';
-import 'package:designhub/features/profile/provider/current_profile_notifier.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
 class SearchNotifier extends ChangeNotifier {
   final BuildContext context;
-  late final ProfileController _profileController;
+
   late final SearchControllerCustom _searchController;
-  late final CurrentProfileNotifier _currentProfileNotifier;
+
   String selectedTab = 'Post';
 
   SearchNotifier(this.context) {
-    _profileController = context.read<ProfileController>();
     _searchController = context.read<SearchControllerCustom>();
-    _currentProfileNotifier = context.read<CurrentProfileNotifier>();
   }
 
   String query = '';
@@ -139,7 +136,6 @@ class SearchNotifier extends ChangeNotifier {
   }
 
   List<Widget> createPostWidgets() {
-    print('neugebaut');
     return posts
         .map((post) {
           final profile = getProfileForPost(post);

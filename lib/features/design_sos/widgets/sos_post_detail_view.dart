@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:designhub/features/chat/provider/chat_notifier.dart';
-import 'package:designhub/features/posts/controller/post_controller.dart';
 import 'package:designhub/features/posts/widgets/image_gallery_screen.dart';
 import 'package:designhub/features/posts/widgets/section_avatar.dart';
 import 'package:designhub/features/posts/widgets/section_icon.dart';

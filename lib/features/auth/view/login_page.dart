@@ -1,9 +1,7 @@
 import 'package:designhub/features/auth/widgets/login.dart';
-import 'package:designhub/features/posts/controller/post_controller.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/shared/widgets/social_login.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -53,12 +51,6 @@ class LoginPage extends StatelessWidget {
           const SizedBox(height: 40),
           const Login(),
           const SocialLogin(label: "Or login with"),
-          TextButton(
-            onPressed: () {
-              context.read<PostController>().update();
-            },
-            child: Text('Update Post'),
-          ),
           const SizedBox(height: 64)
         ],
       ),

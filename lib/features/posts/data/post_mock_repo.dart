@@ -101,10 +101,4 @@ class PostMockRepo extends PostRepo {
     if (start >= posts.length) return [];
     return posts.sublist(start, end > posts.length ? posts.length : end);
   }
-
-  @override
-  Future<void> update() {
-    // TODO: implement update
-    throw UnimplementedError();
-  }
 }

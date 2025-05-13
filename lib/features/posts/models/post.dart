@@ -54,12 +54,6 @@ class Post {
       'isActive': isActive,
       'likes': likes,
       'created': created,
-      // only for search
-      'search':
-          '${title.toLowerCase()} ${hashtags.toLowerCase()} ${description.toLowerCase()}'
-              .split(' ')
-              .toSet()
-              .toList(),
     };
   }
 }

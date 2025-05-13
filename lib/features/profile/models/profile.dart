@@ -58,7 +58,6 @@ class Profile {
       'savedPosts': savedPosts,
       'sosPosts': sosPosts,
       'following': following,
-      'name_low': name.toLowerCase(),
     };
   }
 

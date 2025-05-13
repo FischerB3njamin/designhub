@@ -39,6 +39,4 @@ class PostController {
       repo.getPostsById(postIds);
 
   Future<void> deletePost(String postId) => repo.deletePost(postId);
-
-  Future<void> update() => repo.update();
 }

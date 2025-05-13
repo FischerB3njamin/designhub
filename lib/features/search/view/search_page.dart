@@ -71,7 +71,6 @@ class SearchPage extends StatelessWidget {
   }
 
   Widget _buildSearchResults(SearchNotifier searchNotifier) {
-    print("searchresult");
     if (!searchNotifier.hasResults()) {
       return const SizedBox.shrink();
     }
