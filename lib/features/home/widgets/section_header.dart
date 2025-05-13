@@ -1,4 +1,6 @@
 import 'package:designhub/features/auth/provider/auth_notifier.dart';
+import 'package:designhub/features/home/provider/home_notifier.dart';
+import 'package:designhub/features/search/provider/search_motifer.dart';
 import 'package:designhub/features/search/view/search_page.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/features/profile/provider/current_profile_notifier.dart';
@@ -20,14 +22,20 @@ class SectionHeader extends StatelessWidget {
           const Spacer(),
           IconButton(
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => SearchPage()));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  context.read<SearchNotifier>().init(
+                      context.read<CurrentProfileNotifier>().getProfileId());
+                });
+                return SearchPage();
+              }));
             },
             icon: Assets.icons.search.svg(),
           ),
           IconButton(
             onPressed: () {
               context.read<CurrentProfileNotifier>().logout();
+              context.read<HomeNotifier>().resetUiState();
               context.read<AuthNotifier>().logout();
             },
             icon: Assets.icons.logout.svg(),

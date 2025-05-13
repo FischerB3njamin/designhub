@@ -119,7 +119,7 @@ class _RegistrationState extends State<Registration> {
           child: Row(
             children: [
               Text(
-                "I agree to the ",
+                "I agree the ",
                 overflow: TextOverflow.ellipsis,
               ),
               GestureDetector(

@@ -28,13 +28,29 @@ class SearchNotifier extends ChangeNotifier {
   List<Post> sos = [];
   List<Profile> profiles = [];
 
+  List<Post> allPosts = [];
+  List<Post> allSos = [];
+  List<Profile> allProfiles = [];
+
   bool isLoading = false;
 
   bool get isPerson => selectedTab == 'Person';
 
+  init(String userId) async {
+    isLoading = true;
+    notifyListeners();
+
+    final postResult = await _searchController.searchPosts(userId);
+    allSos = postResult.where((e) => e.isSos == true).toList();
+    allPosts = postResult.where((e) => e.isSos == false).toList();
+    allProfiles = await _searchController.searchProfiles(userId);
+
+    isLoading = false;
+    notifyListeners();
+  }
+
   void updateQuery(String newQuery) {
-    print(selectedTab);
-    query = newQuery;
+    query = newQuery.toLowerCase();
     resetSearch();
     switch (selectedTab) {
       case 'SOS':
@@ -57,46 +73,29 @@ class SearchNotifier extends ChangeNotifier {
   }
 
   Future<void> searchPosts() async {
-    isLoading = true;
-    notifyListeners();
+    posts.clear();
 
-    final results = await _searchController.searchPosts(
-        query, false, _currentProfileNotifier.getProfileId());
-    posts.addAll(results);
-
-    final profileIds = results.map((post) => post.userId).toSet();
-    final newProfiles = await _profileController.getProfilesById(profileIds);
-    profiles.addAll(newProfiles);
-
-    isLoading = false;
+    posts = allPosts
+        .where((e) =>
+            e.title.toLowerCase().contains(query) ||
+            e.hashtags.toLowerCase().contains(query))
+        .toList();
     notifyListeners();
   }
 
   Future<void> searchSos() async {
-    isLoading = true;
-    notifyListeners();
-
-    final results = await _searchController.searchPosts(
-        query, true, _currentProfileNotifier.getProfileId());
-
-    sos.addAll(results);
-    final profileIds = results.map((post) => post.userId).toSet();
-    final newProfiles = await _profileController.getProfilesById(profileIds);
-    profiles.addAll(newProfiles);
-    isLoading = false;
+    sos = [];
+    sos = allSos
+        .where((e) =>
+            e.title.toLowerCase().contains(query) ||
+            e.hashtags.toLowerCase().contains(query))
+        .toList();
     notifyListeners();
   }
 
   Future<void> searchProfiles() async {
-    isLoading = true;
-    notifyListeners();
-
-    final results = await _searchController.searchProfiles(
-        query, _currentProfileNotifier.getProfileId());
-    print("result : ${results.length}");
-    profiles.addAll(results);
-
-    isLoading = false;
+    profiles =
+        allProfiles.where((e) => e.name.toLowerCase().contains(query)).toList();
     notifyListeners();
   }
 
@@ -133,13 +132,14 @@ class SearchNotifier extends ChangeNotifier {
 
   Profile? getProfileForPost(Post post) {
     try {
-      return profiles.firstWhere((profile) => profile.userId == post.userId);
+      return allProfiles.firstWhere((profile) => profile.userId == post.userId);
     } catch (_) {
       return null;
     }
   }
 
   List<Widget> createPostWidgets() {
+    print('neugebaut');
     return posts
         .map((post) {
           final profile = getProfileForPost(post);

@@ -39,7 +39,8 @@ class ChatNotifier extends BaseUiProvider {
     _chatSubscription = _chatController.watchChats(userId).listen(
       (newChats) {
         _chats = newChats;
-        _hasUnread = newChats.any((chat) => chat.unread);
+        _hasUnread =
+            newChats.any((chat) => chat.unread && userId != chat.lastSenderId);
         fetchProfiles(userId);
       },
       onError: (error) {

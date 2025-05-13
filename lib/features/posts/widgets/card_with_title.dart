@@ -64,8 +64,9 @@ class CardWithTitle extends StatelessWidget {
         child: post.images.isNotEmpty
             ? CachedNetworkImage(
                 imageUrl: post.images.first,
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
+                placeholder: (context, url) => Container(
+                  color: DesignhubColors.white,
+                ),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
                 fit: BoxFit.cover,
                 width: double.infinity,
@@ -140,9 +141,5 @@ class CardWithTitle extends StatelessWidget {
         ],
       ),
     );
-
-    if (confirmed == true && context.mounted) {
-      Navigator.pop(context);
-    }
   }
 }

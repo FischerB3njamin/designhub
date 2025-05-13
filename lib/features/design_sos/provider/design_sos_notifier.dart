@@ -103,4 +103,9 @@ class DesignSosNotifier extends BaseUiProvider {
       );
     }).toList();
   }
+
+  closePost(Post post) {
+    sosData.remove(post);
+    notifyListeners();
+  }
 }

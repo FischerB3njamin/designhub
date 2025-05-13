@@ -5,6 +5,7 @@ import 'package:designhub/features/profile/provider/profile_notifier.dart';
 import 'package:designhub/features/profile/widgets/btn_sg_profile_sections.dart';
 import 'package:designhub/features/profile/provider/current_profile_notifier.dart';
 import 'package:designhub/shared/widgets/avatar_circle.dart';
+import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -54,7 +55,9 @@ class ProfilePage extends StatelessWidget {
         children: [
           CachedNetworkImage(
             imageUrl: profile.backgroundImagePath,
-            placeholder: (context, url) => CircularProgressIndicator(),
+            placeholder: (context, url) => Container(
+              color: DesignhubColors.white,
+            ),
             errorWidget: (context, url, error) => Icon(Icons.error),
             height: 180,
             width: double.infinity,

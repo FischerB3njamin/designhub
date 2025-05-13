@@ -7,6 +7,7 @@ import 'package:designhub/features/posts/widgets/section_icon.dart';
 import 'package:designhub/features/posts/widgets/section_post_detail.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/features/profile/provider/current_profile_notifier.dart';
+import 'package:designhub/features/profile/provider/profile_notifier.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:designhub/features/posts/models/post.dart';
@@ -24,7 +25,7 @@ class SosPostDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loginNotifier = context.read<CurrentProfileNotifier>();
+    final loginNotifier = context.watch<CurrentProfileNotifier>();
 
     return Scaffold(
       appBar: AppBar(
@@ -58,14 +59,17 @@ class SosPostDetailView extends StatelessWidget {
     );
   }
 
-  void startChat() {}
-  void closePost() {}
-
   Widget _buildAvatarSection(BuildContext context) =>
       SectionAvatar(post: post, profile: profile);
 
-  _buildCloseSection(BuildContext context) => _sectionCollaboration(context,
-      'Close', () => context.read<PostController>().deletePost(post.postId));
+  _buildCloseSection(BuildContext context) => _sectionCollaboration(
+      context,
+      'Close',
+      (post.isActive
+          ? () {
+              context.read<ProfileNotifier>().removeSosPost(post.postId);
+            }
+          : null));
 
   _buildSupportSection(BuildContext context) =>
       _sectionCollaboration(context, 'Support', () {
@@ -73,7 +77,7 @@ class SosPostDetailView extends StatelessWidget {
       });
 
   Widget _sectionCollaboration(
-          BuildContext context, String textButton, Function callback) =>
+          BuildContext context, String textButton, Function? callback) =>
       Padding(
         padding: const EdgeInsets.only(top: 8.0, bottom: 16),
         child: Row(
@@ -84,7 +88,7 @@ class SosPostDetailView extends StatelessWidget {
                     EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                   ),
                 ),
-                onPressed: () => callback(),
+                onPressed: callback != null ? () => callback() : null,
                 child: Text(textButton))
           ],
         ),
@@ -119,7 +123,9 @@ class SosPostDetailView extends StatelessWidget {
                   ),
                   child: CachedNetworkImage(
                     imageUrl: post.images[index],
-                    placeholder: (context, url) => CircularProgressIndicator(),
+                    placeholder: (context, url) => Container(
+                      color: DesignhubColors.white,
+                    ),
                     errorWidget: (context, url, error) => Icon(Icons.error),
                     width: MediaQuery.of(context).size.width - 32 > 400
                         ? 400

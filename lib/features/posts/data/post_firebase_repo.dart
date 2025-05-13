@@ -127,10 +127,8 @@ class PostFirebaseRepo extends PostRepo {
 
   Future<void> update() async {
     final result = await postsRef.get();
-    print('start');
     final posts =
         result.docs.map((e) => Post.fromMap(e.data() as Map<String, dynamic>));
-    print(posts.length);
     for (final post in posts) {
       postsRef.doc(post.postId).update(post.toMap());
     }

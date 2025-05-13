@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/features/profile/view/profile_external_page.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
+import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class AvatarCircle extends StatelessWidget {
@@ -38,7 +39,9 @@ class AvatarCircle extends StatelessWidget {
         decoration: BoxDecoration(shape: BoxShape.circle),
         child: CachedNetworkImage(
           imageUrl: profile.avatarImagePath,
-          placeholder: (context, url) => CircularProgressIndicator(),
+          placeholder: (context, url) => Container(
+            color: DesignhubColors.white,
+          ),
           errorWidget: (context, url, error) => Icon(Icons.error),
           fit: BoxFit.cover,
         ),

@@ -196,9 +196,10 @@ class ProfileNotifier extends ChangeNotifier {
     avatarImageFile = null;
   }
 
-  void update(profile) {
+  void update(profile) async {
     innerProfile = profile;
     _currentProfileNotifier.setIsChanged(false);
+    await _loadData();
     initPages();
     notifyListeners();
   }
@@ -219,5 +220,7 @@ class ProfileNotifier extends ChangeNotifier {
   void removeSosPost(String postId) {
     sosPosts.removeWhere((post) => post.postId == postId);
     _currentProfileNotifier.removeSosPost(postId);
+    sosPosts.remove(sosPosts.firstWhere((e) => e.postId == postId));
+    notifyListeners();
   }
 }

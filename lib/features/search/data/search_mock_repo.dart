@@ -14,24 +14,14 @@ class SearchMockRepo extends SearchRepo {
   final List<Profile> profiledata = profiles;
 
   @override
-  Future<List<Post>> searchPosts(
-      String query, bool isSos, String userId) async {
+  Future<List<Post>> searchPosts(String userId) async {
     return Future.delayed(Duration(microseconds: 100), () {
-      return postData
-          .where((post) =>
-              post.title.contains(query) ||
-              post.description.contains(query) ||
-              post.hashtags.contains(query))
-          .toList();
+      return postData;
     });
   }
 
   @override
-  Future<List<Profile>> searchProfiles(String query, String userId) async {
-    return Future.delayed(
-        Duration(microseconds: 100),
-        () => profiledata
-            .where((profile) => profile.name.contains(query))
-            .toList());
+  Future<List<Profile>> searchProfiles(String userId) async {
+    return Future.delayed(Duration(microseconds: 100), () => profiledata);
   }
 }

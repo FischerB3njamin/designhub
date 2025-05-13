@@ -8,16 +8,10 @@ class SearchFirebaseRepo extends SearchRepo {
   final _collectionPosts = FirebaseFirestore.instance.collection('posts');
 
   @override
-  Future<List<Post>> searchPosts(
-      String query, bool isSos, String userId) async {
-    print('$query  $isSos  $userId');
+  Future<List<Post>> searchPosts(String userId) async {
     return (await _collectionPosts
-            .where('isSos', isEqualTo: isSos)
-            .where('search', arrayContainsAny: query.toLowerCase().split(' '))
-            // .where('searchIndex',
-            //     isLessThanOrEqualTo: '${query.toLowerCase()}\uf8ff')
-            // .where('userId', isNotEqualTo: userId)
-            // .orderBy('created', descending: true)
+            .where('userId', isNotEqualTo: userId)
+            .orderBy('created', descending: true)
             .get())
         .docs
         .map((e) => Post.fromMap(e.data()))
@@ -25,13 +19,9 @@ class SearchFirebaseRepo extends SearchRepo {
   }
 
   @override
-  Future<List<Profile>> searchProfiles(String query, String userId) async {
-    print('$query   $userId');
+  Future<List<Profile>> searchProfiles(String userId) async {
     try {
       return (await _collectionUsers
-              .where('name_low', isGreaterThanOrEqualTo: query.toLowerCase())
-              .where('name_low',
-                  isLessThanOrEqualTo: '${query.toLowerCase()}\uf8ff')
               .where('userId', isNotEqualTo: userId)
               .get())
           .docs

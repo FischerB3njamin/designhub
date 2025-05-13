@@ -113,7 +113,9 @@ class _ProfileExternalPageState extends State<ProfileExternalPage> {
         children: [
           CachedNetworkImage(
             imageUrl: widget.profile.backgroundImagePath,
-            placeholder: (context, url) => CircularProgressIndicator(),
+            placeholder: (context, url) => Container(
+              color: DesignhubColors.white,
+            ),
             errorWidget: (context, url, error) => Icon(Icons.error),
             height: 180,
             width: double.infinity,

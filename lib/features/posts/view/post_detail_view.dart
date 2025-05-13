@@ -5,6 +5,7 @@ import 'package:designhub/features/posts/widgets/section_icon.dart';
 import 'package:designhub/features/posts/widgets/section_post_detail.dart';
 import 'package:designhub/features/profile/models/profile.dart';
 import 'package:designhub/features/profile/provider/current_profile_notifier.dart';
+import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:provider/provider.dart';
@@ -79,7 +80,9 @@ class PostDetailView extends StatelessWidget {
                     BoxDecoration(borderRadius: BorderRadius.circular(32)),
                 child: CachedNetworkImage(
                   imageUrl: post.images[index],
-                  placeholder: (context, url) => CircularProgressIndicator(),
+                  placeholder: (context, url) => Container(
+                    color: DesignhubColors.white,
+                  ),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                   width: MediaQuery.of(context).size.width - 32,
                   fit: BoxFit.fitHeight,

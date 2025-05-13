@@ -4,6 +4,7 @@ import 'package:designhub/features/home/widgets/post_footer.dart';
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:designhub/features/posts/view/post_detail_view.dart';
 import 'package:designhub/features/profile/models/profile.dart';
+import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 
 class CardPost extends StatelessWidget {
@@ -39,8 +40,9 @@ class CardPost extends StatelessWidget {
                     ? Container()
                     : CachedNetworkImage(
                         imageUrl: post.images.first,
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
+                        placeholder: (context, url) => Container(
+                          color: DesignhubColors.white,
+                        ),
                         errorWidget: (context, url, error) => Icon(Icons.error),
                         width: double.infinity,
                         height: double.infinity,

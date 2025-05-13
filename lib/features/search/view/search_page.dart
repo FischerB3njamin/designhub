@@ -9,21 +9,24 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final searchNotifier = context.watch<SearchNotifier>();
-
     return Scaffold(
       appBar: AppBar(title: const Text('Search')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            _buildSegmentedButton(searchNotifier),
-            const SizedBox(height: 12),
-            _buildSearchField(searchNotifier),
-            const SizedBox(height: 10),
-            _buildSearchResults(searchNotifier),
-          ],
-        ),
-      ),
+      body: searchNotifier.isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  _buildSegmentedButton(searchNotifier),
+                  const SizedBox(height: 12),
+                  _buildSearchField(searchNotifier),
+                  const SizedBox(height: 10),
+                  _buildSearchResults(searchNotifier),
+                ],
+              ),
+            ),
     );
   }
 
@@ -56,11 +59,11 @@ class SearchPage extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: DesignhubColors.grey),
+          borderSide: BorderSide(color: DesignhubColors.grey100),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: DesignhubColors.primary),
+          borderSide: BorderSide(color: DesignhubColors.grey400),
         ),
       ),
       onChanged: (value) => searchNotifier.updateQuery(value),
@@ -68,6 +71,7 @@ class SearchPage extends StatelessWidget {
   }
 
   Widget _buildSearchResults(SearchNotifier searchNotifier) {
+    print("searchresult");
     if (!searchNotifier.hasResults()) {
       return const SizedBox.shrink();
     }

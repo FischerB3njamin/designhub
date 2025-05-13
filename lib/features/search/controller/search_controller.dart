@@ -7,8 +7,7 @@ class SearchControllerCustom {
 
   SearchControllerCustom(this.repo);
 
-  Future<List<Profile>> searchProfiles(String query, String userId) =>
-      repo.searchProfiles(query, userId);
-  Future<List<Post>> searchPosts(String query, bool isSos, String userId) =>
-      repo.searchPosts(query, isSos, userId);
+  Future<List<Post>> searchPosts(String userId) => repo.searchPosts(userId);
+  Future<List<Profile>> searchProfiles(String userId) =>
+      repo.searchProfiles(userId);
 }
