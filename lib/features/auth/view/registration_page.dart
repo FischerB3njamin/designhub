@@ -12,9 +12,11 @@ class RegistrationPage extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        body: SingleChildScrollView(
+        body: SizedBox(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height,
           child: Stack(
-            alignment: Alignment.center,
+            alignment: Alignment.bottomCenter,
             children: [
               _buildBackground(context),
               _buildContent(),
@@ -28,33 +30,33 @@ class RegistrationPage extends StatelessWidget {
 
   Widget _buildBackground(BuildContext context) {
     return Positioned(
-      child: Container(
-        alignment: Alignment.bottomCenter,
+      child: SizedBox(
         width: double.infinity,
-        height: MediaQuery.of(context).size.height,
         child: Hero(
           tag: "bg_image",
-          child: Assets.images.bg.image(),
+          child: Assets.images.bg.image(fit: BoxFit.fitWidth),
         ),
       ),
     );
   }
 
   Widget _buildContent() {
-    return Center(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 60),
-            Hero(
-              tag: "app_icon",
-              child: Assets.images.logoText.image(width: 200, height: 200),
-            ),
-            const SizedBox(height: 60),
-            const Registration(),
-            const SocialLogin(label: "Or register with"),
-          ],
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 60),
+          Hero(
+            tag: "app_icon",
+            child: Assets.images.logoText.image(width: 200, height: 200),
+          ),
+          const SizedBox(height: 60),
+          const Registration(),
+          const SocialLogin(label: "Or register with"),
+          const SizedBox(
+            height: 73,
+          )
+        ],
       ),
     );
   }

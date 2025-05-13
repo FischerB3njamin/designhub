@@ -10,24 +10,27 @@ class CommentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final commentNotifier = context.watch<CommentNotifier>();
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text('Comments'),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 0),
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  children: commentNotifier.buildCommentDetails(),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: const Text('Comments'),
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 0),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    children: commentNotifier.buildCommentDetails(),
+                  ),
                 ),
-              ),
-              SectionCommentInput(),
-            ],
+                SectionCommentInput(),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,5 +1,7 @@
 import 'package:designhub/features/auth/provider/auth_notifier.dart';
+import 'package:designhub/features/auth/view/legal_page.dart';
 import 'package:designhub/shared/controller/validation_controller.dart';
+import 'package:designhub/theme/custom_text_styles.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -113,10 +115,22 @@ class _RegistrationState extends State<Registration> {
           onChanged: (value) =>
               authNotifier.toggleTermsAndConditions(value ?? false),
         ),
-        const Expanded(
-          child: Text(
-            "I agree to the terms and conditions",
-            overflow: TextOverflow.ellipsis,
+        Expanded(
+          child: Row(
+            children: [
+              Text(
+                "I agree to the ",
+                overflow: TextOverflow.ellipsis,
+              ),
+              GestureDetector(
+                  onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => LegalPage())),
+                  child: Text(
+                    "terms and privacy",
+                    style: CustomTextStyles.bodyLargeColorBold(
+                        context, DesignhubColors.primary, FontWeight.bold),
+                  )),
+            ],
           ),
         ),
       ],
@@ -137,12 +151,15 @@ class _RegistrationState extends State<Registration> {
         ? const CircularProgressIndicator()
         : ElevatedButton(
             onPressed: authNotifier.termsAndConditions
-                ? () => authNotifier.handleSignup(
+                ? () {
+                    FocusScope.of(context).unfocus();
+                    authNotifier.handleSignup(
                       _formKey,
                       mailController.text,
                       pwdController.text,
                       pwdController.text == repeatPwdController.text,
-                    )
+                    );
+                  }
                 : null,
             child: SizedBox(
               width: double.infinity,

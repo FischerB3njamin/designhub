@@ -17,20 +17,23 @@ class ChatDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: DesignhubColors.white,
-      body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: 60),
-            SectionChatHeader(senderProfile: senderProfile),
-            const SizedBox(height: 8),
-            Expanded(
-              child: SectionChatItem(senderProfile: senderProfile),
-            ),
-            SectionChatInput(chatId: chatId),
-          ],
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: DesignhubColors.white,
+        body: SafeArea(
+          child: Column(
+            children: [
+              SizedBox(height: 60),
+              SectionChatHeader(senderProfile: senderProfile),
+              const SizedBox(height: 8),
+              Expanded(
+                child: SectionChatItem(senderProfile: senderProfile),
+              ),
+              SectionChatInput(chatId: chatId),
+            ],
+          ),
         ),
       ),
     );

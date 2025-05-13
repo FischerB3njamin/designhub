@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CurrentProfileNotifier extends ChangeNotifier {
-  late ProfileController _profileController;
-  late FollowController _followerController;
+  String? uid;
   Profile? profile;
   bool isInit = false;
   bool isChanged = false;
+  late ProfileController _profileController;
+  late FollowController _followerController;
+  StreamSubscription<Profile>? _profileSub;
   CurrentProfileNotifier(BuildContext context) {
     _profileController = context.read<ProfileController>();
     _followerController = context.read<FollowController>();
@@ -25,14 +27,13 @@ class CurrentProfileNotifier extends ChangeNotifier {
   bool getFollowing(String userId) => profile!.following.contains(userId);
   List<String> getFollowers() => profile!.following;
   int getCountFollower() => profile!.following.length;
-  StreamSubscription<Profile>? _profileSub;
-
+  void setUid(String newUid) => uid = newUid;
   void setIsChanged(bool value) => isChanged = value;
 
-  Future<bool> init(String userId) async {
+  Future<bool> init() async {
     _profileSub?.cancel();
 
-    profile = await _profileController.getProfile(userId);
+    profile = await _profileController.getProfile(uid!);
     isInit = true;
     _profileSub =
         _profileController.watch(profile!.userId).listen((newProfile) {

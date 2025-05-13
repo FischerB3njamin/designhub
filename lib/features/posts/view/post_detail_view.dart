@@ -34,8 +34,9 @@ class PostDetailView extends StatelessWidget {
                 if (profile.userId !=
                     context.read<CurrentProfileNotifier>().getProfileId())
                   _buildAvatarSection(),
-                _buildPostDetailSection(),
                 _buildIconSection(),
+                _buildPostDetailSection(),
+                SizedBox(height: 16),
                 if (post.images.isNotEmpty) _buildImageGallery(context),
                 SizedBox(height: 32),
               ],
@@ -67,18 +68,22 @@ class PostDetailView extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () => _openImageGallery(context, index),
-            child: Container(
-              clipBehavior: Clip.hardEdge,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(32)),
-              child: CachedNetworkImage(
-                imageUrl: post.images[index],
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-                width: MediaQuery.of(context).size.width - 32 > 400
-                    ? 400
-                    : MediaQuery.of(context).size.width - 32,
-                fit: BoxFit.fitHeight,
+            child: Padding(
+              padding: index == 0
+                  ? const EdgeInsets.only(
+                      top: 8.0, right: 8, left: 0, bottom: 8)
+                  : const EdgeInsets.all(8.0),
+              child: Container(
+                clipBehavior: Clip.hardEdge,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(32)),
+                child: CachedNetworkImage(
+                  imageUrl: post.images[index],
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  width: MediaQuery.of(context).size.width - 32,
+                  fit: BoxFit.fitHeight,
+                ),
               ),
             ),
           );

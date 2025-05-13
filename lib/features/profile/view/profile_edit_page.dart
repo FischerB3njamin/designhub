@@ -16,7 +16,7 @@ class ProfileEditPage extends StatefulWidget {
 
 class _ProfileEditPageState extends State<ProfileEditPage> {
   final _formKey = GlobalKey<FormState>();
-
+  bool _isLoading = false;
   late TextEditingController nameController;
   late TextEditingController aboutMeController;
   late TextEditingController interestsController;
@@ -43,6 +43,10 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   }
 
   Future<void> _onUpdateProfilePressed() async {
+    setState(() {
+      _isLoading = true;
+    });
+
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
     final profileProvider = context.read<ProfileNotifier>();
@@ -52,7 +56,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
       aboutMe: aboutMeController.text,
       interests: interestsController.text,
     );
-
+    setState(() {
+      _isLoading = false;
+    });
     if (mounted) {
       profileProvider.clearTempImages();
       Navigator.pop(context, updatedProfile);
@@ -63,97 +69,110 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   Widget build(BuildContext context) {
     final profileNotifier = context.watch<ProfileNotifier>();
 
-    return Scaffold(
-      appBar: AppBar(
-          title: Text("Edit Profile"),
-          leading: SizedBox.shrink(),
-          actions: [
-            IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: Icon(Icons.close)),
-          ]),
-      body: Padding(
-        padding: const EdgeInsets.only(bottom: 64.0),
-        child: ListView(
-          padding: EdgeInsets.all(16),
-          children: [
-            Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 16,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+            title: Text("Edit Profile"),
+            leading: SizedBox.shrink(),
+            actions: [
+              IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: Icon(Icons.close)),
+            ]),
+        body: Padding(
+          padding: const EdgeInsets.only(bottom: 64.0),
+          child: ListView(
+            padding: EdgeInsets.all(16),
+            children: [
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 16,
+                  children: [
+                    ImagePickerField(
+                      title: "Header Image:",
+                      imagePath: headerImagePath,
+                      imageFile: profileNotifier.headerImageFile,
+                      onPick: () => profileNotifier.pickImage(true, context),
+                    ),
+                    ImagePickerField(
+                      title: "Avatar Image:",
+                      imagePath: avatarImagePath,
+                      imageFile: profileNotifier.avatarImageFile,
+                      onPick: () => profileNotifier.pickImage(false, context),
+                    ),
+                    TextFormField(
+                      controller: nameController,
+                      decoration: InputDecoration(labelText: 'Name'),
+                      validator: ValidationController.validateNotEmpty,
+                    ),
+                    TextFormField(
+                      controller: aboutMeController,
+                      maxLines: null,
+                      decoration: InputDecoration(labelText: 'About me'),
+                      validator: ValidationController.validateNotEmpty,
+                    ),
+                    TextFormField(
+                      controller: interestsController,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                          labelText: 'Interests & Inspirations'),
+                      validator: ValidationController.validateNotEmpty,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  ImagePickerField(
-                    title: "Header Image:",
-                    imagePath: headerImagePath,
-                    imageFile: profileNotifier.headerImageFile,
-                    onPick: () => profileNotifier.pickImage(true, context),
-                  ),
-                  ImagePickerField(
-                    title: "Avatar Image:",
-                    imagePath: avatarImagePath,
-                    imageFile: profileNotifier.avatarImageFile,
-                    onPick: () => profileNotifier.pickImage(false, context),
-                  ),
-                  TextFormField(
-                    controller: nameController,
-                    decoration: InputDecoration(labelText: 'Name'),
-                    validator: ValidationController.validateNotEmpty,
-                  ),
-                  TextFormField(
-                    controller: aboutMeController,
-                    maxLines: null,
-                    decoration: InputDecoration(labelText: 'About me'),
-                    validator: ValidationController.validateNotEmpty,
-                  ),
-                  TextFormField(
-                    controller: interestsController,
-                    maxLines: null,
-                    decoration:
-                        InputDecoration(labelText: 'Interests & Inspirations'),
-                    validator: ValidationController.validateNotEmpty,
+                  TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        "Cancel",
+                        style: TextStyle(color: DesignhubColors.black),
+                      )),
+                  SizedBox(width: 16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 0.0, horizontal: 16),
+                    child: TextButton(
+                      style: ButtonStyle(
+                        minimumSize:
+                            WidgetStateProperty.all(const Size(120, 35)),
+                        backgroundColor: WidgetStateProperty.all(
+                          DesignhubColors.primary,
+                        ),
+                        padding: WidgetStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 4),
+                        ),
+                      ),
+                      onPressed: () => _onUpdateProfilePressed(),
+                      child: _isLoading
+                          ? SizedBox(
+                              height: 16,
+                              width: 16,
+                              child: CircularProgressIndicator(
+                                color: DesignhubColors.white,
+                              ),
+                            )
+                          : Text(
+                              'Save',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: DesignhubColors.white,
+                              ),
+                            ),
+                    ),
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      "Cancel",
-                      style: TextStyle(color: DesignhubColors.black),
-                    )),
-                SizedBox(width: 16),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16),
-                  child: TextButton(
-                    style: ButtonStyle(
-                      minimumSize: WidgetStateProperty.all(const Size(120, 35)),
-                      backgroundColor: WidgetStateProperty.all(
-                        DesignhubColors.primary,
-                      ),
-                      padding: WidgetStateProperty.all(
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                      ),
-                    ),
-                    onPressed: () => _onUpdateProfilePressed(),
-                    child: Text(
-                      'Save',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: DesignhubColors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

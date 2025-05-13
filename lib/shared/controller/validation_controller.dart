@@ -45,8 +45,8 @@ class ValidationController {
     if (value == null || value.isEmpty) {
       return 'Please enter value.';
     }
-    if (value.length > 50) {
-      return "Maximum 50 chars for the title";
+    if (value.length > 500) {
+      return "Maximum 500 chars for the title";
     }
     return null;
   }
@@ -55,8 +55,8 @@ class ValidationController {
     if (value == null || value.isEmpty) {
       return 'Please enter value.';
     }
-    if (value.length > 250) {
-      return "Maximum 250 chars for the description";
+    if (value.length > 2250) {
+      return "Maximum 2250 chars for the description";
     }
     return null;
   }

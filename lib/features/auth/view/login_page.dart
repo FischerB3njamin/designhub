@@ -1,7 +1,9 @@
 import 'package:designhub/features/auth/widgets/login.dart';
+import 'package:designhub/features/posts/controller/post_controller.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/shared/widgets/social_login.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -11,12 +13,14 @@ class LoginPage extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        body: SingleChildScrollView(
+        body: SizedBox(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height,
           child: Stack(
-            alignment: Alignment.center,
+            alignment: Alignment.bottomCenter,
             children: [
               _buildBackground(context),
-              _buildContent(),
+              _buildContent(context),
             ],
           ),
         ),
@@ -26,19 +30,17 @@ class LoginPage extends StatelessWidget {
 
   Widget _buildBackground(BuildContext context) {
     return Positioned(
-      child: Container(
-        alignment: Alignment.bottomCenter,
+      child: SizedBox(
         width: double.infinity,
-        height: MediaQuery.of(context).size.height,
         child: Hero(
           tag: "bg_image",
-          child: Assets.images.bg.image(),
+          child: Assets.images.bg.image(fit: BoxFit.fitWidth),
         ),
       ),
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -51,6 +53,13 @@ class LoginPage extends StatelessWidget {
           const SizedBox(height: 40),
           const Login(),
           const SocialLogin(label: "Or login with"),
+          TextButton(
+            onPressed: () {
+              context.read<PostController>().update();
+            },
+            child: Text('Update Post'),
+          ),
+          const SizedBox(height: 64)
         ],
       ),
     );

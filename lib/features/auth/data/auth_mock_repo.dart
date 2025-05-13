@@ -15,9 +15,7 @@ class AuthMockRepo extends AuthRepo {
       StreamController<LoginData?>();
 
   @override
-  Stream<LoginData?> onAuthChanged() {
-    return streamController.stream;
-  }
+  Stream<LoginData?> get onAuthChanged => streamController.stream;
 
   @override
   Future<void> logout() async {

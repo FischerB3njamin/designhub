@@ -68,7 +68,7 @@ class AuthNotifier extends BaseUiProvider {
 // Repo functions
   Future<void> logout() => authController.logout();
 
-  Stream<dynamic> onAuthChanged() => authController.onAuthChanged();
+  Stream<dynamic> get onAuthChanged => authController.onAuthChanged;
 
   Future<String?> signInWithGoogle() => authController.signInWithGoogle();
 

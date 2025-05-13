@@ -1,3 +1,4 @@
+import 'package:designhub/features/chat/provider/chat_notifier.dart';
 import 'package:designhub/features/chat/view/chat_news_page.dart';
 import 'package:designhub/features/design_sos/views/sos_view.dart';
 import 'package:designhub/features/home/view/home_page.dart';
@@ -38,11 +39,20 @@ class NavigationNotifier extends ChangeNotifier {
   }
 
   Future<void> _fetchInitialData(BuildContext context) async {
+    await _loginNotifier.init();
     profile = _loginNotifier.getProfile();
     _profileNotifier.init(profile!);
-    context.read<NewsNotifier>().init(profile!.userId);
-    // context.read<ChatNotifier>().init(profile!.userId);
-    pages = [HomePage(), SosView(), ChatNewsPage(), ProfilePage()];
+    if (context.mounted) {
+      context.read<NewsNotifier>().init(profile!.userId);
+      context.read<ChatNotifier>().init(profile!.userId);
+    }
+
+    pages = [
+      HomePage(),
+      SosView(),
+      ChatNewsPage(),
+      ProfilePage(),
+    ];
 
     activeIndex = profile!.name.isEmpty ? 3 : 0;
     _isLoading = false;

@@ -44,7 +44,6 @@ class HomeNotifier extends BaseUiProvider {
     final profile = _loginNotifier.getProfile();
     await runAsync(() async {
       List<Post> newPosts = [];
-
       if (activeTab == 1) {
         newPosts = await _postController.getPosts(
           profile.userId,
@@ -65,7 +64,7 @@ class HomeNotifier extends BaseUiProvider {
         hasMore = false;
       }
 
-      posts.addAll(newPosts);
+      posts = newPosts;
 
       final profileIds = posts.map((e) => e.userId).toSet();
       profiles = await _profileController.getProfilesById(profileIds);

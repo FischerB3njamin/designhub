@@ -24,6 +24,7 @@ class NewPostNotifier extends BaseUiProvider {
   List<String> uploadedImage = [];
   bool _savePost = false;
   bool _imagesDone = false;
+  bool _isUploading = false;
   int _currentIndex = 0;
   final List<String> pageTitles = ['Add Metadata', 'Add Images', 'Overview'];
 
@@ -46,6 +47,7 @@ class NewPostNotifier extends BaseUiProvider {
   bool get isMetadataPage => _currentIndex == 0;
   bool get isImagePage => _currentIndex == 1;
   bool get isOverview => _currentIndex == 2;
+  bool get isUploading => _isUploading;
   int getCrossAxisCount() => uploadedImage.length == 1 ? 2 : 3;
 
   // Daten-bezogene Setter
@@ -75,6 +77,8 @@ class NewPostNotifier extends BaseUiProvider {
 
     if (isOverview) {
       if (_savePost) {
+        _isUploading = true;
+        notifyListeners();
         await uploadImage();
         if (context.mounted) _createPost(context);
       }

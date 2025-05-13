@@ -25,7 +25,7 @@ class SectionIcon extends StatelessWidget {
     final loginNotifier = context.read<CurrentProfileNotifier>();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
+      padding: const EdgeInsets.only(top: 0.0, bottom: 16, left: 16, right: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

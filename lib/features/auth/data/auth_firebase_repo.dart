@@ -10,7 +10,7 @@ class AuthFirebase implements AuthRepo {
   AuthFirebase(this._auth);
 
   @override
-  Stream<User?> onAuthChanged() => _auth.authStateChanges();
+  Stream<User?> get onAuthChanged => _auth.authStateChanges();
 
   @override
   Future<String?> login(String email, String password) async {

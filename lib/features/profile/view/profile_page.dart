@@ -8,16 +8,11 @@ import 'package:designhub/shared/widgets/avatar_circle.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends StatelessWidget {
   const ProfilePage({
     super.key,
   });
 
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final profileProvider = context.watch<ProfileNotifier>();
@@ -28,22 +23,25 @@ class _ProfilePageState extends State<ProfilePage> {
       });
     }
 
-    return Scaffold(
-      body: ListView(
-        shrinkWrap: true,
-        children: [
-          _buildHeader(context, profileProvider.innerProfile),
-          _buildName(context),
-          const SizedBox(height: 16),
-          SectionFollow(profile: profileProvider.innerProfile),
-          const SizedBox(height: 16),
-          BtnSgProfileSections(
-            selectedTab: profileProvider.selectedTab,
-            profileId: profileProvider.innerProfile.userId,
-          ),
-          const SizedBox(height: 16),
-          profileProvider.pages[profileProvider.selectedTab],
-        ],
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        body: ListView(
+          shrinkWrap: true,
+          children: [
+            _buildHeader(context, profileProvider.innerProfile),
+            _buildName(context),
+            const SizedBox(height: 16),
+            SectionFollow(profile: profileProvider.innerProfile),
+            const SizedBox(height: 16),
+            BtnSgProfileSections(
+              selectedTab: profileProvider.selectedTab,
+              profileId: profileProvider.innerProfile.userId,
+            ),
+            const SizedBox(height: 16),
+            profileProvider.pages[profileProvider.selectedTab],
+          ],
+        ),
       ),
     );
   }

@@ -30,4 +30,6 @@ abstract class PostRepo {
   Future<List<Post>> getPostsById(Set<String> postIds);
 
   Future<void> deletePost(String postId);
+
+  Future<void> update();
 }

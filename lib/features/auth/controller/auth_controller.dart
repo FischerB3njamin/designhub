@@ -4,7 +4,7 @@ class AuthController {
   AuthRepo repo;
   AuthController(this.repo);
 
-  get onAuthChanged => repo.onAuthChanged;
+  Stream<dynamic> get onAuthChanged => repo.onAuthChanged;
 
   Future<String?> signInWithGoogle() async => repo.signInWithGoogle();
   Future<String?> login(String mail, String pwd) async => repo.login(mail, pwd);

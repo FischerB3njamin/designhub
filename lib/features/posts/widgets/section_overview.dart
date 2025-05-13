@@ -12,22 +12,16 @@ class SectionOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final notifier = context.read<NewPostNotifier>();
-    return Padding(
-      padding: EdgeInsets.all(16),
-      child: Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
-              child: Column(
-                children: [
-                  SectionPostDetail(post: notifier.post!),
-                  _buildImageGallery(notifier.post!),
-                  SizedBox(height: 32),
-                ],
-              ),
-            ),
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            spacing: 16,
+            children: [
+              SectionPostDetail(post: notifier.post!),
+              _buildImageGallery(notifier.post!),
+              SizedBox(height: 32),
+            ],
           ),
         ),
       ),
@@ -42,13 +36,16 @@ class SectionOverview extends StatelessWidget {
         itemCount: post.images.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Image.file(
-              File(post.images[index]),
-              width: MediaQuery.of(context).size.width - 32 > 400
-                  ? 400
-                  : MediaQuery.of(context).size.width - 32,
-              fit: BoxFit.fitHeight,
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              clipBehavior: Clip.hardEdge,
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(32)),
+              child: Image.file(
+                File(post.images[index]),
+                width: MediaQuery.of(context).size.width - 48,
+                fit: BoxFit.fitHeight,
+              ),
             ),
           );
         },

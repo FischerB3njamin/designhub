@@ -13,7 +13,6 @@ import 'package:designhub/features/profile/widgets/profile_info.dart';
 import 'package:designhub/features/profile/widgets/section_profile_cards.dart';
 import 'package:designhub/shared/data/image_upload_service.dart';
 import 'package:designhub/features/profile/provider/current_profile_notifier.dart';
-import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:designhub/shared/widgets/empty_posts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -107,8 +106,9 @@ class ProfileNotifier extends ChangeNotifier {
       savedPost = allPosts.where((e) => postIds.contains(e.postId)).toList();
 
   void showEdit(BuildContext context) async {
-    final result = await CustomBottomSheet.showAsync(
-        context, ProfileEditPage(profile: innerProfile), 0.9);
+    final result = await Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => ProfileEditPage(profile: innerProfile)));
+
     if (result) {
       initPages();
       openEdit = false;

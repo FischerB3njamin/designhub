@@ -23,7 +23,9 @@ class PostFirebaseRepo extends PostRepo {
           .docs
           .map((doc) => Post.fromMap(doc.data() as Map<String, dynamic>))
           .toList();
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
     return [];
   }
 
@@ -111,7 +113,6 @@ class PostFirebaseRepo extends PostRepo {
       final posts = snapshots
           .map((doc) => Post.fromMap(doc.data() as Map<String, dynamic>))
           .toList();
-      print(posts);
       return posts;
     } catch (e) {
       print(e);
@@ -122,5 +123,16 @@ class PostFirebaseRepo extends PostRepo {
   @override
   Future<void> deletePost(String postId) async {
     await postsRef.doc(postId).update({"isActive": false});
+  }
+
+  Future<void> update() async {
+    final result = await postsRef.get();
+    print('start');
+    final posts =
+        result.docs.map((e) => Post.fromMap(e.data() as Map<String, dynamic>));
+    print(posts.length);
+    for (final post in posts) {
+      postsRef.doc(post.postId).update(post.toMap());
+    }
   }
 }

@@ -16,9 +16,13 @@ class NewPostPage extends StatelessWidget {
       create: (_) => NewPostNotifier(context),
       child: Consumer<NewPostNotifier>(
         builder: (context, notifier, _) {
-          return Scaffold(
-            appBar: _buildAppBar(context, notifier),
-            body: SafeArea(child: _buildBody(context, notifier)),
+          return GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Scaffold(
+              resizeToAvoidBottomInset: true,
+              appBar: _buildAppBar(context, notifier),
+              body: SafeArea(child: _buildBody(context, notifier)),
+            ),
           );
         },
       ),
@@ -129,11 +133,13 @@ class NewPostPage extends StatelessWidget {
   Widget _buildNextButton(BuildContext context, NewPostNotifier notifier) {
     return TextButton(
       onPressed: () => notifier.goToNextPage(context),
-      child: Text(
-        notifier.isOverview ? "Submit" : "Next",
-        style: CustomTextStyles.bodyLargeColorBold(
-            context, DesignhubColors.primary, FontWeight.bold),
-      ),
+      child: notifier.isUploading
+          ? CircularProgressIndicator()
+          : Text(
+              notifier.isOverview ? "Submit" : "Next",
+              style: CustomTextStyles.bodyLargeColorBold(
+                  context, DesignhubColors.primary, FontWeight.bold),
+            ),
     );
   }
 }

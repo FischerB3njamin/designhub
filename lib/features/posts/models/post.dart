@@ -55,8 +55,11 @@ class Post {
       'likes': likes,
       'created': created,
       // only for search
-      'searchIndex':
-          '${title.toLowerCase()} ${hashtags.toLowerCase()} ${description.toLowerCase()}',
+      'search':
+          '${title.toLowerCase()} ${hashtags.toLowerCase()} ${description.toLowerCase()}'
+              .split(' ')
+              .toSet()
+              .toList(),
     };
   }
 }

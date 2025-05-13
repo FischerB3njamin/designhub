@@ -33,6 +33,7 @@ class SearchNotifier extends ChangeNotifier {
   bool get isPerson => selectedTab == 'Person';
 
   void updateQuery(String newQuery) {
+    print(selectedTab);
     query = newQuery;
     resetSearch();
     switch (selectedTab) {
@@ -92,7 +93,7 @@ class SearchNotifier extends ChangeNotifier {
 
     final results = await _searchController.searchProfiles(
         query, _currentProfileNotifier.getProfileId());
-
+    print("result : ${results.length}");
     profiles.addAll(results);
 
     isLoading = false;

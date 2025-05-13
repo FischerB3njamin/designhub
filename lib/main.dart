@@ -41,11 +41,13 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
   runApp(
     MultiProvider(
       providers: [
         Provider<AuthController>(
-          create: (_) => AuthController(AuthFirebase(FirebaseAuth.instance)),
+          create: (_) => AuthController(AuthFirebase(auth)),
         ),
         Provider<ChatController>(
             create: (_) => ChatController(ChatFirebaseRepo())),
@@ -66,12 +68,8 @@ void main() async {
         ChangeNotifierProvider<NewsNotifier>(
           create: (context) => NewsNotifier(context),
         ),
-        ChangeNotifierProxyProvider<AuthController, AuthNotifier>(
+        ChangeNotifierProvider<AuthNotifier>(
           create: (context) => AuthNotifier(context),
-          update: (context, authController, notifier) {
-            notifier ??= AuthNotifier(context);
-            return notifier;
-          },
         ),
         ChangeNotifierProvider<CurrentProfileNotifier>(
           create: (context) => CurrentProfileNotifier(context),
