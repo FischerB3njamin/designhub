@@ -26,15 +26,9 @@ class _HomePageState extends State<HomePage> {
     final homeNotifier = context.read<HomeNotifier>();
 
     if (_scrollController.position.atEdge) {
-      // Check if we're at the bottom
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        final currentItem = homeNotifier.posts.length;
-
-        if (currentItem >= (homeNotifier.posts.length) - 3 &&
-            !homeNotifier.isLoadingMore) {
-          homeNotifier.loadMore();
-        }
+        homeNotifier.loadMore();
       }
     }
   }
@@ -43,11 +37,6 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
-  }
-
-  Future<void> _onRefresh() async {
-    final homeNotifier = context.read<HomeNotifier>();
-    await homeNotifier.resetAndLoadData(); // Reset the UI and reload the data
   }
 
   @override
@@ -67,7 +56,7 @@ class _HomePageState extends State<HomePage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: RefreshIndicator(
-                onRefresh: _onRefresh, // Trigger the refresh logic
+                onRefresh: homeNotifier.resetAndLoadData,
                 child: ListView(
                   controller: _scrollController, // Use a ScrollController
                   children: [

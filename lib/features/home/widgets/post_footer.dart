@@ -18,7 +18,7 @@ class PostFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = TextTheme.of(context);
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      padding: const EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
         color: DesignhubColors.white.withAlpha(230),
         borderRadius: BorderRadius.all(Radius.circular(34)),

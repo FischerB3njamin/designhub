@@ -25,14 +25,14 @@ class CardPost extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 16),
         child: SizedBox(
           width: double.infinity,
-          height: 500,
+          height: MediaQuery.of(context).size.width * 1,
           child: Card(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(34),
               ),
             ),
-            elevation: 10,
+            elevation: 5,
             clipBehavior: Clip.hardEdge,
             child: Stack(
               children: [

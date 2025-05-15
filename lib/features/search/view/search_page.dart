@@ -9,24 +9,27 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final searchNotifier = context.watch<SearchNotifier>();
-    return Scaffold(
-      appBar: AppBar(title: const Text('Search')),
-      body: searchNotifier.isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  _buildSegmentedButton(searchNotifier),
-                  const SizedBox(height: 12),
-                  _buildSearchField(searchNotifier),
-                  const SizedBox(height: 10),
-                  _buildSearchResults(searchNotifier),
-                ],
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Search')),
+        body: searchNotifier.isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    _buildSegmentedButton(searchNotifier),
+                    const SizedBox(height: 12),
+                    _buildSearchField(searchNotifier),
+                    const SizedBox(height: 10),
+                    _buildSearchResults(searchNotifier),
+                  ],
+                ),
               ),
-            ),
+      ),
     );
   }
 
@@ -76,14 +79,16 @@ class SearchPage extends StatelessWidget {
     }
 
     return searchNotifier.isPerson
-        ? GridView.count(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 2,
-            mainAxisSpacing: 0,
-            crossAxisSpacing: 16,
-            children: [...searchNotifier.getWidgets()],
+        ? Expanded(
+            child: GridView.count(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              mainAxisSpacing: 0,
+              crossAxisSpacing: 16,
+              children: [...searchNotifier.getWidgets()],
+            ),
           )
         : Expanded(
             child: SingleChildScrollView(
