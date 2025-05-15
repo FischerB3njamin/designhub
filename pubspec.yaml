@@ -38,10 +38,11 @@ flutter:
   - assets/icons/
 
 flutter_launcher_icons:
-  android: true
+  android: "launcher_icon"
   ios: true
-  image_path: assets/icons/app_icon.png
-
+  image_path: "assets/icons/app_icon.jpg"
+  min_sdk_android: 21
+  
 flutter_gen:
   output: lib/gen/ # Optional (default: lib/gen/)
   line_length: 80 # Optional (default: 80)
