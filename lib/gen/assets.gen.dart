@@ -19,8 +19,8 @@ class $AssetsIconsGen {
   SvgGenImage get addMessage =>
       const SvgGenImage('assets/icons/add_message.svg');
 
-  /// File path: assets/icons/app_icon.png
-  AssetGenImage get appIcon => const AssetGenImage('assets/icons/app_icon.png');
+  /// File path: assets/icons/app_icon.jpg
+  AssetGenImage get appIcon => const AssetGenImage('assets/icons/app_icon.jpg');
 
   /// File path: assets/icons/apple_logo.png
   AssetGenImage get appleLogo =>
