@@ -29,12 +29,30 @@ class NewsNotifier extends ChangeNotifier {
     profilesList = await profileController
         .getProfilesById(newsList.map((e) => e.creatorId).toSet());
 
-    newsController.watch(uid).listen((data) {
+    newsController.watch(uid).listen((data) async {
       newsList = data;
+      Set<String> newProfilIds = getNewProfiles();
+
+      if (newProfilIds.isNotEmpty) {
+        profilesList.addAll(await profileController
+            .getProfilesById(newsList.map((e) => e.creatorId).toSet()));
+      }
+
       notifyListeners();
     });
     isInit = true;
     notifyListeners();
+  }
+
+  Set<String> getNewProfiles() {
+    Set<String> newProfilIds = {};
+    for (final i in newsList) {
+      if (!profilesList.any((e) => e.userId == i.creatorId)) {
+        newProfilIds.add(i.creatorId);
+      }
+    }
+
+    return newProfilIds;
   }
 
   Future<void> markNewsAsReaded(news) async {

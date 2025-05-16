@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:932954488084:android:b32400e064cbe4b8885601",
         "android_client_info": {
-          "package_name": "com.example.designhub"
+          "package_name": "com.benjamin.designhub"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "932954488084-q8502qmp0f6cn9g606sv0cin4mio35gn.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.designhub"
+                "bundle_id": "com.benjamin.designhub"
               }
             }
           ]
