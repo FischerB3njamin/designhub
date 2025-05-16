@@ -9,19 +9,34 @@ import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({
     super.key,
   });
 
   @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  bool _hasRequestedEdit = true;
+
+  @override
   Widget build(BuildContext context) {
     final profileProvider = context.watch<ProfileNotifier>();
     final currentProfileNotifier = context.watch<CurrentProfileNotifier>();
+
     if (currentProfileNotifier.isChanged) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         profileProvider.update(currentProfileNotifier.getProfile());
       });
+    }
+
+    if (currentProfileNotifier.getProfile().name.isEmpty && _hasRequestedEdit) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        profileProvider.showEdit(context);
+      });
+      setState(() => _hasRequestedEdit = false);
     }
 
     return GestureDetector(
@@ -48,21 +63,32 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context, Profile profile) {
+    final hasValidImage = profile.backgroundImagePath.isNotEmpty;
+
     return SizedBox(
       height: 275,
       width: double.infinity,
       child: Stack(
         children: [
-          CachedNetworkImage(
-            imageUrl: profile.backgroundImagePath,
-            placeholder: (context, url) => Container(
-              color: DesignhubColors.white,
-            ),
-            errorWidget: (context, url, error) => Icon(Icons.error),
-            height: 180,
-            width: double.infinity,
-            fit: BoxFit.cover,
-          ),
+          hasValidImage
+              ? CachedNetworkImage(
+                  imageUrl: profile.backgroundImagePath,
+                  placeholder: (context, url) => Container(
+                    color: DesignhubColors.white,
+                  ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  height: 180,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                )
+              : Container(
+                  height: 180,
+                  width: double.infinity,
+                  color: DesignhubColors.grey300,
+                  alignment: Alignment.center,
+                  child: Icon(Icons.image,
+                      size: 40, color: DesignhubColors.grey700),
+                ),
           Center(
             child: Padding(
               padding: const EdgeInsets.only(top: 53.0),

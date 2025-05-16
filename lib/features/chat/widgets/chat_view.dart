@@ -39,7 +39,7 @@ class _ChatViewState extends State<ChatView> {
 
     return Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: 16.0, vertical: widget.isSmallView ? 0 : 24),
+          horizontal: 16.0, vertical: widget.isSmallView ? 0 : 60),
       child: Column(
         children: [
           _buildHeader(context),

@@ -21,6 +21,7 @@ class AvatarCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool valid = profile.avatarImagePath.isNotEmpty;
     return GestureDetector(
       onTap: () {
         if (allowNavigation) {
@@ -36,15 +37,20 @@ class AvatarCircle extends StatelessWidget {
         height: height,
         width: width,
         clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(shape: BoxShape.circle),
-        child: CachedNetworkImage(
-          imageUrl: profile.avatarImagePath,
-          placeholder: (context, url) => Container(
-            color: DesignhubColors.white,
-          ),
-          errorWidget: (context, url, error) => Icon(Icons.error),
-          fit: BoxFit.cover,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: DesignhubColors.grey300,
         ),
+        child: valid
+            ? CachedNetworkImage(
+                imageUrl: profile.avatarImagePath,
+                placeholder: (context, url) => Container(
+                  color: DesignhubColors.white,
+                ),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+                fit: BoxFit.cover,
+              )
+            : Icon(Icons.image, size: 40, color: DesignhubColors.grey700),
       ),
     );
   }

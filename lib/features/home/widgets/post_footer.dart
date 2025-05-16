@@ -21,7 +21,7 @@ class PostFooter extends StatelessWidget {
       padding: const EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
         color: DesignhubColors.white.withAlpha(230),
-        borderRadius: BorderRadius.all(Radius.circular(34)),
+        borderRadius: BorderRadius.all(Radius.circular(36)),
       ),
       child: Row(
         children: [
