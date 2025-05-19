@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>932954488084-q8502qmp0f6cn9g606sv0cin4mio35gn.apps.googleusercontent.com</string>
+	<string>932954488084-cmjaj26idu24k97fpe6o10506268knnu.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.932954488084-q8502qmp0f6cn9g606sv0cin4mio35gn</string>
+	<string>com.googleusercontent.apps.932954488084-cmjaj26idu24k97fpe6o10506268knnu</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCP2D99WRchSdVAXjXcLOoUqJQGfOk1Eas</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.designhub</string>
+	<string>com.benjamin.designhub</string>
 	<key>PROJECT_ID</key>
 	<string>designhub-9d077</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:932954488084:ios:dc9b75c4fda6fb76885601</string>
+	<string>1:932954488084:ios:3dfba1a43db2887a885601</string>
 </dict>
 </plist>

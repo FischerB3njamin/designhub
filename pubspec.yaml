@@ -1,7 +1,7 @@
 name: designhub
 description: "A new Flutter project."
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0+3
 
 environment:
   sdk: ^3.6.0
@@ -24,6 +24,7 @@ dependencies:
   link_text: ^0.2.1
   cached_network_image: ^3.4.1
   flutter_image_compress: ^2.4.0
+  firebase_messaging: ^15.2.5
 
 dev_dependencies:
   flutter_test:

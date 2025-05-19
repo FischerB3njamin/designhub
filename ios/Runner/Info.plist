@@ -4,6 +4,10 @@
 <dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 		<false/>
+<key>UIBackgroundModes</key>
+<array>
+  <string>remote-notification</string>
+</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -31,14 +35,14 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.932954488084-q8502qmp0f6cn9g606sv0cin4mio35gn</string>
+				<string>com.googleusercontent.apps.932954488084-cmjaj26idu24k97fpe6o10506268knnu</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>GIDClientID</key>
-	<string>932954488084-q8502qmp0f6cn9g606sv0cin4mio35gn.apps.googleusercontent.com</string>
+	<string>932954488084-cmjaj26idu24k97fpe6o10506268knnu.apps.googleusercontent.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>

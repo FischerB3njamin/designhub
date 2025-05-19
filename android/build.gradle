@@ -16,3 +16,20 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+buildscript {
+    repositories {
+        google()       // ✅ Wichtig
+        mavenCentral() // ✅ Wichtig
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.google.gms:google-services:4.3.15' // ✅ Deine Zeile
+    }
+}
+
+ext {
+    flutterCompileSdkVersion = 34
+    flutterMinSdkVersion = 19
+    flutterTargetSdkVersion = 34
+}

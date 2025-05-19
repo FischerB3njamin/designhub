@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:designhub/features/chat/provider/chat_notifier.dart';
+import 'package:designhub/features/posts/controller/post_controller.dart';
 import 'package:designhub/features/posts/widgets/image_gallery_screen.dart';
 import 'package:designhub/features/posts/widgets/section_avatar.dart';
 import 'package:designhub/features/posts/widgets/section_icon.dart';
@@ -12,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:designhub/features/posts/models/post.dart';
 import 'package:provider/provider.dart';
 
-class SosPostDetailView extends StatelessWidget {
+class SosPostDetailView extends StatefulWidget {
   final Post post;
   final Profile profile;
 
@@ -23,12 +24,19 @@ class SosPostDetailView extends StatelessWidget {
   });
 
   @override
+  State<SosPostDetailView> createState() => _SosPostDetailViewState();
+}
+
+class _SosPostDetailViewState extends State<SosPostDetailView> {
+  bool postIsClose = false;
+
+  @override
   Widget build(BuildContext context) {
     final loginNotifier = context.watch<CurrentProfileNotifier>();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(post.title),
+        title: Text(widget.post.title),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -36,19 +44,19 @@ class SosPostDetailView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
             child: Column(
               children: [
-                if (post.userId != loginNotifier.getProfileId())
+                if (widget.post.userId != loginNotifier.getProfileId())
                   _buildAvatarSection(context),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     _buildIconSection(),
-                    post.userId != loginNotifier.getProfileId()
+                    widget.post.userId != loginNotifier.getProfileId()
                         ? _buildSupportSection(context)
                         : _buildCloseSection(context),
                   ],
                 ),
                 _buildPostDetailSection(),
-                if (post.images.isNotEmpty) _buildImageGallery(context),
+                if (widget.post.images.isNotEmpty) _buildImageGallery(context),
                 SizedBox(height: 32),
               ],
             ),
@@ -59,20 +67,25 @@ class SosPostDetailView extends StatelessWidget {
   }
 
   Widget _buildAvatarSection(BuildContext context) =>
-      SectionAvatar(post: post, profile: profile);
+      SectionAvatar(post: widget.post, profile: widget.profile);
 
   _buildCloseSection(BuildContext context) => _sectionCollaboration(
       context,
       'Close',
-      (post.isActive
+      (widget.post.isActive
           ? () {
-              context.read<ProfileNotifier>().removeSosPost(post.postId);
+              print('closed');
+              setState(() {
+                widget.post.isActive = false;
+              });
+              context.read<ProfileNotifier>().removeSosPost(widget.post.postId);
+              context.read<PostController>().deletePost(widget.post.postId);
             }
           : null));
 
   _buildSupportSection(BuildContext context) =>
       _sectionCollaboration(context, 'Support', () {
-        context.read<ChatNotifier>().openChat(context, profile);
+        context.read<ChatNotifier>().openChat(context, widget.profile);
       });
 
   Widget _sectionCollaboration(
@@ -94,11 +107,12 @@ class SosPostDetailView extends StatelessWidget {
       );
 
   Widget _buildPostDetailSection() {
-    return SectionPostDetail(post: post);
+    return SectionPostDetail(post: widget.post);
   }
 
   Widget _buildIconSection() {
-    return Expanded(child: SectionIcon(post: post, profile: profile));
+    return Expanded(
+        child: SectionIcon(post: widget.post, profile: widget.profile));
   }
 
   Widget _buildImageGallery(BuildContext context) {
@@ -108,7 +122,7 @@ class SosPostDetailView extends StatelessWidget {
         height: 600,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: post.images.length,
+          itemCount: widget.post.images.length,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () => _openImageGallery(context, index),
@@ -121,7 +135,7 @@ class SosPostDetailView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(32),
                   ),
                   child: CachedNetworkImage(
-                    imageUrl: post.images[index],
+                    imageUrl: widget.post.images[index],
                     placeholder: (context, url) => Container(
                       color: DesignhubColors.white,
                     ),
@@ -145,8 +159,8 @@ class SosPostDetailView extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => ImageGalleryScreen(
-          title: post.title,
-          images: post.images,
+          title: widget.post.title,
+          images: widget.post.images,
           initialIndex: initialIndex,
         ),
       ),

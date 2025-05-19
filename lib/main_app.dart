@@ -3,6 +3,7 @@ import 'package:designhub/features/auth/view/login_page.dart';
 import 'package:designhub/features/navigation/provider/navigation_notifier.dart';
 import 'package:designhub/features/navigation/view/navigation_page.dart';
 import 'package:designhub/features/profile/provider/current_profile_notifier.dart';
+import 'package:designhub/shared/controller/push_notification_controller.dart';
 import 'package:designhub/theme/custom_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,9 @@ class MainApp extends StatelessWidget {
 
   Widget initNaviagtation(BuildContext context, String uid) {
     context.read<CurrentProfileNotifier>().setUid(uid);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       context.read<NavigationNotifier>().reinit(context);
+      await PushNotificationService().init(uid);
     });
 
     return NavigationPage();

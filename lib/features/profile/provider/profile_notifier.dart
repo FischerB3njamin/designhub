@@ -220,7 +220,6 @@ class ProfileNotifier extends ChangeNotifier {
   void removeSosPost(String postId) {
     sosPosts.removeWhere((post) => post.postId == postId);
     _currentProfileNotifier.removeSosPost(postId);
-    sosPosts.remove(sosPosts.firstWhere((e) => e.postId == postId));
     notifyListeners();
   }
 }
