@@ -1,36 +1,59 @@
-# designhub 🎨✨
+# designhub
 
-**designhub** is a modern Flutter-based social media app built for designers and creatives to showcase their work, get feedback, and connect with other like-minded individuals. It supports posting designs, engaging with the community, sending SOS design requests, and managing personal profiles.
+**designhub** ist eine moderne Social-Media-App auf Basis von Flutter, die speziell für Designer:innen und Kreative entwickelt wurde. Die App ermöglicht es, Designarbeiten zu veröffentlichen, Feedback zu erhalten, sich mit Gleichgesinnten zu vernetzen und bei kreativen Herausforderungen schnelle Hilfe aus der Community zu erhalten.
 
----
+## Features
 
-## 🚀 Features
+- Erstellen, Anzeigen und Löschen von Design-Posts mit Bild, Titel und Hashtags  
+- Suchen von Posts und SOS-Anfragen (case-insensitive)  
+- Speichern und Verwalten von Lieblingsdesigns  
+- SOS-Posts zur schnellen Community-Hilfe veröffentlichen  
+- 1:1-Chats bei SOS-Reaktionen starten  
+- Benutzerprofile anzeigen und bearbeiten  
+- Kuratierte Inhalte und News aus der Designwelt  
+- Echtzeit-Aktualisierungen mit `Provider` und `ChangeNotifier`  
+- Bild-Uploads via Firebase Storage  
+- Datenspeicherung in Firebase Firestore  
 
-- 🖼️ Create, view, and delete design posts with images, titles, and hashtags
-- 🔍 Search posts and SOS requests (case-insensitive)
-- 📁 Save favorite designs
-- 🆘 Post SOS design requests and receive community help
-- 💬 Start chat sessions when responding to SOS posts
-- 👤 View and edit user profiles
-- 📚 Explore curated design content and news
-- 🔔 Realtime UI updates using Provider and ChangeNotifier
-- 📷 Image upload with Firebase Storage
-- ☁️ Firestore integration for persistent data
+## Technologiestack
 
----
+- **Flutter & Dart**  
+- **Firebase**: Auth, Firestore, Storage, Messaging  
+- **State Management**: Provider  
+- **UI & UX**: Google Fonts, PhotoView, Custom Widgets  
+- **Image Handling**: cached_network_image, image_picker, flutter_image_compress  
+- **Weitere Packages**: flutter_svg, app_settings, link_text  
 
-## 🧱 Tech Stack
+## Installation & Testzugang
 
-- **Flutter** with Dart
-- **Firebase Firestore** – real-time database
-- **Firebase Storage** – media upload
-- **Provider** – state management
-- **cached_network_image** – efficient image loading
-- **Custom theme and styles** for consistent UI
+Es gibt keine öffentliche Live-Demo.  
+Wenn du die App testen möchtest, kontaktiere mich gerne per E-Mail unter **blblamda@mail.de**.  
+Ich lade dich dann zu **TestFlight (iOS)** oder zum **Android-Beta-Test** ein.
 
+## Screenshots
 
-## Future Ideas
-- Push notifications for SOS help
-- Collaborative design sessions
-- Figma plugin integration
+Hier ein Einblick in die Benutzeroberfläche und Funktionen der App:
 
+| Startseite | Design-Post | SOS-Funktion |
+|------------|-------------|---------------|
+| ![Home](assets/images/logo.png) | ![Post](assets/images/logo_text.png) | ![SOS](assets/images/screenshot_sos.png) |
+
+## App Demo (Video)
+
+Hier ein kurzer Einblick in das Nutzererlebnis von **designhub**:
+
+- **Startseite & Feed**
+  
+  ![Home Video](assets/videos/demo_home.gif)
+
+- **Neuen Post erstellen**
+  
+  ![Create Post](assets/videos/demo_create_post.gif)
+
+- **SOS-Funktion & Chat**
+  
+  ![SOS](assets/videos/demo_sos_chat.gif)
+
+> **Hinweis:** Die Videos sollten im Ordner `assets/videos/` liegen und idealerweise als optimierte `.gif` oder `.mp4` bereitgestellt werden. Markdown unterstützt direkt nur GIFs. Für `.mp4` kannst du alternativ einen Link zu einem Hosting-Dienst (z. B. GitHub Releases, Dropbox, Streamable) angeben:
+
+[▶️ App-Demo als MP4 ansehen](https://yourhost.com/designhub-demo.mp4)
