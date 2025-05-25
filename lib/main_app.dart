@@ -1,8 +1,8 @@
-import 'package:designhub/features/auth/provider/auth_notifier.dart';
-import 'package:designhub/features/auth/view/login_page.dart';
-import 'package:designhub/features/navigation/provider/navigation_notifier.dart';
-import 'package:designhub/features/navigation/view/navigation_page.dart';
-import 'package:designhub/features/profile/provider/current_profile_notifier.dart';
+import 'package:designhub/features/core/auth/provider/auth_notifier.dart';
+import 'package:designhub/features/core/auth/view/login_page.dart';
+import 'package:designhub/features/core/navigation/provider/navigation_notifier.dart';
+import 'package:designhub/features/core/navigation/view/navigation_page.dart';
+import 'package:designhub/features/socials/profile/provider/current_profile_notifier.dart';
 import 'package:designhub/shared/controller/push_notification_controller.dart';
 import 'package:designhub/theme/custom_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';

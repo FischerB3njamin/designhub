@@ -1,4 +1,4 @@
-import 'package:designhub/features/auth/provider/auth_notifier.dart';
+import 'package:designhub/features/core/auth/provider/auth_notifier.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

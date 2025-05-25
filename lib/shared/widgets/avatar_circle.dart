@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:designhub/features/profile/models/profile.dart';
-import 'package:designhub/features/profile/view/profile_external_page.dart';
+import 'package:designhub/features/socials/profile/models/profile.dart';
+import 'package:designhub/features/socials/profile/view/profile_external_page.dart';
 import 'package:designhub/shared/view/custom_bottom_sheet.dart';
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
