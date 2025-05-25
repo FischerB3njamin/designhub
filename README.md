@@ -3,6 +3,26 @@
 **designhub** is a modern social media app built with Flutter, tailored for designers and creatives. It enables users to showcase their work, get meaningful feedback, connect with like-minded individuals, and request design help in real-time. The platform is crafted to inspire creativity, support collaboration, and foster a strong design community.
 
 ---
+## Navigation
+
+Use this quick index to jump directly to key sections of the README:
+
+- [Features](#features)  
+- [Technology Stack](#technology-stack)  
+- [Getting Started](#getting-started)  
+- [Screenshots](#screenshots)  
+  - [Login & Registration](#login--registration)  
+  - [Home Feed](#home-feed)  
+  - [Search](#search)  
+  - [Posts](#posts)  
+  - [Create New Posts](#create-new-posts)  
+  - [SOS Feature](#sos-feature)  
+  - [News & Chat](#news--chat)  
+  - [Profile & External Profiles](#profile--external-profiles)  
+- [Access](#access)  
+- [About](#about)  
+
+---
 
 ## Features
 
@@ -53,7 +73,6 @@
 
 Explore the visual journey through **designhub**’s interface and core functionality.
 
----
 
 ### Login & Registration  
 Start your journey with a secure login and quick email-based sign-up. The clean and intuitive forms provide a seamless onboarding experience.
