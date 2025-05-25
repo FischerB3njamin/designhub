@@ -77,7 +77,7 @@ Explore the visual journey through **designhub**’s interface and core function
 ### Login & Registration  
 Start your journey with a secure login and quick email-based sign-up. The clean and intuitive forms provide a seamless onboarding experience.
 
-<table>
+<table style="border-collapse: collapse; border: none;">
   <tr>
     <td align="center"><img src="assets/images/screenshots/login.png" width="200"/><br/><sub>Login screen</sub></td>
     <td align="center"><img src="assets/images/screenshots/registration.png" width="200"/><br/><sub>Registration form</sub></td>
@@ -89,7 +89,7 @@ Start your journey with a secure login and quick email-based sign-up. The clean 
 ### Home Feed  
 Browse a curated feed of posts from the creative community. Scroll through visual inspiration, save your favorite posts, or dive into discussions.
 
-<table>
+<table style="border-collapse: collapse; border: none;">
   <tr>
     <td align="center"><img src="assets/images/screenshots/home.png" width="200"/><br/><sub>Community feed</sub></td>
   </tr>
@@ -100,7 +100,7 @@ Browse a curated feed of posts from the creative community. Scroll through visua
 ### Search  
 Use intelligent search to quickly find design posts, SOS requests, or other users. Searches work with titles, tags, names, and content.
 
-<table>
+<table style="border-collapse: collapse; border: none;">
   <tr>
     <td align="center"><img src="assets/images/screenshots/search_post.png" width="200"/><br/><sub>Search by post</sub></td>
     <td align="center"><img src="assets/images/screenshots/search sos.png" width="200"/><br/><sub>Search SOS requests</sub></td>
@@ -113,7 +113,7 @@ Use intelligent search to quickly find design posts, SOS requests, or other user
 ### Posts  
 Explore design posts in depth. View images in detail, read and post comments, and interact with fellow creatives.
 
-<table>
+<table style="border-collapse: collapse; border: none;">
   <tr>
     <td align="center"><img src="assets/images/screenshots/post_detail.png" width="200"/><br/><sub>Post detail view</sub></td>
     <td align="center"><img src="assets/images/screenshots/post_detail2.png" width="200"/><br/><sub>Expanded post view</sub></td>
@@ -126,7 +126,7 @@ Explore design posts in depth. View images in detail, read and post comments, an
 ### Create New Posts  
 Build your own post from scratch. Add a title, description, hashtags, and images—then preview it all before publishing.
 
-<table>
+<table style="border-collapse: collapse; border: none;">
   <tr>
     <td align="center"><img src="assets/images/screenshots/empty_newPost.png" width="200"/><br/><sub>Start with an empty form</sub></td>
     <td align="center"><img src="assets/images/screenshots/filled_newPost.png" width="200"/><br/><sub>Add title, description, and hashtags</sub></td>
@@ -147,7 +147,7 @@ Build your own post from scratch. Add a title, description, hashtags, and images
 ### SOS Feature  
 In moments when quick feedback or urgent help is needed, publish an SOS request. Designers can respond directly via comments or chat.
 
-<table>
+<table style="border-collapse: collapse; border: none;">
   <tr>
     <td align="center"><img src="assets/images/screenshots/sos_overview.png" width="200"/><br/><sub>SOS overview</sub></td>
     <td align="center"><img src="assets/images/screenshots/sos_detail.png" width="200"/><br/><sub>Detailed SOS post</sub></td>
@@ -160,7 +160,7 @@ In moments when quick feedback or urgent help is needed, publish an SOS request.
 ### News & Chat  
 Stay updated with the latest design trends and engage in direct 1:1 conversations through the integrated chat system.
 
-<table>
+<table style="border-collapse: collapse; border: none;">
   <tr>
     <td align="center"><img src="assets/images/screenshots/news_chat.png" width="200"/><br/><sub>Design news overview</sub></td>
     <td align="center"><img src="assets/images/screenshots/chat_overview.png" width="200"/><br/><sub>Chat interface</sub></td>
@@ -173,7 +173,7 @@ Stay updated with the latest design trends and engage in direct 1:1 conversation
 ### Profile & External Profiles  
 Manage your personal design identity and explore profiles of other creatives. View their posts, saved work, and SOS activity.
 
-<table>
+<table style="border-collapse: collapse; border: none;">
   <tr>
     <td align="center"><img src="assets/images/screenshots/info.png" width="200"/><br/><sub>Your profile information</sub></td>
     <td align="center"><img src="assets/images/screenshots/edit.png" width="200"/><br/><sub>Edit your profile</sub></td>
