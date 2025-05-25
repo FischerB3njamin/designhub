@@ -1,59 +1,188 @@
 # designhub
 
-**designhub** ist eine moderne Social-Media-App auf Basis von Flutter, die speziell für Designer:innen und Kreative entwickelt wurde. Die App ermöglicht es, Designarbeiten zu veröffentlichen, Feedback zu erhalten, sich mit Gleichgesinnten zu vernetzen und bei kreativen Herausforderungen schnelle Hilfe aus der Community zu erhalten.
+**designhub** is a modern social media app built with Flutter, tailored for designers and creatives. It enables users to showcase their work, get meaningful feedback, connect with like-minded individuals, and request design help in real-time. The platform is crafted to inspire creativity, support collaboration, and foster a strong design community.
+
+---
 
 ## Features
 
-- Erstellen, Anzeigen und Löschen von Design-Posts mit Bild, Titel und Hashtags  
-- Suchen von Posts und SOS-Anfragen (case-insensitive)  
-- Speichern und Verwalten von Lieblingsdesigns  
-- SOS-Posts zur schnellen Community-Hilfe veröffentlichen  
-- 1:1-Chats bei SOS-Reaktionen starten  
-- Benutzerprofile anzeigen und bearbeiten  
-- Kuratierte Inhalte und News aus der Designwelt  
-- Echtzeit-Aktualisierungen mit `Provider` und `ChangeNotifier`  
-- Bild-Uploads via Firebase Storage  
-- Datenspeicherung in Firebase Firestore  
+- Create, view, and manage design posts with images, titles, tags, and optional questions  
+- Save and organize your favorite posts  
+- Explore curated design news and community content  
+- Publish SOS posts to request urgent feedback or creative help  
+- Connect with peers via 1:1 chat for SOS requests  
+- Fully browsable and editable user profiles (info, posts, saved items, SOS history)  
+- Powerful search across posts, users, and SOS requests using content and hashtags  
+- Smooth state updates using `Provider` and `ChangeNotifier`  
+- Image uploads and hosting through Firebase Storage  
+- Real-time post feeds and chat using Firestore  
 
-## Technologiestack
+---
 
-- **Flutter & Dart**  
-- **Firebase**: Auth, Firestore, Storage, Messaging  
+## Technology Stack
+
+- **Flutter & Dart** — cross-platform mobile development  
+- **Firebase Suite**:  
+  - Authentication  
+  - Firestore (real-time database)  
+  - Storage (media handling)  
+  - Messaging (push notifications)  
 - **State Management**: Provider  
-- **UI & UX**: Google Fonts, PhotoView, Custom Widgets  
 - **Image Handling**: cached_network_image, image_picker, flutter_image_compress  
-- **Weitere Packages**: flutter_svg, app_settings, link_text  
+- **UI/UX Components**:  
+  - Custom Widgets  
+  - Google Fonts  
+  - PhotoView for interactive image zoom  
+- **Other Packages**:  
+  - flutter_svg  
+  - link_text  
+  - app_settings  
 
-## Installation & Testzugang
+---
 
-Es gibt keine öffentliche Live-Demo.  
-Wenn du die App testen möchtest, kontaktiere mich gerne per E-Mail unter **blblamda@mail.de**.  
-Ich lade dich dann zu **TestFlight (iOS)** oder zum **Android-Beta-Test** ein.
+## Getting Started
+
+1. Clone the repository  
+2. Run `flutter pub get`  
+3. Connect your Firebase project  
+4. Launch the app using `flutter run` on your emulator or physical device  
+
+---
 
 ## Screenshots
 
-Hier ein Einblick in die Benutzeroberfläche und Funktionen der App:
+Explore the visual journey through **designhub**’s interface and core functionality.
 
-| Startseite | Design-Post | SOS-Funktion |
-|------------|-------------|---------------|
-| ![Home](assets/images/logo.png) | ![Post](assets/images/logo_text.png) | ![SOS](assets/images/screenshot_sos.png) |
+---
 
-## App Demo (Video)
+### Login & Registration  
+Start your journey with a secure login and quick email-based sign-up. The clean and intuitive forms provide a seamless onboarding experience.
 
-Hier ein kurzer Einblick in das Nutzererlebnis von **designhub**:
+<table>
+  <tr>
+    <td align="center"><img src="assets/images/screenshots/login.png" width="200"/><br/><sub>Login screen</sub></td>
+    <td align="center"><img src="assets/images/screenshots/registration.png" width="200"/><br/><sub>Registration form</sub></td>
+  </tr>
+</table>
 
-- **Startseite & Feed**
-  
-  ![Home Video](assets/videos/demo_home.gif)
+---
 
-- **Neuen Post erstellen**
-  
-  ![Create Post](assets/videos/demo_create_post.gif)
+### Home Feed  
+Browse a curated feed of posts from the creative community. Scroll through visual inspiration, save your favorite posts, or dive into discussions.
 
-- **SOS-Funktion & Chat**
-  
-  ![SOS](assets/videos/demo_sos_chat.gif)
+<table>
+  <tr>
+    <td align="center"><img src="assets/images/screenshots/home.png" width="200"/><br/><sub>Community feed</sub></td>
+  </tr>
+</table>
 
-> **Hinweis:** Die Videos sollten im Ordner `assets/videos/` liegen und idealerweise als optimierte `.gif` oder `.mp4` bereitgestellt werden. Markdown unterstützt direkt nur GIFs. Für `.mp4` kannst du alternativ einen Link zu einem Hosting-Dienst (z. B. GitHub Releases, Dropbox, Streamable) angeben:
+---
 
-[▶️ App-Demo als MP4 ansehen](https://yourhost.com/designhub-demo.mp4)
+### Search  
+Use intelligent search to quickly find design posts, SOS requests, or other users. Searches work with titles, tags, names, and content.
+
+<table>
+  <tr>
+    <td align="center"><img src="assets/images/screenshots/search_post.png" width="200"/><br/><sub>Search by post</sub></td>
+    <td align="center"><img src="assets/images/screenshots/search sos.png" width="200"/><br/><sub>Search SOS requests</sub></td>
+    <td align="center"><img src="assets/images/screenshots/search_person.png" width="200"/><br/><sub>Search user profiles</sub></td>
+  </tr>
+</table>
+
+---
+
+### Posts  
+Explore design posts in depth. View images in detail, read and post comments, and interact with fellow creatives.
+
+<table>
+  <tr>
+    <td align="center"><img src="assets/images/screenshots/post_detail.png" width="200"/><br/><sub>Post detail view</sub></td>
+    <td align="center"><img src="assets/images/screenshots/post_detail2.png" width="200"/><br/><sub>Expanded post view</sub></td>
+    <td align="center"><img src="assets/images/screenshots/comments.png" width="200"/><br/><sub>Comments section</sub></td>
+  </tr>
+</table>
+
+---
+
+### Create New Posts  
+Build your own post from scratch. Add a title, description, hashtags, and images—then preview it all before publishing.
+
+<table>
+  <tr>
+    <td align="center"><img src="assets/images/screenshots/empty_newPost.png" width="200"/><br/><sub>Start with an empty form</sub></td>
+    <td align="center"><img src="assets/images/screenshots/filled_newPost.png" width="200"/><br/><sub>Add title, description, and hashtags</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="assets/images/screenshots/empty_images_newPost.png" width="200"/><br/><sub>Image upload section</sub></td>
+    <td align="center"><img src="assets/images/screenshots/image selection_newPost.png" width="200"/><br/><sub>Select images with picker</sub></td>
+    <td align="center"><img src="assets/images/screenshots/selected_images_newPost.png" width="200"/><br/><sub>Selected image overview</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="assets/images/screenshots/overview1_newPost.png" width="200"/><br/><sub>Final post preview</sub></td>
+    <td align="center"><img src="assets/images/screenshots/overview2_newPost.png" width="200"/><br/><sub>Final post with images</sub></td>
+  </tr>
+</table>
+
+---
+
+### SOS Feature  
+In moments when quick feedback or urgent help is needed, publish an SOS request. Designers can respond directly via comments or chat.
+
+<table>
+  <tr>
+    <td align="center"><img src="assets/images/screenshots/sos_overview.png" width="200"/><br/><sub>SOS overview</sub></td>
+    <td align="center"><img src="assets/images/screenshots/sos_detail.png" width="200"/><br/><sub>Detailed SOS post</sub></td>
+    <td align="center"><img src="assets/images/screenshots/comments.png" width="200"/><br/><sub>Community responses</sub></td>
+  </tr>
+</table>
+
+---
+
+### News & Chat  
+Stay updated with the latest design trends and engage in direct 1:1 conversations through the integrated chat system.
+
+<table>
+  <tr>
+    <td align="center"><img src="assets/images/screenshots/news_chat.png" width="200"/><br/><sub>Design news overview</sub></td>
+    <td align="center"><img src="assets/images/screenshots/chat_overview.png" width="200"/><br/><sub>Chat interface</sub></td>
+    <td align="center"><img src="assets/images/screenshots/chat_detail.png" width="200"/><br/><sub>Real-time messaging</sub></td>
+  </tr>
+</table>
+
+---
+
+### Profile & External Profiles  
+Manage your personal design identity and explore profiles of other creatives. View their posts, saved work, and SOS activity.
+
+<table>
+  <tr>
+    <td align="center"><img src="assets/images/screenshots/info.png" width="200"/><br/><sub>Your profile information</sub></td>
+    <td align="center"><img src="assets/images/screenshots/edit.png" width="200"/><br/><sub>Edit your profile</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="assets/images/screenshots/work.png" width="200"/><br/><sub>Published work</sub></td>
+    <td align="center"><img src="assets/images/screenshots/saved.png" width="200"/><br/><sub>Saved posts</sub></td>
+    <td align="center"><img src="assets/images/screenshots/sos.png" width="200"/><br/><sub>Your SOS history</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="assets/images/screenshots/external.png" width="200"/><br/><sub>View other profiles</sub></td>
+  </tr>
+</table>
+
+---
+
+## Access
+
+There is no public release at this time.  
+To request beta access for **iOS (via TestFlight)** or **Android**, please reach out via email:
+
+**bennyfischer22@googlemail.com**
+
+---
+
+## About
+
+**designhub** was created as part of a personal development project with a focus on design-centric collaboration. The goal was to build a space where creatives can not only present their work but also get real-time help and feedback. The app leverages a modular architecture, thoughtful UX design, and Firebase-powered live updates to deliver a polished experience for designers worldwide.
+
+---
+

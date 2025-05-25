@@ -1,7 +1,7 @@
 import 'package:designhub/theme/designhub_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:designhub/features/search/provider/search_motifer.dart';
+import 'package:designhub/features/search/provider/search_notifer.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});

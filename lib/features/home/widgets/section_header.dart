@@ -1,6 +1,6 @@
 import 'package:designhub/features/auth/provider/auth_notifier.dart';
 import 'package:designhub/features/home/provider/home_notifier.dart';
-import 'package:designhub/features/search/provider/search_motifer.dart';
+import 'package:designhub/features/search/provider/search_notifer.dart';
 import 'package:designhub/features/search/view/search_page.dart';
 import 'package:designhub/gen/assets.gen.dart';
 import 'package:designhub/features/profile/provider/current_profile_notifier.dart';

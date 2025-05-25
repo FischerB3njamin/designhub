@@ -1,6 +1,6 @@
 import 'package:designhub/features/chat/provider/chat_notifier.dart';
 import 'package:designhub/features/chat/view/chat_news_page.dart';
-import 'package:designhub/features/design_sos/views/sos_view.dart';
+import 'package:designhub/features/design_sos/view/sos_view.dart';
 import 'package:designhub/features/home/view/home_page.dart';
 import 'package:designhub/features/news/provider/news_notifier.dart';
 import 'package:designhub/features/profile/controller/profile_controller.dart';

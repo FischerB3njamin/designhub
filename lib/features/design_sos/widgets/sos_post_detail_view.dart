@@ -74,7 +74,6 @@ class _SosPostDetailViewState extends State<SosPostDetailView> {
       'Close',
       (widget.post.isActive
           ? () {
-              print('closed');
               setState(() {
                 widget.post.isActive = false;
               });

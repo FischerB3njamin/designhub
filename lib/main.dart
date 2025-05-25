@@ -19,7 +19,7 @@ import 'package:designhub/features/profile/controller/profile_controller.dart';
 import 'package:designhub/features/profile/data/profile_firebase_repo.dart';
 import 'package:designhub/features/search/controller/search_controller.dart';
 import 'package:designhub/features/search/data/search_firebase_repo.dart';
-import 'package:designhub/features/search/provider/search_motifer.dart';
+import 'package:designhub/features/search/provider/search_notifer.dart';
 import 'package:designhub/firebase_options.dart';
 import 'package:designhub/main_app.dart';
 import 'package:designhub/features/profile/provider/current_profile_notifier.dart';
