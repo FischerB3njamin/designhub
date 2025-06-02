@@ -1,5 +1,5 @@
 abstract class AuthRepo {
-  Future<void> logout();
+  Future<void> signOut();
   Stream<dynamic> get onAuthChanged;
   Future<String?> signInWithGoogle();
   Future<String?> login(String email, String password);

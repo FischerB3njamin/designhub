@@ -4,8 +4,13 @@ import 'package:designhub/features/socials/profile/models/profile.dart';
 import 'package:designhub/features/discovery/search/data/search_repo.dart';
 
 class SearchFirebaseRepo extends SearchRepo {
-  final _collectionUsers = FirebaseFirestore.instance.collection('profiles');
-  final _collectionPosts = FirebaseFirestore.instance.collection('posts');
+  final FirebaseFirestore firestore;
+
+  SearchFirebaseRepo({FirebaseFirestore? firestore})
+      : firestore = firestore ?? FirebaseFirestore.instance;
+
+  CollectionReference get _collectionUsers => firestore.collection('profiles');
+  CollectionReference get _collectionPosts => firestore.collection('posts');
 
   @override
   Future<List<Post>> searchPosts(String userId) async {
@@ -14,7 +19,7 @@ class SearchFirebaseRepo extends SearchRepo {
             .orderBy('created', descending: true)
             .get())
         .docs
-        .map((e) => Post.fromMap(e.data()))
+        .map((e) => Post.fromMap(e.data() as Map<String, dynamic>))
         .toList();
   }
 
@@ -25,11 +30,10 @@ class SearchFirebaseRepo extends SearchRepo {
               .where('userId', isNotEqualTo: userId)
               .get())
           .docs
-          .map((doc) => Profile.fromMap(doc.data()))
+          .map((doc) => Profile.fromMap(doc.data() as Map<String, dynamic>))
           .toList();
     } catch (e) {
-      print(e);
+      return [];
     }
-    return [];
   }
 }

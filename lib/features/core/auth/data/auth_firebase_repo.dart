@@ -36,7 +36,7 @@ class AuthFirebase implements AuthRepo {
   }
 
   @override
-  Future<void> logout() async {
+  Future<void> signOut() async {
     await GoogleSignIn().signOut();
     await _auth.signOut();
   }

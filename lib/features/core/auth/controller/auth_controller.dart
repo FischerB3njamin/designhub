@@ -11,7 +11,7 @@ class AuthController {
   Future<String?> register(String email, String pwd) async =>
       repo.register(email, pwd);
 
-  Future<void> logout() => repo.logout();
+  Future<void> logout() => repo.signOut();
   Future<String?> resetPassword(String email) async =>
       repo.resetPassword(email);
 }

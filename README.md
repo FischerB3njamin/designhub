@@ -205,3 +205,4 @@ To request beta access for **iOS (via TestFlight)** or **Android**, please reach
 
 ---
 
+hm, hat vor und nachtei

@@ -31,6 +31,7 @@ class HomeNotifier extends BaseUiProvider {
     _loadPosts();
   }
 
+  // ignore: annotate_overrides
   void resetUiState() {
     posts.clear();
     profiles.clear();

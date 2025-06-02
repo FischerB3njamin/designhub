@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SectionInputfields extends StatefulWidget {
-  const SectionInputfields({Key? key}) : super(key: key);
+  const SectionInputfields({super.key});
 
   @override
   State<SectionInputfields> createState() => _SectionInputfieldsState();

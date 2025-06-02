@@ -50,5 +50,31 @@
         "*.local"
       ]
     }
-  ]
+
+  ],   
+  "emulators": {
+    "auth": {
+      "port": 9099
+    },
+    "firestore": {
+      "port": 8082,
+      "rules": "firebase_rules/firestore.rules"
+    },
+    "database": {
+      "port": 8083,
+      "rules": "firebase_rules/database.rules.json"
+    },
+    "storage": {
+      "port": 8084,
+      "rules": "firebase_rules/storage.rules"
+    },
+    "ui": {
+      "enabled": true,
+      "port": 8085
+    },
+    "singleProjectMode": true
+  
+}
+
+    
 }

@@ -57,7 +57,12 @@ class NewsItem extends StatelessWidget {
           children: [
             AvatarCircle(profile: profile, height: 32, width: 32),
             const SizedBox(width: 12),
-            Expanded(child: _NewsText(profile: profile, news: news)),
+            Expanded(
+                child: _NewsText(
+              profile: profile,
+              news: news,
+              newsNotifier: newsNotifier,
+            )),
             const SizedBox(width: 8),
             Text(
               formattedDate,
@@ -75,13 +80,12 @@ class NewsItem extends StatelessWidget {
 class _NewsText extends StatelessWidget {
   final News news;
   final Profile profile;
-
-  const _NewsText({required this.news, required this.profile});
+  final NewsNotifier newsNotifier;
+  const _NewsText(
+      {required this.news, required this.profile, required this.newsNotifier});
 
   @override
   Widget build(BuildContext context) {
-    final newsNotifier = context.watch<NewsNotifier>();
-
     return Text(
       newsNotifier.buildItemText(profile, news.type),
       style: CustomTextStyles.bodyMedium(context).copyWith(

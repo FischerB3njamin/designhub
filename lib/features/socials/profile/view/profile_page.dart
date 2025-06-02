@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:designhub/features/socials/follow/widgets/section_follow.dart';
-import 'package:designhub/features/socials/profile/models/profile.dart';
 import 'package:designhub/features/socials/profile/provider/profile_notifier.dart';
 import 'package:designhub/features/socials/profile/widgets/btn_sg_profile_sections.dart';
 import 'package:designhub/features/socials/profile/provider/current_profile_notifier.dart';
@@ -45,8 +44,8 @@ class _ProfilePageState extends State<ProfilePage> {
         body: ListView(
           shrinkWrap: true,
           children: [
-            _buildHeader(context, profileProvider.innerProfile),
-            _buildName(context),
+            _buildHeader(context, profileProvider),
+            _buildName(context, profileProvider),
             const SizedBox(height: 16),
             SectionFollow(profile: profileProvider.innerProfile),
             const SizedBox(height: 16),
@@ -62,7 +61,8 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildHeader(BuildContext context, Profile profile) {
+  Widget _buildHeader(BuildContext context, ProfileNotifier profileNotifier) {
+    final profile = profileNotifier.innerProfile;
     final hasValidImage = profile.backgroundImagePath.isNotEmpty;
 
     return SizedBox(
@@ -100,14 +100,14 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-          _buildEditButton(context),
+          _buildEditButton(context, profileNotifier),
         ],
       ),
     );
   }
 
-  Widget _buildEditButton(BuildContext context) {
-    final profileNotifier = context.watch<ProfileNotifier>();
+  Widget _buildEditButton(
+      BuildContext context, ProfileNotifier profileNotifier) {
     return Positioned(
       right: 8,
       top: 8,
@@ -118,9 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildName(BuildContext context) {
-    final profileNotifier = context.watch<ProfileNotifier>();
-
+  Widget _buildName(BuildContext context, ProfileNotifier profileNotifier) {
     return Text(
       profileNotifier.innerProfile.name,
       style: TextTheme.of(context)

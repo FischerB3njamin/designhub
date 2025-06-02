@@ -8,7 +8,6 @@ class PushNotificationService {
 
   /// Initialisiert Push Notifications (inkl. iOS APNs und FCM Token)
   Future<void> init(String userId) async {
-    print('init');
     try {
       // 1. Berechtigungen anfordern
       final settings = await _messaging.requestPermission(
@@ -18,7 +17,6 @@ class PushNotificationService {
       );
 
       if (settings.authorizationStatus == AuthorizationStatus.denied) {
-        print('Push permission denied.');
         return;
       }
 
@@ -32,20 +30,15 @@ class PushNotificationService {
           retry++;
         }
         if (apnsToken == null) {
-          print("APNs Token konnte nicht abgerufen werden.");
           return;
         }
-        print("APNs Token: $apnsToken");
       }
 
       // 3. FCM Token abrufen
       final fcmToken = await _messaging.getToken();
       if (fcmToken == null) {
-        print("FCM Token konnte nicht abgerufen werden.");
         return;
       }
-
-      print("FCM Token: $fcmToken");
 
       // 4. Token im Firestore speichern
       await _firestore.collection('profiles').doc(userId).update({
@@ -57,10 +50,9 @@ class PushNotificationService {
         await _firestore.collection('profiles').doc(userId).update({
           'fcmToken': newToken,
         });
-        print("FCM Token wurde aktualisiert: $newToken");
       });
     } catch (e) {
-      print("PushNotificationService init error: $e");
+      return;
     }
   }
 }

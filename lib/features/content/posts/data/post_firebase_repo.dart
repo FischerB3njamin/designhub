@@ -24,9 +24,8 @@ class PostFirebaseRepo extends PostRepo {
           .map((doc) => Post.fromMap(doc.data() as Map<String, dynamic>))
           .toList();
     } catch (e) {
-      print(e);
+      return [];
     }
-    return [];
   }
 
   @override
@@ -63,9 +62,8 @@ class PostFirebaseRepo extends PostRepo {
 
       return posts;
     } catch (e) {
-      print(e);
+      return [];
     }
-    return [];
   }
 
   @override
@@ -115,9 +113,8 @@ class PostFirebaseRepo extends PostRepo {
           .toList();
       return posts;
     } catch (e) {
-      print(e);
+      return [];
     }
-    return [];
   }
 
   @override
